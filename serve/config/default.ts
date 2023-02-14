@@ -8,7 +8,6 @@ export enum GENDER { Male = 'male', Female = 'female', Neutral = 'neutral' }
 export enum AUDITSTATUS { Reviewing = 'Reviewing', Approved = 'Approved', NoPass = 'Not Pass', Canceling = 'Canceling', Canceled = 'Canceled' }
 
 // 数据库地址 
-// export let mongoUrl = 'mongodb://patricia:Fviw4kyvkTVlQRlNJbABvlrz6WLemA5PiJQkyK6rg8f3MWLKBaVFgJqpvTXH2QUOynaYcywMvxNpACDbZc3IEg==@patricia.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@patricia@'
 export let mongoUrl = 'mongodb://localhost:27017'
 // 权限枚举
 export enum ROLE {
