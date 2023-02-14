@@ -1,0 +1,69 @@
+type loginDataType = { username: string, password: string }
+
+type sendCheckDataType = { id: string, email: string }
+
+type checkCodeType = { code: string, time: Date }
+
+type checkCodeDataType = { [key: string]: checkCodeType }
+
+type resetPassDatType = { id: string, email: string, pass: string, againPass: string, code: string }
+
+type resetUserInfoType = { id: string, name: string, phone: string, address: string, allergy: string, birth: Date, gender: string }
+
+type resetDoctorInfoType = { id: string, phone: string, identity: string, hospitalName: string, name: string, hospitalLevel: string, hospitalAddress: string, job: string, strength: string, selfIntro: string, departmentId: string, gender: string }
+
+type updateDepartmentNameType = { id: string, name: string, departId: string }
+
+type availableWeekType = { Mon: boolean, Tues: boolean, Wed: boolean, Thurs: boolean, Fri: boolean, Sat: boolean, Sun: boolean }
+
+type applyToBeDoctorType = {
+  id: string, doctorName: string, gender: string, zoomlink: string, phone: string, email: string, identity: string,
+  hospitalName: string, hospitalLevel: string, hospitalAddress: string,
+  departmentId: string, job: string, strength: string, selfIntro: string,
+  availabletime: Array<string>, availableWeek: availableWeekType, identityFront: string,
+  identityBack: string, certification: string, workCertificate: string,
+}
+
+type availableTimeType = { doctorId: string, startTime: string, endTime: string }
+
+type changeDoctorStatusType = { id: string, userId: string, status: string }
+
+type adminApprovalDoctorCancelStatusType = { id: string, userId: string, bool: boolean }
+
+type getOneDoctorType = { id: string, phone: string, name: string, email: string, hospitalName: string, hospitalLevel: string, hospitalAddress: string, pos: string, job: string, slot: string, strength: string, status: string, selfIntro: string }
+
+type personAskDoctorType = { id: string, doctorId: string, selfReport: string, allergyMedicine: string, appointmentTime: string, appointmentDate: Date }
+
+type doctorWirteVisitRecordType = { id: string, inquiryId: string, doctorId: string, userId: string, name: string, age: string, gender: string, consultDate: string, departmentId: string, doctorName: string, symptoms: string, drugsage: Array<string>, remark: string }
+
+type createDistributionType = { id: string, name: string, phone: string, period: string, quantities: string, subject: string, status: string, other: string }
+
+type updataDistributionType = { id: string, drugId: string, name: string, phone: string, period: string, quantities: string, subject: string, status: string, other: string }
+
+type timeSlotType = { startTime: string, endTime: string }
+
+type judgeDoctorIsFreeType = { doctorId: string, date: Date, time: timeSlotType }
+
+interface pushInfoModelType { title: string, link: string, coverLink: string }
+
+interface pushInfoType extends pushInfoModelType { id: string }
+
+interface updatePushInfoType extends pushInfoType { infoId: string }
+
+type inqueryType = {
+  userId: string, doctorId: string, selfReport: string, allergyMedicine: Array<string>, appointmentTime: String, appointmentDate: Date,
+  status: string, time: Date
+}
+
+interface updateinqueryType extends inqueryType { inqueryId: string }
+
+interface findDocType extends applyToBeDoctorType { doctorId: string }
+
+export {
+  loginDataType, sendCheckDataType, checkCodeDataType, checkCodeType, resetPassDatType,
+  resetUserInfoType, updateDepartmentNameType, applyToBeDoctorType, availableWeekType,
+  availableTimeType, changeDoctorStatusType, adminApprovalDoctorCancelStatusType, resetDoctorInfoType,
+  getOneDoctorType, personAskDoctorType, doctorWirteVisitRecordType, createDistributionType,
+  updataDistributionType, judgeDoctorIsFreeType, pushInfoModelType, pushInfoType,
+  updatePushInfoType, inqueryType, updateinqueryType,findDocType
+}
