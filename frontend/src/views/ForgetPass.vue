@@ -11,6 +11,7 @@
               type="email"
               v-model="user.email"
               placeholder="Please enter the email..."
+              required
             />
           </div>
         </div>
@@ -44,37 +45,26 @@ export default {
   methods: {
     forgetPassword() {
       // TODO 忘记密码接口
-      console.log("发送忘记密码接口",this.user.email);
+      console.log("发送忘记密码接口", this.user.email);
       console.log(this.user.email);
-      Service.sendCheckMail(this.user)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.code === 1) {
-            // 根据原本的逻辑进行添加
-            alert("Check your registered email to reset the password!");
-            this.$router.replace("/resetpass");
-          } else {
-            alert(res.data.info);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      // console.log(firebase);
-      // firebase
-      //   .auth()
-      //   .sendPasswordResetEmail(this.user.email)
-      //   .then(() => {
-      //     alert("Check your registered email to reset the password!");
-      //     this.user = {
-      //       email: "",
-      //     };
-      //     this.$router.replace("/resetpass");
-      //   })
-      //   .catch((error) => {
-      //     alert(error);
-      //   });
+      if (this.user.email == "") {
+        alert("The email can not be empty!");
+      } else {
+        Service.sendCheckMail(this.user)
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.code === 1) {
+              // 根据原本的逻辑进行添加
+              alert(res.data.info + " Please check your registered email to reset the password!");
+              this.$router.replace("/resetpass");
+            } else {
+              alert(res.data.info);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     },
     handlecancel: function () {
       this.$router.replace("/login"); // 點擊取消按鈕，跳轉至健康資訊頁面
