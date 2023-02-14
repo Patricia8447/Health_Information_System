@@ -149,6 +149,13 @@ export default new Router({
             import(/* webpackChunkName: "about" */ "../views/user/DiabetesTest.vue"),
         },
         {
+          path: "/onlinetest/sleep",
+          name: "SleepTest",
+          meta: { requireAuth: true, visible: true, roles: ['user'] },
+          component: () =>
+            import(/* webpackChunkName: "about" */ "../views/user/SleepTest.vue"),
+        },
+        {
           path: "/qualification",
           name: "qualification",
           meta: { requireAuth: true, visible: true, roles: ['doctor'] },

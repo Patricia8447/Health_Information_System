@@ -11,6 +11,9 @@
       <el-button
         ><router-link to="/onlinetest/diabetes">Diabetes Test</router-link></el-button
       >
+      <el-button
+        ><router-link to="/onlinetest/sleep">Sleeping Test</router-link></el-button
+      >
     </el-row>
   </div>
 </template>
