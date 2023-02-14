@@ -30,6 +30,7 @@
           <label>Email: </label
           ><input type="email" v-model.trim="json.email" required /><br />
         </div>
+
         <div class="form">
           <input
             type="radio"
@@ -37,8 +38,9 @@
             name="role"
             value="NORMAL"
             v-model.trim="json.role"
+            required
           />
-          <label for="user">Normal User</label><br />
+          <label for="user">User</label><br />
           <input
             type="radio"
             id="doctor"
@@ -48,10 +50,12 @@
           />
           <label for="doctor">Doctor</label><br />
         </div>
-        <br />
-        <strong>
-          <a href="http://localhost:8080/policy" target="_blank">隐私条款</a></strong
-        >
+        <br /> <br /> 
+        <div class="form">
+          <strong>
+            <a href="http://localhost:8080/policy" target="_blank">隐私条款</a></strong
+          >
+        </div>
         <div class="btns">
           <button type="submit">Submit</button>
           <button @click.prevent="handleup">Cancel</button>
@@ -210,6 +214,7 @@ input:focus,
 textarea:focus {
   border-color: #0d0aa1;
 }
+
 button {
   position: relative;
   height: 33px;
@@ -230,5 +235,10 @@ button {
 
 strong {
   text-align: right;
+}
+
+.form a{
+  text-align: right;
+  margin-left: 350px;
 }
 </style>
