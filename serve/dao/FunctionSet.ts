@@ -572,9 +572,9 @@ function updataPushInfo({ inqueryId, selfReport, allergyMedicine, appointmentTim
 // }).catch((err:Error) => res.send(responseInfo.getException(err)))
 
 function findDoc({ doctorId }: findDocType, res: Response) {
-  console.log(doctorId);
-  DoctorPictureModel.findOne({ doctorId: '63e4805e1dba83a323f21fa6' }).then((result: any) => {
-    console.log(doctorId);
+  console.log("1: " + doctorId);
+  DoctorPictureModel.findOne({ doctorId: doctorId }).then((result: any) => {
+    // console.log("2: " + doctorId);
     if (!result) { throw new Error('No such document is found') }
     res.send(responseInfo.success(result))
   }).catch((err: Error) => {

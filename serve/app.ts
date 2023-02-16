@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors"
 import { port, Token } from './config/default'
 import router from "./route";
 import responseInfo from "./config/responseInfo";
@@ -8,16 +9,17 @@ const app = express()
 const ExpressJwt = require('express-jwt')
 
 // 解决前后端分离出现的跨域问题
-app.all('*', (req:express.Request, res:express.Response, next:express.NextFunction) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  // Access-Control-Allow-Headers, 可根据浏览器的F12查看，把对应的粘贴在这里就行
-  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Credentials", 'true');
-  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-  res.header("X-Powered-By", '3.2.1')
-  res.header("Content-Type", "application/json;charset=utf-8");
-  next();
-})
+app.use(cors())
+// app.all('*', (req:express.Request, res:express.Response, next:express.NextFunction) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   // Access-Control-Allow-Headers, 可根据浏览器的F12查看，把对应的粘贴在这里就行
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept, Authorization");
+//   res.header("Access-Control-Allow-Credentials", 'true');
+//   res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+//   res.header("X-Powered-By", '3.2.1')
+//   res.header("Content-Type", "application/json;charset=utf-8");
+//   next();
+// })
 
 // 解析前端请求体数据
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));

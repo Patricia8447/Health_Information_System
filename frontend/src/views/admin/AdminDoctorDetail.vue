@@ -158,14 +158,40 @@
           <template slot="label">
             <div class="my-label">
               <i class="el-icon-user"></i>
-              document test
+              Document Display
             </div>
           </template>
           <div class="my-content">
-            {{ alldoctordetails.doc1 }}
-            <!-- <a href="serve\public\img\1675919436224.doc"> testing</a>readFile -->
-            <el-button @click="readFile">readFile</el-button>
-            <!-- <input type="file" onchange="upload(this)" /> -->
+            <a
+              :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc1}`"
+              target="_blank"
+            >
+              Identity Front</a
+            >
+          </div>
+          <div class="my-content">
+            <a
+              :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc2}`"
+              target="_blank"
+            >
+              Identity Back</a
+            >
+          </div>
+          <div class="my-content">
+            <a
+              :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc3}`"
+              target="_blank"
+            >
+              Certification</a
+            >
+          </div>
+          <div class="my-content">
+            <a
+              :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc4}`"
+              target="_blank"
+            >
+              Work Certificate</a
+            >
           </div>
         </el-descriptions-item>
       </el-descriptions>
@@ -182,7 +208,7 @@ import Admin from "@/service/admin.service.js";
 export default {
   data() {
     return {
-      filePath: "serve/public/img/1675919436224.doc",
+      // filePath: "serve/public/img/1675919436224.doc",
       CS: {
         "text-align": "left", //文本居中
         "min-width": "40px", //最小宽度
@@ -209,40 +235,47 @@ export default {
           symptoms: "",
           drugusage: "",
           doc1: "",
+          doc2: "",
+          doc3: "",
+          doc4: "",
         },
       ],
     };
   },
-  methods: {
-    readFile(filePath) {
-      alert(filePath);
-      // 创建一个新的xhr对象
-      let xhr = null;
-      if (window.XMLHttpRequest) {
-        xhr = new XMLHttpRequest();
-      } else {
-        // eslint-disable-next-line
-        xhr = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      const okStatus = document.location.protocol === "file" ? 0 : 200;
-      xhr.open("GET", filePath, false);
-      xhr.overrideMimeType("text/html;charset=utf-8");
-      xhr.send(null);
-      return xhr.status === okStatus ? xhr.responseText : null;
-    },
-  },
-  mounted() {
-    console.log(this.$route.params.id);
-    this.tableData.doctorId = this.$route.params.id;
-    console.log(this.tableData.doctorId);
 
-    Admin.findDoc(this.tableData.doctorId)
+  mounted() {
+    this.tableData.doctorId = this.$route.params.id;
+    Common.getAllDoctor(this.tableData.doctorId)
       .then((res) => {
-        console.log("test1" + JSON.stringify(res.data.info));
         if (res.data.code === 1) {
-          // alert(JSON.stringify(res.data.info));
+          for (let i = 0; i < res.data.info.length; i++) {
+            if (res.data.info[i]._id == this.tableData.doctorId) {
+              console.log("11111: " + JSON.stringify(res.data.info[i]));
+              this.alldoctordetails = res.data.info[i];
+              this.basicInfo = res.data.info[i].userInfo[0];
+              break;
+            }
+          }
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    let datas = {
+      doctorId: this.tableData.doctorId,
+    };
+
+    Admin.findDoc(datas)
+      .then((res) => {
+        console.log("test_findDoc" + this.tableData.doctorId);
+        if (res.data.code === 1) {
           this.alldoctordetails.doc1 = res.data.info.identityFront;
-          // alert("test? " + JSON.stringify(this.alldoctordetails.doc1));
+          this.alldoctordetails.doc2 = res.data.info.identityBack;
+          this.alldoctordetails.doc3 = res.data.info.certification;
+          this.alldoctordetails.doc4 = res.data.info.workCertificate;
         } else {
           alert(res.data.info);
         }
@@ -260,7 +293,6 @@ export default {
             if (res.data.info[i].doctorId == this.tableData.doctorId) {
               console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
               this.availableTime = res.data.info[i];
-              // alert("test-2-time " + JSON.stringify(this.availableTime));
               break;
             }
           }
@@ -316,27 +348,6 @@ export default {
                 this.availableDate.Sun = "";
               }
               break;
-            }
-          }
-        } else {
-          alert(res.data.info);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    Common.getAllDoctor(this.tableData.doctorId)
-      .then((res) => {
-        if (res.data.code === 1) {
-          // alert(res.data.info.length);
-          for (let i = 0; i < res.data.info.length; i++) {
-            if (res.data.info[i]._id == this.tableData.doctorId) {
-              console.log("11111: " + JSON.stringify(res.data.info[i]));
-              this.alldoctordetails = res.data.info[i];
-              this.basicInfo = res.data.info[i].userInfo[0];
-              break;
-              // console.log("11111: " + JSON.stringify(res.data.info[0].name));
             }
           }
         } else {

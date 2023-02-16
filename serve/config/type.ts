@@ -57,7 +57,7 @@ type inqueryType = {
 
 interface updateinqueryType extends inqueryType { inqueryId: string }
 
-interface findDocType extends applyToBeDoctorType { doctorId: string }
+type findDocType = { doctorId: string, identityFront: string, identityBack: string, certification: string, workCertificate: string }
 
 export {
   loginDataType, sendCheckDataType, checkCodeDataType, checkCodeType, resetPassDatType,
@@ -65,5 +65,5 @@ export {
   availableTimeType, changeDoctorStatusType, adminApprovalDoctorCancelStatusType, resetDoctorInfoType,
   getOneDoctorType, personAskDoctorType, doctorWirteVisitRecordType, createDistributionType,
   updataDistributionType, judgeDoctorIsFreeType, pushInfoModelType, pushInfoType,
-  updatePushInfoType, inqueryType, updateinqueryType,findDocType
+  updatePushInfoType, inqueryType, updateinqueryType, findDocType
 }
