@@ -111,6 +111,7 @@
       <label for="identityFront">Please upload the front side of your ID card:</label>
       <input
         type="file"
+        accept=".pdf"
         @change="test($event, 'identityFront')"
         id="identityFront"
         name="identityFront"
@@ -119,6 +120,7 @@
       <label for="identityBack">Please upload the back side of your ID card:</label>
       <input
         type="file"
+        accept=".pdf"
         @change="test($event, 'identityBack')"
         id="identityBack"
         name="identityBack"
@@ -127,6 +129,7 @@
       <label for="certification">Please upload the your certification:</label>
       <input
         type="file"
+        accept=".pdf"
         @change="test($event, 'certification')"
         id="certification"
         name="certification"
@@ -135,6 +138,7 @@
       <label for="workCertificate">Please upload your working certificate:</label>
       <input
         type="file"
+        accept=".pdf"
         @change="test($event, 'workCertificate')"
         id="workCertificate"
         name="workCertificate"
@@ -251,9 +255,13 @@ export default {
     //   alert("弹窗");
     //   window.localStorage.setItem("storge", "true");
     // }
-    this.$alert('<strong>当你填写资格申请表格时，即代表你已经了解该平台的隐私条款政策并自愿成为该平台的用户。如需要请参考 <a href="http://localhost:8080/policy" target="_blank">隐私条款</a></strong>', "提醒", {
-      dangerouslyUseHTMLString: true
-    });
+    this.$alert(
+      '<strong>当你填写资格申请表格时，即代表你已经了解该平台的隐私条款政策并自愿成为该平台的用户。如需要请参考 <a href="http://localhost:8080/policy" target="_blank">隐私条款</a></strong>',
+      "提醒",
+      {
+        dangerouslyUseHTMLString: true,
+      }
+    );
   },
 };
 </script>
