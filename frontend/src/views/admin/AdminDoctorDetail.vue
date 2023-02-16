@@ -163,7 +163,9 @@
           </template>
           <div class="my-content">
             {{ alldoctordetails.doc1 }}
-            <a href="serve\public\img\1675919436224.doc"> testing</a>
+            <!-- <a href="serve\public\img\1675919436224.doc"> testing</a>readFile -->
+            <el-button @click="readFile">readFile</el-button>
+            <!-- <input type="file" onchange="upload(this)" /> -->
           </div>
         </el-descriptions-item>
       </el-descriptions>
@@ -180,6 +182,7 @@ import Admin from "@/service/admin.service.js";
 export default {
   data() {
     return {
+      filePath: "serve/public/img/1675919436224.doc",
       CS: {
         "text-align": "left", //文本居中
         "min-width": "40px", //最小宽度
@@ -209,6 +212,24 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    readFile(filePath) {
+      alert(filePath);
+      // 创建一个新的xhr对象
+      let xhr = null;
+      if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+      } else {
+        // eslint-disable-next-line
+        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      const okStatus = document.location.protocol === "file" ? 0 : 200;
+      xhr.open("GET", filePath, false);
+      xhr.overrideMimeType("text/html;charset=utf-8");
+      xhr.send(null);
+      return xhr.status === okStatus ? xhr.responseText : null;
+    },
   },
   mounted() {
     console.log(this.$route.params.id);
