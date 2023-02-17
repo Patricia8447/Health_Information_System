@@ -70,7 +70,7 @@ export default {
       json: JSON.parse(localStorage.getItem("user")),
       form: {
         name: "",
-        gender:"",
+        gender: "",
         email: "",
         status: "",
         phone: "",

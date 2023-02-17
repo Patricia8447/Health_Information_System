@@ -22,78 +22,10 @@ export default {
         {
           questions: [
             {
-              type: "html",
-              name: "consultDate",
-              html:
-                '<h3>Consultation Date</h3><input type="date" id="consultDate" name="consultDate">',
-            },
-
-            {
-              name: "name",
-              type: "text",
-              title: "Patient Name",
-              placeHolder: "please enter the patient name",
-              isRequired: true,
-              autoComplete: "patientname",
-            },
-            {
-              name: "age",
-              type: "text",
-              title: "Patient Age",
-              placeHolder: "please enter the patient name",
-              isRequired: true,
-              autoComplete: "patientage",
-            },
-            {
-              type: "dropdown",
-              name: "gender",
-              title: "Patient Gender",
-              isRequired: true,
-              placeHolder: "please choose the patient gender",
-              colCount: 0,
-              choices: ["female", "male"],
-            },
-          ],
-        },
-        {
-          questions: [
-            {
-              name: "doctorName",
-              type: "text",
-              title: "Doctor's Name",
-              placeHolder: "please enter your name",
-              isRequired: true,
-              autoComplete: "doctorName",
-            },
-            {
-              type: "dropdown",
-              name: "departmentId",
-              title: "Department",
-              isRequired: false,
-              placeHolder: "please choose the department",
-              colCount: 0,
-              choices: [
-                "Internal medicine",
-                "surgical",
-                "ent",
-                "Department of gynaecology",
-                "gastroenterology",
-                "other",
-              ],
-            },
-            // {
-            //   name: "consultdate",
-            //   type: "text",
-            //   title: "Consultation Date",
-            //   placeHolder: "please enter the consultation date",
-            //   isRequired: true,
-            //   autoComplete: "consultdate",
-            // },
-            {
               name: "symptoms",
               type: "comment",
               title: "Symptoms",
-              placeHolder: "please enter described the symptoms",
+              placeHolder: "please enter the described symptoms",
               isRequired: true,
               autoComplete: "symptoms",
             },
@@ -101,7 +33,7 @@ export default {
               name: "drugsage",
               type: "comment",
               title: "Drug Usage",
-              placeHolder: "please list out the drug to be used",
+              placeHolder: "please list out the drug(s) to be used",
               isRequired: true,
               autoComplete: "drugsage",
             },
@@ -109,16 +41,16 @@ export default {
               name: "remark",
               type: "comment",
               title: "Remark",
-              placeHolder: "please tell patient how yo use the drug clearly",
+              placeHolder: "please tell the patient how to use the drug(s) clearly",
               isRequired: true,
               autoComplete: "remark",
             },
-            // {
-            //   type: "signaturepad",
-            //   name: "signature",
-            //   title: "Please sign here",
-            //   isRequired: true,
-            // },
+            {
+              type: "signaturepad",
+              name: "signature",
+              title: "Please sign here",
+              isRequired: true,
+            },
           ],
         },
       ],
@@ -127,7 +59,7 @@ export default {
     const model = new Model(json);
     model.showPreviewBeforeComplete = "showAnsweredQuestions";
     model.onComplete.add(this.alertResults);
-    model.completedHtml = "consulatation recors uploaded successfully!";
+    model.completedHtml = "consulatation record has uploaded successfully!";
 
     return {
       survey: model,
@@ -135,10 +67,10 @@ export default {
   },
   methods: {
     async alertResults(sender) {
-      console.log("发送医生填写就诊记录接口");
       console.log(JSON.stringify(sender.data));
-      let data = sender.data
-      data.inquiryId = this.$route.params.id
+      let data = sender.data;
+      data.inquiryId = this.$route.params.id;
+
       Service.doctorWirteVisitRecord(data)
         .then((res) => {
           console.log(res.data);

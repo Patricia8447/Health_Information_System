@@ -442,7 +442,7 @@ function getInquiryList({ doctorId }: Record<string, string>, res: Response) {
 function doctorWirteVisitRecord(data: doctorWirteVisitRecordType, res: Response) {
   let { inquiryId } = data
   VisitRecordModel.findOne({ inquiryId: inquiryId }, {}).then((num: any) => {
-    if (!num) { throw new Error('Please do not fill in the medical records repeatedly') }
+    // if (num != null) { throw new Error('Please do not fill in the medical records repeatedly') }
     let promises = [
       new VisitRecordModel(data).save(),
       InquiryModel.updateOne({ _id: inquiryId }, { status: APPOINTMENT.End })
@@ -450,7 +450,9 @@ function doctorWirteVisitRecord(data: doctorWirteVisitRecordType, res: Response)
     return Promise.all(promises)
   }).then((result: any) => {
     res.send(responseInfo.success('Save successfully'))
-  }).catch((err: Error) => res.send(responseInfo.updataException(err)))
+  }).catch((err: Error) =>
+    // console.log(err))
+  res.send(responseInfo.updataException(err)))
 }
 
 /**

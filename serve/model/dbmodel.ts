@@ -104,6 +104,7 @@ const VisitRecordSchema = new Schema({
   drugsage: { type:Array<string>, default: [] },                                // 开了什么药
   remark: { type:String, default: '' },                                         // 备注
   time: { type:Date, default: new Date() },                                     // 就诊记录创建日期
+  signature: {type: String, require: true, default:''}
 })
 
 // 送药表
