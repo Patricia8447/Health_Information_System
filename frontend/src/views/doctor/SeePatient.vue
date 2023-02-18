@@ -60,7 +60,7 @@
           <el-input v-model="search" size="mini" placeholder="search your patient..." />
         </template>
         <template slot-scope="scope" class="btns">
-          <el-button type="success" plain size="mini" @click="open">Start</el-button>
+          <el-button type="success" plain @click="open">Start</el-button>
 
           <!-- 问诊结束之后才能click以下按钮 -->
           <el-button type="success" plain class="button" @click="goRoute(scope.$index)">
@@ -163,9 +163,6 @@ export default {
     },
   },
   mounted() {
-    console.log("发送获取对应的患者列表接口");
-    // TODO 获取对应的患者列表接口
-    // console.log(JSON.parse(localStorage.getItem("user")).id);
     let datas1 = {
       userId: JSON.parse(localStorage.getItem("user")).id,
     };
@@ -184,9 +181,9 @@ export default {
           Service.getInquiryList(datas2)
             .then((res) => {
               if (res.data.code === 1) {
-                console.log(res.data);
+                // alert(JSON.stringify(res.data.info));
                 this.tableData = res.data.info;
-                console.log(this.tableData);
+                // console.log(JSON.stringify(this.tableData));
               } else {
                 alert(res.data.info);
               }

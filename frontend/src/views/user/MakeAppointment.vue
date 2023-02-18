@@ -22,15 +22,15 @@
           v-model.trim="ruleForm.appointmentTime"
           placeholder="please choose the time"
         >
-          <!-- <el-option label="8" value="8"></el-option>
-          <el-option label="9" value="9"></el-option> -->
-          <el-option
+          <el-option label="8" value="8"></el-option>
+          <el-option label="9" value="9"></el-option>
+          <!-- <el-option
             v-for="item in availableTime"
             :key="item.appointmentTime"
             :label="item.appointmentTime"
             :value="item.appointmentTime"
           >
-          </el-option>
+          </el-option> -->
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -91,7 +91,8 @@ export default {
     this.ruleForm.doctorId = this.$route.params.id;
 
     //拿到该医生的出诊时间
-    doctorService.getTimeList()
+    doctorService
+      .getTimeList()
       .then((res) => {
         //  alert("test-1-time " + JSON.stringify(res.data));
         if (res.data.code === 1) {

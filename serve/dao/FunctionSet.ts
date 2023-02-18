@@ -251,7 +251,7 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
     else if (result && result.status === AUDITSTATUS.Approved) throw new Error('already qualified')     // 如果有数据，并且状态为申请成功，则直接抛出已成为医生的异常
     return new DoctorModel(doctorData).save()           // 如果没有数据，则直接保存新的医生申请
   }).then((result: any) => {   // 保存成功之后获取对应的doctorId
-    let doctorPictureData = { doctorId: result._id, identityFront, identityBack, certification, workCertificate,photo }
+    let doctorPictureData = { doctorId: result._id, identityFront, identityBack, certification, workCertificate, photo }
     let doctorAvailableWeekData: Record<string, boolean | string> = ObjectSimpleShallowCopy(availableWeek as Record<string, boolean>)
     doctorAvailableWeekData.doctorId = result._id
     let promises: Array<Promise<mongoDocument<unknown, any, any>>> = [
@@ -414,9 +414,11 @@ function judgeDoctorIsFree({ doctorId, date, time }: judgeDoctorIsFreeType, res:
  * @param { Response } res 响应
  */
 function getInquiryList({ doctorId }: Record<string, string>, res: Response) {
+  console.log(doctorId);
   InquiryModel.find({ doctorId: doctorId }).then((result: Array<any>) => {
     // DoctorModel.find({ doctorId: doctorId }).then((result: Array<any>) => {
     if (!result) { throw new Error() }
+    console.log(result);
     res.send(responseInfo.success(result))
   }).catch((err: Error) => res.send(responseInfo.getException(err)))
 
@@ -451,7 +453,7 @@ function doctorWirteVisitRecord(data: doctorWirteVisitRecordType, res: Response)
     res.send(responseInfo.success('Save successfully'))
   }).catch((err: Error) =>
     // console.log(err))
-  res.send(responseInfo.updataException(err)))
+    res.send(responseInfo.updataException(err)))
 }
 
 /**
@@ -460,9 +462,20 @@ function doctorWirteVisitRecord(data: doctorWirteVisitRecordType, res: Response)
  * @param { Response } res 响应
  */
 function getVisitRecordList(data: Record<string, string>, res: Response) {
+  console.log(data);
   InquiryModel.find(data).then((result: Array<any>) => {
     res.send(responseInfo.success(result))
   }).catch((err: Error) => res.send(responseInfo.getException(err)))
+}
+
+function getVisitRecordList2({ inquiryId, doctorId }: doctorWirteVisitRecordType, res: Response) {
+  console.log(inquiryId);
+  console.log(doctorId);
+  VisitRecordModel.findOne({ inquiryId: inquiryId }).then((result: any) =>{
+    // VisitRecordModel.find(data).then((result: Array<any>) => {
+    console.log(result);
+  res.send(responseInfo.success(result))
+}).catch ((err: Error) => res.send(responseInfo.getException(err)))
 }
 
 /**
@@ -606,7 +619,7 @@ let FunctionSet = {
   getAllDepartment, applyToBeDoctor, adminApprovalDoctorStatus, doctorCancelToBeDoctor,
   adminApprovalDoctorCancelStatus, adminRejectDoctorStatus, getAllDoctor, resaveDoctorInfo, getOneDoctor, personAskDoctor, getInquiryList,
   doctorWirteVisitRecord, getVisitRecordList, createDistribution, updataDistribution,
-  judgeDoctorIsFree, getPushInfoList, addPushInfo, updataPushInfo, deletePushInfo, getUserInfo, getTimeList, getDateList, findDoc
+  judgeDoctorIsFree, getPushInfoList, addPushInfo, updataPushInfo, deletePushInfo, getUserInfo, getTimeList, getDateList, findDoc, getVisitRecordList2
 }
 
 export default FunctionSet

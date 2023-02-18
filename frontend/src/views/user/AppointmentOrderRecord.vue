@@ -16,6 +16,12 @@
       >
       </el-table-column>
       <el-table-column
+        label="Inquiry ID"
+        prop="_id"
+        :width="flexColumnWidth('Inquiry ID', '_id')"
+      >
+      </el-table-column>
+      <el-table-column
         label="Allergy Medicine"
         prop="allergyMedicine"
         :width="flexColumnWidth('Allergy Medicine', 'allergyMedicine')"
@@ -60,7 +66,7 @@
             Edit Appointment
           </el-button>
           <!-- <el-button size="mini" @click="open">Start</el-button> -->
-          <el-button size="small">
+          <el-button>
             <a
               :href="alldoctordetails.zoomlink"
               target="_blank"
@@ -73,9 +79,9 @@
           <el-button type="success" plain class="button" @click="goRoute(scope.$index)">
             Deliver Medicine
           </el-button>
-          <el-button size="mini"
-            ><router-link to="/appointmentdetail">View Detail</router-link></el-button
-          >
+          <el-button type="success" plain class="button" @click="goRoute3(scope.$index)">
+            View Detail
+          </el-button>
           <!-- 该按钮在审核完成后才能进行点击，在此之前应该是unclickable的状态 -->
         </template>
       </el-table-column>
@@ -129,7 +135,15 @@ export default {
       this.$router.push({
         name: "UpdateAppointmentTest",
         params: { id: data[e]._id },
-      }); 
+      });
+    },
+    goRoute3(e) {
+      let data = this.tableData;
+      console.log(data[e]._id);
+      this.$router.push({
+        name: "AppointmentDetail",
+        params: { id: data[e]._id },
+      });
     },
     logisticDescData(row) {
       return row.appointmentDate.split("T")[0];

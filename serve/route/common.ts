@@ -19,6 +19,10 @@ commonRouter.post('/record/list', (req:Request, res:Response) => {
   commonServe.getVisitRecordList(req, res)
 })
 
+commonRouter.post('/record2/list', (req:Request, res:Response) => {
+  commonServe.getVisitRecordList2(req, res)
+})
+
 commonRouter.post('/doctor/judge', (req:Request, res:Response) => {
   commonServe.judgeDoctorIsFree(req, res)
 })

@@ -26,6 +26,10 @@ export default {
     return request.post('/common/record/list', data)
   },
 
+  getVisitRecordList2: (data) => {
+    return request.post('/common/record2/list', data)
+  },
+
   getPushInfoList: (data) => {
     return request.post('/common/info/list', data)
   },

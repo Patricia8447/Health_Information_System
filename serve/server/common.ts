@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { ObjectSimpleShallowCopy } from '../config/default';
-import { createDistributionType, judgeDoctorIsFreeType, personAskDoctorType, updataDistributionType } from '../config/type';
+import { createDistributionType, judgeDoctorIsFreeType, personAskDoctorType, updataDistributionType, doctorWirteVisitRecordType } from '../config/type';
 import FunctionSet from "../dao/FunctionSet";
 
 function getAllDepartment(req:Request, res:Response){
@@ -23,6 +23,13 @@ function getVisitRecordList(req:Request, res:Response){
   data.userId = data.id
   delete data.id
   FunctionSet.getVisitRecordList(data, res)
+}
+
+function getVisitRecordList2(req:Request, res:Response){
+  let data: Record<string, string | Array<string>> = ObjectSimpleShallowCopy(req.body)
+  data.doctorId = data.id
+  delete data.id
+  FunctionSet.getVisitRecordList2(data as doctorWirteVisitRecordType, res)
 }
 
 function createDistribution(req:Request, res:Response){
@@ -48,7 +55,7 @@ function getPushInfoList(req:Request, res:Response){
 
 let commonServe = {
   getAllDepartment, getAllDoctor, askDoctor, getVisitRecordList, 
-  createDistribution, updataDistribution,judgeDoctorIsFree, getPushInfoList
+  createDistribution, updataDistribution,judgeDoctorIsFree, getPushInfoList, getVisitRecordList2
 }
 
 export default commonServe
