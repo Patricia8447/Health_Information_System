@@ -163,6 +163,14 @@
           </template>
           <div class="my-content">
             <a
+              :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc5}`"
+              target="_blank"
+            >
+              Photo</a
+            >
+          </div>
+          <div class="my-content">
+            <a
               :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc1}`"
               target="_blank"
             >
@@ -238,6 +246,7 @@ export default {
           doc2: "",
           doc3: "",
           doc4: "",
+          doc5: "",
         },
       ],
     };
@@ -276,6 +285,7 @@ export default {
           this.alldoctordetails.doc2 = res.data.info.identityBack;
           this.alldoctordetails.doc3 = res.data.info.certification;
           this.alldoctordetails.doc4 = res.data.info.workCertificate;
+          this.alldoctordetails.doc5 = res.data.info.photo;
         } else {
           alert(res.data.info);
         }

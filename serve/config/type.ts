@@ -8,9 +8,9 @@ type checkCodeDataType = { [key: string]: checkCodeType }
 
 type resetPassDatType = { id: string, email: string, pass: string, againPass: string, code: string }
 
-type resetUserInfoType = { id: string, name: string, phone: string, address: string, allergy: string, birth: Date, gender: string }
+type resetUserInfoType = { id: string, name: string, phone: string, address: string, allergy: string, birth: Date, gender: string, photo: string }
 
-type resetDoctorInfoType = { id: string, phone: string, identity: string, hospitalName: string, name: string, hospitalLevel: string, hospitalAddress: string, job: string, strength: string, selfIntro: string, departmentId: string, gender: string }
+type resetDoctorInfoType = { id: string, photo: string, identity: string, hospitalName: string, name: string, hospitalLevel: string, hospitalAddress: string, job: string, strength: string, selfIntro: string, departmentId: string, gender: string }
 
 type updateDepartmentNameType = { id: string, name: string, departId: string }
 
@@ -21,7 +21,7 @@ type applyToBeDoctorType = {
   hospitalName: string, hospitalLevel: string, hospitalAddress: string,
   departmentId: string, job: string, strength: string, selfIntro: string,
   availabletime: Array<string>, availableWeek: availableWeekType, identityFront: string,
-  identityBack: string, certification: string, workCertificate: string,
+  identityBack: string, certification: string, workCertificate: string, photo: string
 }
 
 type availableTimeType = { doctorId: string, startTime: string, endTime: string }

@@ -179,8 +179,8 @@ function resaveUserInfo({ id, phone, address, allergy, name, birth, gender }: re
  * @param { resetDoctorInfo } data 请求数据
  * @param { Response } res 响应
  */
-function resaveDoctorInfo({ id, phone, identity, hospitalName, name, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId, gender }: resetDoctorInfoType, res: Response) {
-  let updateObject = { phone, identity, hospitalName, name, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId, gender }
+function resaveDoctorInfo({ id, photo, identity, hospitalName, name, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId, gender }: resetDoctorInfoType, res: Response) {
+  let updateObject = { photo, identity, hospitalName, name, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId, gender }
   UserModel.updateOne({ _id: id }, updateObject)
     .then(() => { res.send(responseInfo.success('modify successfully')) })
     .catch(() => { res.send(responseInfo.updataException('modify failed')) })
@@ -234,7 +234,7 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
   let {
     doctorName, id, identity, hospitalName, hospitalLevel, hospitalAddress,
     departmentId, job, strength, selfIntro, availabletime, availableWeek,
-    identityFront, identityBack, certification, workCertificate
+    identityFront, identityBack, certification, workCertificate, photo, gender, zoomlink
   }: applyToBeDoctorType = applyToBeDoctorData
   let arr = [undefined, '', null]
   for (let v in applyToBeDoctorData) {
@@ -243,7 +243,7 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
       return;
     }
   }
-  let doctorData = { name: doctorName, userId: id, identity, hospitalName, hospitalLevel, hospitalAddress, departmentId, job, strength, selfIntro }
+  let doctorData = { name: doctorName, userId: id, identity, hospitalName, hospitalLevel, hospitalAddress, departmentId, job, strength, selfIntro, gender, zoomlink }
   DoctorModel.findOne({ userId: id }).then((result: any) => {
     let tmpAry = [AUDITSTATUS.NoPass, AUDITSTATUS.Canceled]
     if (result && tmpAry.includes(result.status)) DoctorModel.deleteMany({ userId: id })         // 删除之前申请失败的数据，可以直接异步删除
@@ -251,7 +251,7 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
     else if (result && result.status === AUDITSTATUS.Approved) throw new Error('already qualified')     // 如果有数据，并且状态为申请成功，则直接抛出已成为医生的异常
     return new DoctorModel(doctorData).save()           // 如果没有数据，则直接保存新的医生申请
   }).then((result: any) => {   // 保存成功之后获取对应的doctorId
-    let doctorPictureData = { doctorId: result._id, identityFront, identityBack, certification, workCertificate }
+    let doctorPictureData = { doctorId: result._id, identityFront, identityBack, certification, workCertificate,photo }
     let doctorAvailableWeekData: Record<string, boolean | string> = ObjectSimpleShallowCopy(availableWeek as Record<string, boolean>)
     doctorAvailableWeekData.doctorId = result._id
     let promises: Array<Promise<mongoDocument<unknown, any, any>>> = [
@@ -266,7 +266,6 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
     res.send(responseInfo.success('The application is successful, please wait for the administrator further review'))
   }).catch((error: Error) => {
     res.send(responseInfo.applyException(error))
-    // res.send(error);
   })
 }
 

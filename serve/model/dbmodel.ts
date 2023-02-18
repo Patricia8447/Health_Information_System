@@ -41,12 +41,13 @@ const DoctorSchema = new Schema({
   hospitalName: { type: String, default: '' },                                    // 医院名称
   hospitalLevel: { type: String, default: '' },                                   // 医院等级
   hospitalAddress: { type: String, default: '' },                                 // 医院地址
-  zoomlink: { type: String, default: '' }, 
+  zoomlink: { type: String, default: '' },
   departmentId: { type: String },                                                // 科室ID
   job: { type: String, default: '' },                                             // 具体岗位
   strength: { type: String, default: '' },                                        // 优势长项
   selfIntro: { type: String, default: '' },                                       // 自我介绍
   status: { type: String, enum: AUDITSTATUS, default: AUDITSTATUS.Reviewing },    // 审核状态
+  gender: { type: String, default:'netural'},
 })
 
 // 医生空闲时间表
@@ -75,49 +76,50 @@ const DoctorPictureSchema = new Schema({
   identityBack: { type: String, default: null },                                 // 身份证反面照
   certification: { type: String, default: null },                                // 资质证书
   workCertificate: { type: String, default: null },                              // 工作证明
+  photo: { type: String, default: null },
 })
 
 // 问诊表
 const InquirySchema = new Schema({
-  userId: { type:String, require: true },                                       // 用户ID
-  doctorId: { type:String, require: true },                                     // 医生标识ID
-  selfReport: { type:String, require: true },                                   // 病情自述
-  allergyMedicine: { type:Array<string>, default: [] },                         // 过敏药物
-  appointmentTime: { type:String, require: true },                              // 预约时间
-  appointmentDate: { type:Date, require: true },                                // 预约日期
-  status: { type:String, default:APPOINTMENT.Not },           // 问诊预约状态
-  time: { type:Date, default: new Date() },                                     // 问诊创建日期
+  userId: { type: String, require: true },                                       // 用户ID
+  doctorId: { type: String, require: true },                                     // 医生标识ID
+  selfReport: { type: String, require: true },                                   // 病情自述
+  allergyMedicine: { type: Array<string>, default: [] },                         // 过敏药物
+  appointmentTime: { type: String, require: true },                              // 预约时间
+  appointmentDate: { type: Date, require: true },                                // 预约日期
+  status: { type: String, default: APPOINTMENT.Not },           // 问诊预约状态
+  time: { type: Date, default: new Date() },                                     // 问诊创建日期
 })
 
 // 就诊记录表
 const VisitRecordSchema = new Schema({
-  inquiryId: { type:String, require: true },                                    // 问诊记录ID
-  userId: { type:String, require: true },                                       // 用户ID
-  doctorId: { type:String, require: true },                                     // 医生标识ID
-  name: { type:String, require: true },                                         // 患者名称
-  age: { type:Number, require: true },                                          // 患者年纪
-  gender: { type:String, enum:GENDER, require: true },                          // 性别
-  consultDate: { type:Date, default: Date.now() },                              // 会诊日期
-  departmentId: { type:String },                                                // 医生所在部门
-  doctorName: { type:String, require: true },                                   // 医生名称
-  symptoms: { type:String, default: '' },                                       // 症状描述
-  drugsage: { type:Array<string>, default: [] },                                // 开了什么药
-  remark: { type:String, default: '' },                                         // 备注
-  time: { type:Date, default: new Date() },                                     // 就诊记录创建日期
-  signature: {type: String, require: true, default:''}
+  inquiryId: { type: String, require: true },                                    // 问诊记录ID
+  userId: { type: String, require: true },                                       // 用户ID
+  doctorId: { type: String, require: true },                                     // 医生标识ID
+  name: { type: String, require: true },                                         // 患者名称
+  age: { type: Number, require: true },                                          // 患者年纪
+  gender: { type: String, enum: GENDER, require: true },                          // 性别
+  consultDate: { type: Date, default: Date.now() },                              // 会诊日期
+  departmentId: { type: String },                                                // 医生所在部门
+  doctorName: { type: String, require: true },                                   // 医生名称
+  symptoms: { type: String, default: '' },                                       // 症状描述
+  drugsage: { type: Array<string>, default: [] },                                // 开了什么药
+  remark: { type: String, default: '' },                                         // 备注
+  time: { type: Date, default: new Date() },                                     // 就诊记录创建日期
+  signature: { type: String, require: true, default: '' }
 })
 
 // 送药表
 const DrugDeliverySchema = new Schema({
-  userId: { type:String, require: true },                                       // 用户ID
-  name: { type:String, require: true },                                         // 收件人名字
-  phone: { type:String, require: true },                                        // 收件人电话
-  period: { type:String, require: true },                                         // 送件时间
-  quantities: { type:Number, default: 1 },                                      // 药品数量
-  subject: { type:String, require: true },                                      // 药品名称
-  status: { type:String, enum: DELIVERY, default: DELIVERY.Undelivered },       // 配送状态
-  other: { type:String, default: '' },                                          // 备注
-  time: { type:Date, default: new Date() },                                     // 创建时间
+  userId: { type: String, require: true },                                       // 用户ID
+  name: { type: String, require: true },                                         // 收件人名字
+  phone: { type: String, require: true },                                        // 收件人电话
+  period: { type: String, require: true },                                         // 送件时间
+  quantities: { type: Number, default: 1 },                                      // 药品数量
+  subject: { type: String, require: true },                                      // 药品名称
+  status: { type: String, enum: DELIVERY, default: DELIVERY.Undelivered },       // 配送状态
+  other: { type: String, default: '' },                                          // 备注
+  time: { type: Date, default: new Date() },                                     // 创建时间
 })
 
 // 推送信息
@@ -141,7 +143,7 @@ let PushInformationModel = db.model('PushInformation', PushInformationSchema)
 
 export {
   UserModel, DepartmentModel, TokenModel, DoctorModel,
-  DoctorAvailableTimeModel, DoctorAvailableWeekModel, DoctorPictureModel, 
-  InquiryModel, VisitRecordModel, 
+  DoctorAvailableTimeModel, DoctorAvailableWeekModel, DoctorPictureModel,
+  InquiryModel, VisitRecordModel,
   DrugDeliveryModel, PushInformationModel
 }

@@ -8,9 +8,6 @@
       label-width="150px"
       class="ruleForm"
     >
-      <!-- <el-form-item label="User ID" prop="id">
-        <el-input v-model.trim="ruleForm.id" ></el-input>
-      </el-form-item> -->
       <el-form-item label="Doctor Name" prop="doctorName">
         <el-input v-model.trim="ruleForm.doctorName"></el-input>
       </el-form-item>
@@ -66,17 +63,7 @@
         </el-select>
       </el-form-item>
 
-      <!-- <el-form-item label="Available Week" prop="availableWeek">
-        <el-date-picker
-          type="date"
-          placeholder="choose your available date"
-          v-model="ruleForm.availableWeek"
-          style="width: 100%"
-        ></el-date-picker>
-      </el-form-item> -->
-
       <el-form-item label="Available Week">
-        <!-- <el-checkbox-group > -->
         <el-checkbox label="Monday" v-model="ruleForm.availableWeek.Mon"></el-checkbox>
         <el-checkbox label="Tuesday" v-model="ruleForm.availableWeek.Tues"></el-checkbox>
         <el-checkbox label="Wednesday" v-model="ruleForm.availableWeek.Wed"></el-checkbox>
@@ -87,7 +74,6 @@
         <el-checkbox label="Friday" v-model="ruleForm.availableWeek.Fri"></el-checkbox>
         <el-checkbox label="Saturday" v-model="ruleForm.availableWeek.Sat"></el-checkbox>
         <el-checkbox label="Sunday" v-model="ruleForm.availableWeek.Sun"></el-checkbox>
-        <!-- </el-checkbox-group> -->
       </el-form-item>
 
       <el-form-item label="Available Time" prop="availabletime">
@@ -143,6 +129,14 @@
         id="workCertificate"
         name="workCertificate"
       /><br /><br />
+
+      <label for="photo">Please upload your photo:</label>
+      <input
+        type="file"
+        @change="test($event, 'photo')"
+        id="photo"
+        name="photo"
+      /><br /><br />
       <el-form-item>
         <el-button type="submit" @click="submitForm()">Submit</el-button>
         <el-button type="success" plain @click="resetForm('ruleForm')">Reset</el-button>
@@ -191,21 +185,12 @@ export default {
         identityBack: "",
         certification: "",
         workCertificate: "",
+        photo: "",
       },
       rules: {},
     };
   },
   methods: {
-    // submitForm(formName) {
-    //   this.$refs[formName].validate((valid) => {
-    //     if (valid) {
-    //       alert("submit!");
-    //     } else {
-    //       console.log("error submit!!");
-    //       return false;
-    //     }
-    //   });
-    // },
     submitForm() {
       console.log("发送成为医生接口");
       console.log(JSON.stringify(this.ruleForm));
@@ -213,7 +198,6 @@ export default {
         .then((res) => {
           console.log(res.data);
           if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
             // localStorage.setItem("doctor", JSON.stringify(res.data.info));
             alert("Submitted successfully, waiting for administrator review");
             localStorage.setItem("doctor", JSON.stringify(res.data.info));
@@ -239,9 +223,6 @@ export default {
         this.ruleForm[type] = res.data.info;
         console.log(this.ruleForm[type], type);
       });
-
-      // console.log(JSON.stringify(formData));
-      // console.log(e.target.files[0].name);
     },
   },
   mounted() {

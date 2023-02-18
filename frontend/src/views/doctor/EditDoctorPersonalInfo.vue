@@ -3,7 +3,7 @@
     <!-- <el-form-item label="personal photo">
       <el-upload
         class="avatar-uploader"
-        action="uploadUrl()"
+        action="/img/upload"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
@@ -14,15 +14,6 @@
     </el-form-item> -->
     <el-form-item label="Name">
       <el-input v-model.trim="json.name" disabled></el-input>
-    </el-form-item>
-    <el-form-item label="Gender" prop="gender">
-      <el-select v-model.trim="json.gender" placeholder="please choose the gender">
-        <el-option label="male" value="male"></el-option>
-        <el-option label="female" value="female"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="Phone">
-      <el-input v-model.trim="json.phone"></el-input>
     </el-form-item>
     <el-form-item label="Email">
       <el-input type="email" v-model.trim="json.email" disabled></el-input>
@@ -48,6 +39,16 @@
     <el-form-item label="Self Introduction">
       <el-input v-model.trim="json.selfIntro"></el-input>
     </el-form-item>
+    <!-- <el-form-item label="photo">
+      <label>Please upload the your photo:</label>
+      <input
+        type="file"
+        accept=".jpg"
+        @change="test($event, 'photo')"
+        id="photo"
+        name="photo"
+      />
+    </el-form-item> -->
     <el-form-item>
       <el-button type="submit" @click="onSubmit()">UPDATE</el-button>
       <el-button type="danger" plain @click="handleup()">CANCEL</el-button>
@@ -61,6 +62,7 @@ import "survey-vue/modern.min.css";
 import { Survey, StylesManager, Model } from "survey-vue";
 import Service from "@/service/user.service.js";
 import { ref } from "vue";
+import Service2 from "@/service/upload.service.js";
 
 let json = ref({});
 export default {
@@ -82,22 +84,19 @@ export default {
         job: "",
         strength: "",
         selfIntro: "",
+        photo: "",
       },
     };
   },
   methods: {
     async onSubmit() {
       console.log("发送修改doctor个人信息接口");
-      // TODO 修改用户个人信息接口
       console.log(this.json);
       Service.resaveDoctorInfo(this.json)
         .then((res) => {
           console.log("test" + res.data);
           console.log("test1" + JSON.stringify(this.json));
-          // alert(res.data);
-          // alert(this.json);
           if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
             alert(res.data.info);
             localStorage.setItem("user", JSON.stringify(this.json));
             location.assign("/dpersonalcenter");
@@ -127,8 +126,15 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    uploadUrl() {
-      return "";
+    test(e, type) {
+      console.log(e, type, 123);
+      let formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      Service2.uploadImg(formData, { files: e.target.files }).then((res) => {
+        console.log(res, "res");
+        this.ruleForm[type] = res.data.info;
+        console.log(this.ruleForm[type], type);
+      });
     },
   },
 };
