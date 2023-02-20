@@ -2,7 +2,7 @@
   <div class="container">
     <div class="container">
       <el-descriptions
-        title="testing view detail page"
+        title="view result page"
         direction="vertical"
         :column="1"
         border
@@ -14,7 +14,7 @@
           >
         </template>
 
-        <el-descriptions-item>
+        <!-- <el-descriptions-item>
           <template slot="label">
             <div class="my-label">
               <i class="el-icon-user"></i>
@@ -46,12 +46,12 @@
           <div class="my-content">
             {{ alldoctordetails.hospitalName }}
           </div>
-        </el-descriptions-item>
+        </el-descriptions-item> -->
         <el-descriptions-item>
           <template slot="label">
             <div class="my-label">
               <i class="el-icon-user"></i>
-              symptoms
+              Symptoms
             </div>
           </template>
           <div class="my-content">
@@ -62,11 +62,22 @@
           <template slot="label">
             <div class="my-label">
               <i class="el-icon-user"></i>
-              drugusage
+              Result
             </div>
           </template>
           <div class="my-content">
-            {{ alldoctordetails.drugusage }}
+            {{ alldoctordetails.remark }}
+          </div>
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
+            <div class="my-label">
+              <i class="el-icon-user"></i>
+              Drugsage
+            </div>
+          </template>
+          <div class="my-content">
+            {{ alldoctordetails.drugsage }}
           </div>
         </el-descriptions-item>
       </el-descriptions>
@@ -104,8 +115,9 @@ export default {
           job: "",
           strength: "",
           selfIntro: "",
-          symptoms: "", //待完成
-          drugusage: "", //待完成
+          symptoms: "",
+          drugsage: "",
+          remark: "",
           inquiryId: "",
         },
       ],
@@ -119,7 +131,7 @@ export default {
       .then((res) => {
         if (res.data.code === 1) {
           this.tableData = res.data.info; //拿到了doctor id
-          alert("test? " + JSON.stringify(res.data.info));
+          // alert("test? " + JSON.stringify(res.data.info));
         } else {
           alert(res.data.info);
         }
@@ -137,7 +149,7 @@ export default {
       .then((res) => {
         if (res.data.code === 1) {
           this.alldoctordetails = res.data.info; //拿到了doctor id
-          alert("test?2: " + JSON.stringify(res.data.info));
+          // alert("test?2: " + JSON.stringify(res.data.info));
         } else {
           alert(res.data.info);
         }

@@ -34,7 +34,7 @@ type getOneDoctorType = { id: string, phone: string, name: string, email: string
 
 type personAskDoctorType = { id: string, doctorId: string, selfReport: string, allergyMedicine: string, appointmentTime: string, appointmentDate: Date }
 
-type doctorWirteVisitRecordType = { id: string, inquiryId: string, doctorId: string, userId: string, name: string, age: string, gender: string, consultDate: string, departmentId: string, doctorName: string, symptoms: string, drugsage: Array<string>, remark: string }
+type doctorWirteVisitRecordType = { id: string, inquiryId: string, doctorId: string, userId: string, name: string, age: string, gender: string, consultDate: string, departmentId: string, doctorName: string, symptoms: string, drugsage: string, remark: string }
 
 type createDistributionType = { id: string, name: string, phone: string, period: string, quantities: string, subject: string, status: string, other: string }
 

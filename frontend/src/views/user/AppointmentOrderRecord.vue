@@ -80,7 +80,7 @@
             Deliver Medicine
           </el-button>
           <el-button type="success" plain class="button" @click="goRoute3(scope.$index)">
-            View Detail
+            View Result
           </el-button>
           <!-- 该按钮在审核完成后才能进行点击，在此之前应该是unclickable的状态 -->
         </template>

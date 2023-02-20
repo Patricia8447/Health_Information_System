@@ -103,7 +103,7 @@ const VisitRecordSchema = new Schema({
   departmentId: { type: String },                                                // 医生所在部门
   doctorName: { type: String, require: true },                                   // 医生名称
   symptoms: { type: String, default: '' },                                       // 症状描述
-  drugsage: { type: Array<string>, default: [] },                                // 开了什么药
+  drugsage: { type: String, default: '' },                                // 开了什么药
   remark: { type: String, default: '' },                                         // 备注
   time: { type: Date, default: new Date() },                                     // 就诊记录创建日期
   signature: { type: String, require: true, default: '' }

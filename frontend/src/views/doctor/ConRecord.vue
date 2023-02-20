@@ -21,6 +21,7 @@ export default {
       pages: [
         {
           questions: [
+            //症状
             {
               name: "symptoms",
               type: "comment",
@@ -29,6 +30,16 @@ export default {
               isRequired: true,
               autoComplete: "symptoms",
             },
+            //诊断结果
+            {
+              name: "remark",
+              type: "comment",
+              title: "Result",
+              placeHolder: "please tell the patient the result clearly",
+              isRequired: true,
+              autoComplete: "remark",
+            },
+            //用药情况
             {
               name: "drugsage",
               type: "comment",
@@ -37,14 +48,7 @@ export default {
               isRequired: true,
               autoComplete: "drugsage",
             },
-            {
-              name: "remark",
-              type: "comment",
-              title: "Remark",
-              placeHolder: "please tell the patient how to use the drug(s) clearly",
-              isRequired: true,
-              autoComplete: "remark",
-            },
+
             {
               type: "signaturepad",
               name: "signature",
