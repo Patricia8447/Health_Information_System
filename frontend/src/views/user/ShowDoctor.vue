@@ -12,15 +12,11 @@
       style="width: 100%"
     >
       <el-table-column label="ID" prop="_id" width="150px"></el-table-column>
-      <el-table-column
-        label="Name"
-        prop="userInfo[0].name"
-        :width="flexColumnWidth('Name', 'name')"
-      >
+      <el-table-column label="Name" prop="name" :width="flexColumnWidth('Name', 'name')">
       </el-table-column>
       <el-table-column
         label="Gender"
-        prop="userInfo[0].gender"
+        prop="gender"
         :width="flexColumnWidth('Gender', 'gender')"
       >
       </el-table-column>
@@ -81,6 +77,7 @@
 
 <script>
 import Service from "@/service/common.service.js";
+import User from "@/service/user.service.js";
 import adminService from "@/service/admin.service.js";
 import { ref } from "vue";
 
@@ -193,7 +190,7 @@ export default {
     },
   },
   async mounted() {
-    console.log("发送获取医生列表接口");
+    console.log("发送获取所有已获批准的医生列表接口");
     Service.getApprovedDoctor()
       .then((res) => {
         if (res.data.code === 1) {
@@ -204,10 +201,6 @@ export default {
               // break;
             }
           }
-          // console.log(this.tableData[0]._id);
-          // console.log(this.tableData[1]._id);
-          // console.log(this.tableData[4]._id);
-          // console.log("show-doctor: " + JSON.stringify(res.data.info));
         } else {
           alert(res.data.info);
         }
