@@ -9,31 +9,27 @@ import { bulmaConfig } from '@oruga-ui/theme-bulma'
 import '@oruga-ui/theme-bulma/dist/bulma.css'
 import JsonExcel from "vue-json-excel"
 import ElementUI from 'element-ui'
-Vue.use(ElementUI)
+import dayjs from 'dayjs'
 import 'survey-core/survey.core.min.js'
 import 'survey-core/survey.i18n.min.js'
 import 'survey-vue-ui/survey-vue-ui.min.js'
 import 'surveyjs-widgets/surveyjs-widgets.min.js'
-
 import "element-ui/lib/theme-chalk/index.css";
-// 引入element-ui和css文件
 import "./assets/style/reset.css";
-// 引入样式重置的css样式
 import 'bootstrap/dist/css/bootstrap.min.css'
-// import '@/assets/css/main.css'
+import firebase from 'firebase/compat/app';
 
+// import '@/assets/css/main.css'
 // import * as firebase from "firebase/app"; 
 // import { initializeApp } from 'firebase/app';
-import firebase from 'firebase/compat/app';
 // import 'firebase/compat/auth';
 // import jwt_decode from "jwt-decode";
 // Vue.use(jwt_decode);
 
+Vue.use(ElementUI, dayjs)
 Vue.component("downloadExcel", JsonExcel);
-
 Vue.use(Oruga, bulmaConfig)
 Vue.use(Chartkick.use(Chart))
-
 Vue.config.productionTip = false
 
 const firebaseConfig = {
@@ -44,8 +40,6 @@ const firebaseConfig = {
   messagingSenderId: "312305674494",
   appId: "1:312305674494:web:de38c3ec41a51b1b5e1daf"
 };
-
-// console.log(firebase)
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

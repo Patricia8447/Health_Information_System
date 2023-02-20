@@ -15,12 +15,12 @@
         :width="flexColumnWidth('Doctor ID', 'doctorId')"
       >
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="Inquiry ID"
         prop="_id"
         :width="flexColumnWidth('Inquiry ID', '_id')"
       >
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         label="Allergy Medicine"
         prop="allergyMedicine"
@@ -62,11 +62,11 @@
         <template slot-scope="scope" class="btns">
           <!-- 如果状态显示已经是结束的话，不允许做进一步的编辑了 -->
 
-          <el-button type="success" plain class="button" @click="goRoute2(scope.$index)">
+          <el-button type="warning" plain class="button" @click="goRoute2(scope.$index)">
             Edit Appointment
           </el-button>
           <!-- <el-button size="mini" @click="open">Start</el-button> -->
-          <el-button>
+          <el-button type="primary" plain class="button">
             <a
               :href="alldoctordetails.zoomlink"
               target="_blank"
@@ -79,7 +79,7 @@
           <el-button type="success" plain class="button" @click="goRoute(scope.$index)">
             Deliver Medicine
           </el-button>
-          <el-button type="success" plain class="button" @click="goRoute3(scope.$index)">
+          <el-button type="info" plain class="button" @click="goRoute3(scope.$index)">
             View Result
           </el-button>
           <!-- 该按钮在审核完成后才能进行点击，在此之前应该是unclickable的状态 -->
