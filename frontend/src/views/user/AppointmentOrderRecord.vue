@@ -28,12 +28,6 @@
       >
       </el-table-column>
 
-      <!-- <el-table-column
-        label="Order Date"
-        prop="time"
-        :width="flexColumnWidth('Order Date', 'time')"
-      >
-      </el-table-column> -->
       <el-table-column
         label="Appointment Date"
         prop="appointmentDate"
@@ -42,6 +36,14 @@
         :formatter="logisticDescData"
       >
       </el-table-column>
+      <el-table-column
+        label="Appointment Time"
+        prop="appointmentTime"
+        sortable
+        :width="flexColumnWidth('Appointment Time', 'appointmentTime')"
+      >
+      </el-table-column>
+
       <el-table-column
         label="Self Report"
         prop="selfReport"
@@ -129,7 +131,6 @@ export default {
   methods: {
     goRoute2(e) {
       let data = this.tableData;
-      // 这里写
       // this.$router.push({ name: "MakeAppointment", params: { id: data[e].doctorId } }); //inquiryId: "",
       console.log(data[e]._id);
       this.$router.push({
@@ -147,6 +148,7 @@ export default {
     },
     logisticDescData(row) {
       return row.appointmentDate.split("T")[0];
+      // return row.appointmentDate;
     },
     handleEdit(index, row) {
       console.log(index, row);
@@ -190,12 +192,9 @@ export default {
      * @param table_data: 表格数据
      */
     flexColumnWidth(label, prop) {
-      // console.log('label', label)
-      // console.log('prop', prop)
       // 1.获取该列的所有数据
       const arr = this.tableData.map((x) => x[prop]);
       arr.push(label); // 把每列的表头也加进去算
-      // console.log(arr)
       // 2.计算每列内容最大的宽度 + 表格的内间距（依据实际情况而定）
       return this.getMaxLength(arr) + 25 + "px";
     },
@@ -216,7 +215,6 @@ export default {
   },
   async mounted() {
     console.log("发送获取就诊记录列表接口");
-    // TODO 医生列表接口
     Common.getVisitRecordList()
       .then((res) => {
         console.log("test" + res.data);

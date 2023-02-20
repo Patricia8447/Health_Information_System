@@ -1,1 +1,1 @@
-export const baseUrlApi = 'http://localhost:3005'//---开发调试环境
+export const baseUrlApi = 'http://localhost:3004'//---开发调试环境

@@ -86,8 +86,8 @@ const InquirySchema = new Schema({
   selfReport: { type: String, require: true },                                   // 病情自述
   allergyMedicine: { type: Array<string>, default: [] },                         // 过敏药物
   appointmentTime: { type: String, require: true },                              // 预约时间
-  appointmentDate: { type: Date, require: true },                                // 预约日期
-  status: { type: String, default: APPOINTMENT.Not },           // 问诊预约状态
+  appointmentDate: { type: String, require: true },                              // 预约日期
+  status: { type: String, default: APPOINTMENT.Not },                            // 问诊预约状态
   time: { type: Date, default: new Date() },                                     // 问诊创建日期
 })
 
