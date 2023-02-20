@@ -115,10 +115,12 @@ export default {
     goRoute(e) {
       let data = this.tableData;
       // 这里写
+      console.log("make-appointment: " + data[e]._id);
       this.$router.push({ name: "MakeAppointment", params: { id: data[e]._id } });
     },
     viewDetail(e) {
       let data = this.tableData;
+      console.log("view-detail: " + data[e]._id);
       this.$router.push({ name: "ViewDoctorDetail", params: { id: data[e]._id } });
     },
     handleEdit(index, row) {
@@ -163,12 +165,9 @@ export default {
      * @param table_data: 表格数据
      */
     flexColumnWidth(label, prop) {
-      // console.log('label', label)
-      // console.log('prop', prop)
       // 1.获取该列的所有数据
       const arr = this.tableData.map((x) => x[prop]);
       arr.push(label); // 把每列的表头也加进去算
-      // console.log(arr)
       // 2.计算每列内容最大的宽度 + 表格的内间距（依据实际情况而定）
       return this.getMaxLength(arr) + 28 + "px";
     },
@@ -177,14 +176,12 @@ export default {
       console.log(status);
       console.log(" 用户进行问诊预约接口");
 
-      // TODO 审批医生接口
       adminService
         .personAskDoctor(datas)
         .then((res) => {
           // console.log("test" + res.data);
           console.log("test1" + JSON.stringify(res.data));
           if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
             alert(res.data.info);
           } else {
             alert(res.data.info);
@@ -193,36 +190,24 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      // this.$confirm(
-      //   "you are going to approve the doctor, make sure you do the right action?",
-      //   "warning",
-      //   {
-      //     confirmButtonText: "agree",
-      //     cancelButtonText: "cancel",
-      //     type: "warning",
-      //   }
-      // )
-      //   .then(() => {
-      //     this.$message({
-      //       type: "success",
-      //       message: "successfully approve!",
-      //     });
-      //   })
-      //   .catch(() => {
-      //     this.$message({
-      //       type: "info",
-      //       message: "cancel the process",
-      //     });
-      //   });
     },
   },
   async mounted() {
     console.log("发送获取医生列表接口");
-    // TODO 医生列表接口
-    Service.getAllDoctor()
+    Service.getApprovedDoctor()
       .then((res) => {
         if (res.data.code === 1) {
-          this.tableData = res.data.info;
+          for (let i = 0; i < res.data.info.length; i++) {
+            if (res.data.info[i].status == "Approved") {
+              console.log("test-whos-doctor: " + JSON.stringify(res.data.info[i]));
+              this.tableData = res.data.info;
+              // break;
+            }
+          }
+          // console.log(this.tableData[0]._id);
+          // console.log(this.tableData[1]._id);
+          // console.log(this.tableData[4]._id);
+          // console.log("show-doctor: " + JSON.stringify(res.data.info));
         } else {
           alert(res.data.info);
         }

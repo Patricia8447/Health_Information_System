@@ -11,6 +11,9 @@ commonRouter.post('/doctor/all', (req:Request, res:Response) => {
   commonServe.getAllDoctor(req, res)
 })
 
+commonRouter.post('/doctor/approveddoctor', (req:Request, res:Response) => {
+  commonServe.getApprovedDoctor(req, res)
+})
 commonRouter.post('/doctor/ask', (req:Request, res:Response) => {
   commonServe.askDoctor(req, res)
 })

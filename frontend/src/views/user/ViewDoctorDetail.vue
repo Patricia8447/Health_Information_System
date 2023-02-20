@@ -115,9 +115,9 @@
             </div>
           </template>
           <div class="my-content">
-            {{ availableDate.Mon }}  {{ availableDate.Tues }}  {{ availableDate.Wed }} 
-            {{ availableDate.Thurs }}  {{ availableDate.Fri }} 
-            {{ availableDate.Sat }}  {{ availableDate.Sun }}
+            {{ availableDate.Mon }} {{ availableDate.Tues }} {{ availableDate.Wed }}
+            {{ availableDate.Thurs }} {{ availableDate.Fri }} {{ availableDate.Sat }}
+            {{ availableDate.Sun }}
           </div>
         </el-descriptions-item>
         <el-descriptions-item>
@@ -196,19 +196,21 @@ export default {
     };
   },
   mounted() {
-    Common.getVisitRecordList()
-      .then((res) => {
-        // console.log("test1" + JSON.stringify(res.data));
-        if (res.data.code === 1) {
-          this.tableData = res.data.info;
-          // alert("test? " + JSON.stringify(this.tableData[0].doctorId));
-        } else {
-          alert(res.data.info);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.tableData.doctorId = this.$route.params.id;
+
+    // Common.getVisitRecordList()
+    //   .then((res) => {
+    //     // console.log("test1" + JSON.stringify(res.data));
+    //     if (res.data.code === 1) {
+    //       this.tableData = res.data.info;
+    //       // alert("test? " + JSON.stringify(this.tableData[0].doctorId));
+    //     } else {
+    //       alert(res.data.info);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
     //拿到该医生的出诊时间
     Service.getTimeList()
@@ -216,7 +218,7 @@ export default {
         //  alert("test-1-time " + JSON.stringify(res.data));
         if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
-            if (res.data.info[i].doctorId == this.tableData[0].doctorId) {
+            if (res.data.info[i].doctorId == this.tableData.doctorId) {
               console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
               this.availableTime = res.data.info[i];
               // alert("test-2-time " + JSON.stringify(this.availableTime));
@@ -236,7 +238,7 @@ export default {
       .then((res) => {
         if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
-            if (res.data.info[i].doctorId == this.tableData[0].doctorId) {
+            if (res.data.info[i].doctorId == this.tableData.doctorId) {
               console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
               this.availableDate = res.data.info[i];
               if (res.data.info[i].Mon == true) {
@@ -285,12 +287,12 @@ export default {
         console.log(err);
       });
 
-    Common.getAllDoctor(this.tableData[0].doctorId)
+    Common.getAllDoctor(this.tableData.doctorId)
       .then((res) => {
         if (res.data.code === 1) {
           // alert(res.data.info.length);
           for (let i = 0; i < res.data.info.length; i++) {
-            if (res.data.info[i]._id == this.tableData[0].doctorId) {
+            if (res.data.info[i]._id == this.tableData.doctorId) {
               console.log("11111: " + JSON.stringify(res.data.info[i]));
               this.alldoctordetails = res.data.info[i];
               this.basicInfo = res.data.info[i].userInfo[0];

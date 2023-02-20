@@ -10,6 +10,10 @@ export default {
     return request.post('/common/doctor/all', data)
   },
 
+  getApprovedDoctor: (data) => {
+    return request.post('/common/doctor/approveddoctor', data)
+  },
+
   createDistribution: (data) => {
     return request.post('/common/prescription/add', data)
   },

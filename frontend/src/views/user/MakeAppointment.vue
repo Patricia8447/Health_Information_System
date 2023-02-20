@@ -14,60 +14,50 @@
       <el-form-item label="Allergy Medicine" prop="allergyMedicine">
         <el-input type="textarea" v-model.trim="ruleForm.allergyMedicine"></el-input>
       </el-form-item>
-      <!-- <el-form-item label="Appointment Date" prop="appointmentDate">
-        <el-input type="date" v-model.trim="ruleForm.appointmentDate"></el-input>
-      </el-form-item>
-      <el-form-item label="Appointment Time" prop="appointmentTime ">
-        <el-select
-          v-model.trim="ruleForm.appointmentTime"
-          placeholder="please choose the time"
-        >
-          <el-option label="8" value="8"></el-option>
-          <el-option label="9" value="9"></el-option>
-        </el-select>
-      </el-form-item> -->
 
-      <div class="timeCheck">
-        <el-date-picker
-          v-model.trim="ruleForm.appointmentDate"
-          type="date"
-          @change="dateChange"
-          :picker-options="datePickerOption"
-          placeholder="选择日期"
-        >
-        </el-date-picker>
-
-        <el-select
-          v-model.trim="ruleForm.appointmentTime"
-          placeholder="选择时间范围"
-          @focus="timeFocus"
-          ref="timeSelect"
-          @change="timeChange"
-        >
-          <el-option
-            v-for="(item, index) in timeList"
-            :key="index"
-            :value="item.value1 + '-' + item.value2"
-            :disabled="item.disabled || index === 2 || index === 6"
+      <el-form-item label="Please choose the date and time">
+        <div class="timeCheck">
+          <el-date-picker
+            v-model.trim="ruleForm.appointmentDate"
+            type="date"
+            @change="dateChange"
+            :picker-options="datePickerOption"
+            placeholder="选择日期"
           >
-            <div
-              style="display: flex; justify-content: space-between; align-items: center"
+          </el-date-picker>
+
+          <el-select
+            v-model.trim="ruleForm.appointmentTime"
+            placeholder="选择时间范围"
+            @focus="timeFocus"
+            ref="timeSelect"
+            @change="timeChange"
+          >
+            <el-option
+              v-for="(item, index) in timeList"
+              :key="index"
+              :value="item.value1 + '-' + item.value2"
+              :disabled="item.disabled || index === 2 || index === 6"
             >
-              <span>{{ item.value1 + "-" + item.value2 }}</span>
-              <i
-                class="el-icon-circle-check"
-                style="color: #67c23a; font-size: 14px; margin-left: 50px"
-                v-if="!item.disabled"
-              ></i>
-              <i
-                class="el-icon-circle-close"
-                style="color: #f56c6c; font-size: 14px; margin-left: 50px"
-                v-else
-              ></i>
-            </div>
-          </el-option>
-        </el-select>
-      </div>
+              <div
+                style="display: flex; justify-content: space-between; align-items: center"
+              >
+                <span>{{ item.value1 + "-" + item.value2 }}</span>
+                <i
+                  class="el-icon-circle-check"
+                  style="color: #67c23a; font-size: 14px; margin-left: 50px"
+                  v-if="!item.disabled"
+                ></i>
+                <i
+                  class="el-icon-circle-close"
+                  style="color: #f56c6c; font-size: 14px; margin-left: 50px"
+                  v-else
+                ></i>
+              </div>
+            </el-option>
+          </el-select>
+        </div>
+      </el-form-item>
 
       <el-form-item>
         <el-button type="submit" @click="submitForm()">Submit</el-button>
@@ -208,10 +198,10 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    getTimeList() {
+    getTimeList2() {
       //传实际的值，得改
-      const start = "00:00";
-      const end = "23:30";
+      const start = this.availableTime.startTime;
+      const end = this.availableTime.endTime;
       const step = this.step;
 
       const result = [];
@@ -246,8 +236,8 @@ export default {
         data: { code, msg, data },
       } = await this.getTimeCheck();
       if (code === 200) {
-        if (data.length <= 0) return (this.timeList = this.getTimeList());
-        this.timeList = this.getTimeList().map((v, i) => {
+        if (data.length <= 0) return (this.timeList = this.getTimeList2());
+        this.timeList = this.getTimeList2().map((v, i) => {
           v.disabled = data[i].disabled;
         });
         this.ruleForm.appointmentTime = "";
@@ -274,25 +264,25 @@ export default {
     this.ruleForm.doctorId = this.$route.params.id;
 
     //拿到该医生的出诊时间
-    // doctorService
-    //   .getTimeList()
-    //   .then((res) => {
-    //     //  alert("test-1-time " + JSON.stringify(res.data));
-    //     if (res.data.code === 1) {
-    //       for (let i = 0; i < res.data.info.length; i++) {
-    //         if (res.data.info[i].doctorId == this.tableData[0].doctorId) {
-    //           console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
-    //           this.availableTime = res.data.info[i];
-    //           break;
-    //         }
-    //       }
-    //     } else {
-    //       alert(res.data.info);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    doctorService
+      .getTimeList()
+      .then((res) => {
+        //  alert("test-1-time " + JSON.stringify(res.data));
+        if (res.data.code === 1) {
+          for (let i = 0; i < res.data.info.length; i++) {
+            if (res.data.info[i].doctorId == this.ruleForm.doctorId) {
+              console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
+              this.availableTime = res.data.info[i];
+              break;
+            }
+          }
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

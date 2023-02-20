@@ -14,47 +14,49 @@
       <el-form-item label="Allergy Medicine" prop="allergyMedicine">
         <el-input type="textarea" v-model.trim="ruleForm.allergyMedicine"></el-input>
       </el-form-item>
-      <div class="timeCheck">
-        <el-date-picker
-          v-model.trim="ruleForm.appointmentDate"
-          type="date"
-          @change="dateChange"
-          :picker-options="datePickerOption"
-          placeholder="选择日期"
-        >
-        </el-date-picker>
-
-        <el-select
-          v-model.trim="ruleForm.appointmentTime"
-          placeholder="选择时间范围"
-          @focus="timeFocus"
-          ref="timeSelect"
-          @change="timeChange"
-        >
-          <el-option
-            v-for="(item, index) in timeList"
-            :key="index"
-            :value="item.value1 + '-' + item.value2"
-            :disabled="item.disabled || index === 2 || index === 6"
+      <el-form-item label="Please choose the date and time">
+        <div class="timeCheck">
+          <el-date-picker
+            v-model.trim="ruleForm.appointmentDate"
+            type="date"
+            @change="dateChange"
+            :picker-options="datePickerOption"
+            placeholder="选择日期"
           >
-            <div
-              style="display: flex; justify-content: space-between; align-items: center"
+          </el-date-picker>
+
+          <el-select
+            v-model.trim="ruleForm.appointmentTime"
+            placeholder="选择时间范围"
+            @focus="timeFocus"
+            ref="timeSelect"
+            @change="timeChange"
+          >
+            <el-option
+              v-for="(item, index) in timeList"
+              :key="index"
+              :value="item.value1 + '-' + item.value2"
+              :disabled="item.disabled || index === 2 || index === 6"
             >
-              <span>{{ item.value1 + "-" + item.value2 }}</span>
-              <i
-                class="el-icon-circle-check"
-                style="color: #67c23a; font-size: 14px; margin-left: 50px"
-                v-if="!item.disabled"
-              ></i>
-              <i
-                class="el-icon-circle-close"
-                style="color: #f56c6c; font-size: 14px; margin-left: 50px"
-                v-else
-              ></i>
-            </div>
-          </el-option>
-        </el-select>
-      </div>
+              <div
+                style="display: flex; justify-content: space-between; align-items: center"
+              >
+                <span>{{ item.value1 + "-" + item.value2 }}</span>
+                <i
+                  class="el-icon-circle-check"
+                  style="color: #67c23a; font-size: 14px; margin-left: 50px"
+                  v-if="!item.disabled"
+                ></i>
+                <i
+                  class="el-icon-circle-close"
+                  style="color: #f56c6c; font-size: 14px; margin-left: 50px"
+                  v-else
+                ></i>
+              </div>
+            </el-option>
+          </el-select>
+        </div>
+      </el-form-item>
       <el-form-item>
         <el-button type="submit" @click="submitForm()">Update</el-button>
         <el-button type="success" plain @click="resetForm('ruleForm')">Reset</el-button>

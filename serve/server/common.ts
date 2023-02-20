@@ -13,6 +13,11 @@ function getAllDoctor(req:Request, res:Response){
   FunctionSet.getAllDoctor(data, res)
 }
 
+function getApprovedDoctor(req:Request, res:Response){
+  let data:Record<string, string> = ObjectSimpleShallowCopy(req.body)
+  FunctionSet.getApprovedDoctor(data, res)
+}
+
 function askDoctor(req:Request, res:Response){
   let data:Record<string, string|Date> = ObjectSimpleShallowCopy(req.body)
   FunctionSet.personAskDoctor((data as personAskDoctorType), res)
@@ -55,7 +60,9 @@ function getPushInfoList(req:Request, res:Response){
 
 let commonServe = {
   getAllDepartment, getAllDoctor, askDoctor, getVisitRecordList, 
-  createDistribution, updataDistribution,judgeDoctorIsFree, getPushInfoList, getVisitRecordList2
+  createDistribution, updataDistribution,judgeDoctorIsFree, 
+  getPushInfoList, getVisitRecordList2,
+  getApprovedDoctor
 }
 
 export default commonServe

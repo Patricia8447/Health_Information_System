@@ -369,6 +369,19 @@ function getAllDoctor({ status }: Record<string, string>, res: Response) {
   });
 }
 
+/**
+ * 获取已通过认证的医生列表
+ * @param { Record<string, string> } data 请求数据 如果需要获取全部的医生数据可以可以将status设置为undefined，如果需要获取已经成为医生的数据则给对应的status
+ * @param { Response } res 响应
+ */
+function getApprovedDoctor({ status }: Record<string, string>, res: Response) {
+  DoctorModel.find({status: AUDITSTATUS.Approved}).then((result:Array<any>) => {
+    console.log("this is res " + res);
+    console.log("this is result " + result);
+    res.send(responseInfo.success(result))
+  }).catch((err:Error) => {res.send(responseInfo.getException(err))})
+}
+
 function getOneDoctor({ id, name, hospitalName, hospitalLevel, hospitalAddress, job, strength, status, selfIntro }: getOneDoctorType, res: Response) {
   let findObject = { name, hospitalName, hospitalLevel, hospitalAddress, job, strength, status, selfIntro }
   DoctorModel.findOne({ userId: id }, findObject)
@@ -457,7 +470,7 @@ function doctorWirteVisitRecord(data: doctorWirteVisitRecordType, res: Response)
 }
 
 /**
- * 获取就诊记录列表 VisitRecordModel
+ * 获取预约记录列表 VisitRecordModel
  * @param { Record<string, string> } data 请求数据
  * @param { Response } res 响应
  */
@@ -468,6 +481,11 @@ function getVisitRecordList(data: Record<string, string>, res: Response) {
   }).catch((err: Error) => res.send(responseInfo.getException(err)))
 }
 
+/**
+ * 获取就诊记录列表 VisitRecordModel
+ * @param { Record<string, string> } data 请求数据
+ * @param { Response } res 响应
+ */
 function getVisitRecordList2({ inquiryId, doctorId }: doctorWirteVisitRecordType, res: Response) {
   console.log(inquiryId);
   console.log(doctorId);
@@ -564,6 +582,11 @@ function addPushInfo({ title, link, coverLink }: pushInfoType, res: Response) {
 //   }).catch((err: Error) => res.send(responseInfo.updataException(err)))
 // }
 
+/**
+ * 更新预约信息表单
+ * @param { updatePushInfoType } data 请求数据
+ * @param { Response } res 响应
+ */
 function updataPushInfo({ inqueryId, selfReport, allergyMedicine, appointmentTime, appointmentDate, status, time }: updateinqueryType, res: Response) {
   console.log(inqueryId);
   InquiryModel.findOne({ _id: inqueryId }).then((result1: any) => {
@@ -579,12 +602,11 @@ function updataPushInfo({ inqueryId, selfReport, allergyMedicine, appointmentTim
   })
 }
 
-// DoctorModel.find(status == undefined?{}:{status}).then((result:Array<any>) => {
-//   console.log("this is res " + res);
-//   console.log("this is result " + result);
-//   res.send(responseInfo.success(result))
-// }).catch((err:Error) => res.send(responseInfo.getException(err)))
-
+/**
+ * 读取医生上传的文件信息
+ * @param { findDocType } data 请求数据
+ * @param { Response } res 响应
+ */
 function findDoc({ doctorId }: findDocType, res: Response) {
   console.log("1: " + doctorId);
   DoctorPictureModel.findOne({ doctorId: doctorId }).then((result: any) => {
@@ -619,7 +641,7 @@ let FunctionSet = {
   getAllDepartment, applyToBeDoctor, adminApprovalDoctorStatus, doctorCancelToBeDoctor,
   adminApprovalDoctorCancelStatus, adminRejectDoctorStatus, getAllDoctor, resaveDoctorInfo, getOneDoctor, personAskDoctor, getInquiryList,
   doctorWirteVisitRecord, getVisitRecordList, createDistribution, updataDistribution,
-  judgeDoctorIsFree, getPushInfoList, addPushInfo, updataPushInfo, deletePushInfo, getUserInfo, getTimeList, getDateList, findDoc, getVisitRecordList2
+  judgeDoctorIsFree, getPushInfoList, addPushInfo, updataPushInfo, deletePushInfo, getUserInfo, getTimeList, getDateList, findDoc, getVisitRecordList2, getApprovedDoctor
 }
 
 export default FunctionSet
