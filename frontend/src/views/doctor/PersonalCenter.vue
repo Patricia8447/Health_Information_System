@@ -16,7 +16,7 @@
         <div class="my-content">
           <el-image
             style="width: 100px; height: 100px"
-            :src="`http://127.0.0.1:3004/img/${doctorPart.photo}`"
+            :src="`http://127.0.0.1:3005/img/${doctorPart.photo}`"
           ></el-image>
         </div>
       </el-descriptions-item> -->

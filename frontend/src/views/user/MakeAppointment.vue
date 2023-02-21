@@ -203,7 +203,6 @@ export default {
       const start = this.availableTime.startTime;
       const end = this.availableTime.endTime;
       const step = this.step;
-
       const result = [];
 
       if (start && end && step) {
@@ -259,8 +258,6 @@ export default {
     },
   },
   mounted() {
-    console.log("2333");
-    console.log(this.$route.params.id);
     this.ruleForm.doctorId = this.$route.params.id;
 
     //拿到该医生的出诊时间

@@ -16,9 +16,9 @@
       >
       </el-table-column>
       <!-- <el-table-column
-        label="Inquiry ID"
-        prop="_id"
-        :width="flexColumnWidth('Inquiry ID', '_id')"
+        label="Doctor Name"
+        prop="name"
+        :width="flexColumnWidth('Doctor Name', 'name')"
       >
       </el-table-column> -->
       <el-table-column
@@ -103,6 +103,7 @@ export default {
         {
           _id: "",
           doctorId: "",
+          doctorName: "",
           status: "",
           selfReport: "",
           appointmentTime: "",
@@ -217,7 +218,6 @@ export default {
     console.log("发送获取就诊记录列表接口");
     Common.getVisitRecordList()
       .then((res) => {
-        console.log("test" + res.data);
         console.log("test1" + JSON.stringify(res.data));
         if (res.data.code === 1) {
           this.tableData = res.data.info;
@@ -233,10 +233,13 @@ export default {
     Common.getAllDoctor(this.tableData[0].doctorId)
       .then((res) => {
         if (res.data.code === 1) {
+          // this.tableData.doctorName = this.alldoctordetails.name;
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i]._id == this.tableData[0].doctorId) {
               // console.log("11111: " + JSON.stringify(res.data.info[i]));
               this.alldoctordetails = res.data.info[i];
+              // alert("2345: " + this.alldoctordetails.name);
+              this.tableData.doctorName = this.alldoctordetails.name;
               break;
             }
           }

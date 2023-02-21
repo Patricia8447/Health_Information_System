@@ -17,9 +17,9 @@
         style="width: 100%"
       ></el-date-picker>
     </el-form-item>
-    <el-form-item label="Phone">
+    <!-- <el-form-item label="Phone">
       <el-input v-model.trim="json.phone"></el-input>
-    </el-form-item>
+    </el-form-item> -->
     <el-form-item label="Email">
       <el-input type="email" v-model.trim="json.email" disabled></el-input>
     </el-form-item>

@@ -60,7 +60,9 @@
           <el-input v-model="search" size="mini" placeholder="search your patient..." />
         </template>
         <template slot-scope="scope" class="btns">
-          <el-button type="success" plain @click="open">Start</el-button>
+          <el-button type="primary" plain class="button">
+            <a :href="zoomlink" target="_blank" style="text-decoration: none"> Start </a>
+          </el-button>
 
           <!-- 问诊结束之后才能click以下按钮 -->
           <el-button type="success" plain class="button" @click="goRoute(scope.$index)">
@@ -92,12 +94,12 @@ export default {
         },
       ],
       search: "",
+      zoomlink: "",
     };
   },
   methods: {
     goRoute(e) {
       let data = this.tableData;
-      // 这里写
       this.$router.push({ name: "ConRecord", params: { id: data[e]._id } });
     },
 
@@ -143,47 +145,30 @@ export default {
      * @param table_data: 表格数据
      */
     flexColumnWidth(label, prop) {
-      // console.log('label', label)
-      // console.log('prop', prop)
       // 1.获取该列的所有数据
       const arr = this.tableData.map((x) => x[prop]);
       arr.push(label); // 把每列的表头也加进去算
-      // console.log(arr)
       // 2.计算每列内容最大的宽度 + 表格的内间距（依据实际情况而定）
       return this.getMaxLength(arr) + 25 + "px";
-    },
-    open() {
-      this.$alert(
-        '<a href="https://hkbu.zoom.us/j/6183055551?pwd=ZVpEa1lUWnJBc2hwV2orRWhBbjlqQT09">Link</a>',
-        "Jump to Zoom",
-        {
-          dangerouslyUseHTMLString: true,
-        }
-      );
     },
   },
   mounted() {
     let datas1 = {
       userId: JSON.parse(localStorage.getItem("user")).id,
     };
-    // console.log(datas);
 
     User.getUserInfo(datas1)
       .then((res) => {
-        // console.log("1test1: " + JSON.stringify(res.data));
         if (res.data.code === 1) {
-          console.log("11111: " + res.data.info.doctor.id);
+          this.zoomlink = res.data.info.doctor.zoomlink;
           let datas2 = {
             doctorId: res.data.info.doctor.id,
           };
-          console.log("22222: " + JSON.stringify(datas2.doctorId));
 
           Service.getInquiryList(datas2)
             .then((res) => {
               if (res.data.code === 1) {
-                // alert(JSON.stringify(res.data.info));
                 this.tableData = res.data.info;
-                // console.log(JSON.stringify(this.tableData));
               } else {
                 alert(res.data.info);
               }

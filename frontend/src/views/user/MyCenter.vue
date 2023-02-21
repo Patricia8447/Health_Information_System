@@ -50,17 +50,6 @@
       <el-descriptions-item>
         <template slot="label">
           <div class="my-label">
-            <i class="el-icon-mobile-phone"></i>
-            phone
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.phone }}
-        </div>
-      </el-descriptions-item>
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
             <i class="el-icon-message"></i>
             email
           </div>
