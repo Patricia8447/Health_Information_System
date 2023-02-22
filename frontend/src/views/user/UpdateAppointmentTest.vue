@@ -268,16 +268,19 @@ export default {
 
     Service.getVisitRecordList()
       .then((res) => {
-        console.log("test" + res.data);
-        console.log("test1" + JSON.stringify(res.data));
+        // console.log("test" + res.data);
+        // console.log("test1" + JSON.stringify(res.data));
         if (res.data.code === 1) {
           console.log(this.ruleForm.inqueryId);
-          console.log(res.data.info[0]._id);
+          console.log("New: " + JSON.stringify(res.data.info));
           //   console.log(this.ruleForm.inqueryId == res.data.info[0]._id);
-          if (this.ruleForm.inqueryId == res.data.info[0]._id) {
-            this.ruleForm = res.data.info[0];
-            this.ruleForm.inqueryId = this.$route.params.id;
-            alert(this.ruleForm.inqueryId);
+          for (let i = 0; i < res.data.info.length; i++) {
+            if (res.data.info[i]._id == this.ruleForm.inqueryId) {
+              this.ruleForm = res.data.info[i];
+              this.ruleForm.inqueryId = this.$route.params.id;
+              alert(this.ruleForm.inqueryId);
+              break;
+            }
           }
         } else {
           alert(res.data.info);
