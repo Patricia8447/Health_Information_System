@@ -1,7 +1,54 @@
 <template>
   <div class="container has-text-left">
-    <h1>Drug Delivery Registration Form</h1>
-    <survey :survey="survey"></survey>
+    <h1>Drug Delivery Form</h1>
+    <el-form
+      :model="ruleForm"
+      :rules="rules"
+      ref="ruleForm"
+      label-width="150px"
+      class="ruleForm"
+    >
+      <el-form-item label="Drugsage" prop="drugsage">
+        <el-input
+          type="input"
+          v-model.trim="alldoctordetails.drugsage"
+          disabled
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="Receiver Name" prop="name">
+        <el-input type="input" v-model.trim="ruleForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="Contact Number" prop="phone">
+        <el-input type="phone" v-model.trim="ruleForm.phone"></el-input>
+      </el-form-item>
+      <el-form-item label="Delivery Date" prop="deliverDate">
+        <el-date-picker
+          v-model.trim="ruleForm.deliverDate"
+          type="date"
+          placeholder="please choose the deliver date"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="Delivery Time" prop="period">
+        <el-time-select
+          v-model.trim="ruleForm.period"
+          :picker-options="{
+            start: '06:00',
+            step: '01:00',
+            end: '23:30',
+          }"
+          placeholder="please choose the deliver time"
+        >
+        </el-time-select>
+      </el-form-item>
+      <el-form-item label="Remark" prop="other">
+        <el-input type="textarea" v-model.trim="ruleForm.other"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="submit" @click="alertResults()">Submit</el-button>
+        <el-button type="success" plain @click="resetForm('ruleForm')">Reset</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -10,104 +57,42 @@ import "survey-vue/modern.min.css";
 import { Survey, StylesManager, Model } from "survey-vue";
 import Service from "@/service/common.service.js";
 
-StylesManager.applyTheme("modern");
-
 export default {
-  components: {
-    Survey,
-  },
   data() {
-    var json = {
-      pages: [
+    return {
+      ruleForm: {
+        name: "",
+        phone: "",
+        period: "",
+        deliverDate: "",
+        other: "",
+      },
+      value1: "",
+      rules: {},
+      tableData: [{ doctorId: "" }],
+      alldoctordetails: [
         {
-          questions: [
-            {
-              name: "name",
-              type: "text",
-              title: "Receiver's Name",
-              placeHolder: "please enter the name",
-              isRequired: true,
-              autoComplete: "name",
-            },
-            {
-              name: "phone",
-              type: "text",
-              title: "Receiver's Phone",
-              placeHolder: "please enter the correct phone number",
-              isRequired: true,
-              autoComplete: "phone",
-            },
-            {
-              type: "dropdown",
-              name: "period",
-              title: "Delivery Period",
-              isRequired: true,
-              placeHolder: "please choose the delivered time",
-              colCount: 0,
-              choices: [
-                "9 a.m.",
-                "10 a.m.",
-                "11 a.m.",
-                "12 p.m.",
-                "1 p.m.",
-                "2 p.m.",
-                "3 p.m.",
-                "4 p.m.",
-              ],
-            },
-            {
-              type: "matrixdynamic",
-              name: "orerItem",
-              title: "Select the quantities",
-              addRowText: "Add Medicine",
-              horizontalScroll: true,
-              columnMinWidth: "130px",
-              columnColCount: 1,
-              cellType: "radiogroup",
-              choices: ["1", "2", "3", "4", "5", "6", "7"],
-
-              columns: [
-                {
-                  name: "subject",
-                  cellType: "text",
-                  title: "Please enter the order item(s)",
-                  isRequired: true,
-                  minWidth: "300px",
-                },
-                {
-                  name: "quantities",
-                  title: "Please select the quantities",
-                },
-              ],
-              rowCount: 2,
-            },
-            {
-              name: "other",
-              type: "text",
-              title: "Other",
-              placeHolder: "",
-              isRequired: false,
-              autoComplete: "other",
-            },
-          ],
+          name: "",
+          hospitalName: "",
+          hospitalLevel: "",
+          hospitalAddress: "",
+          departmentId: "",
+          job: "",
+          strength: "",
+          selfIntro: "",
+          symptoms: "",
+          drugsage: "",
+          remark: "",
+          inquiryId: "",
         },
       ],
     };
-
-    const model = new Model(json);
-    model.showPreviewBeforeComplete = "showAnsweredQuestions";
-    model.onComplete.add(this.alertResults);
-    model.completedHtml = "order created successfully!";
-
-    return {
-      survey: model,
-    };
   },
   methods: {
-    async alertResults(sender) {
+    async alertResults() {
       console.log("发送送药接口");
-      console.log(JSON.stringify(sender.data));
-      Service.createDistribution(sender.data)
+      console.log(JSON.stringify(this.ruleForm));
+      Service.createDistribution(this.ruleForm)
         .then((res) => {
           console.log(res.data);
           if (res.data.code === 1) {
@@ -122,10 +107,46 @@ export default {
           console.log(err);
         });
     },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
   },
-  created(){
-     console.log(this.$route.params.id);
-  }
+  created() {
+    console.log(this.$route.params.id);
+  },
+  mounted() {
+    this.alldoctordetails.inquiryId = this.$route.params.id;
+    console.log(this.alldoctordetails.inquiryId);
+
+    Service.getVisitRecordList()
+      .then((res) => {
+        if (res.data.code === 1) {
+          this.tableData = res.data.info; //拿到了doctor id
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    let datas = {
+      doctorId: this.tableData.doctorId,
+      inquiryId: this.alldoctordetails.inquiryId,
+    };
+
+    Service.getVisitRecordList2(datas)
+      .then((res) => {
+        if (res.data.code === 1) {
+          this.alldoctordetails = res.data.info; //拿到了doctor id
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 </script>
 

@@ -36,9 +36,9 @@ type personAskDoctorType = { id: string, doctorId: string, selfReport: string, a
 
 type doctorWirteVisitRecordType = { id: string, inquiryId: string, doctorId: string, userId: string, name: string, age: string, gender: string, consultDate: string, departmentId: string, doctorName: string, symptoms: string, drugsage: string, remark: string }
 
-type createDistributionType = { id: string, name: string, phone: string, period: string, quantities: string, subject: string, status: string, other: string }
+type createDistributionType = { id: string, name: string, phone: string, period: string, deliverDate: string, subject: string, status: string, other: string }
 
-type updataDistributionType = { id: string, drugId: string, name: string, phone: string, period: string, quantities: string, subject: string, status: string, other: string }
+type updataDistributionType = { id: string, drugId: string, name: string, phone: string, period: string, deliverDate: string, subject: string, status: string, other: string }
 
 type timeSlotType = { startTime: string, endTime: string }
 

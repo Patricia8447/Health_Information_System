@@ -20,11 +20,11 @@
           <el-option label="female" value="female"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Phone No" prop="phone">
+      <!-- <el-form-item label="Phone No" prop="phone">
         <el-input v-model.trim="ruleForm.phone"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="Email" prop="email">
-        <el-input v-model.trim="ruleForm.email"></el-input>
+        <el-input v-model.trim="ruleForm.email" disabled></el-input>
       </el-form-item>
       <el-form-item label="Zoom Link" prop="zoomlink">
         <el-input v-model.trim="ruleForm.zoomlink"></el-input>

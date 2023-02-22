@@ -16,12 +16,12 @@
         :width="flexColumnWidth('Patient ID', 'userId')"
       >
       </el-table-column>
-      <!-- <el-table-column
+      <el-table-column
         label="Patient Name"
-        prop="patientname"
-        :width="flexColumnWidth('Patient Name', 'patientname')"
+        prop="patientName"
+        :width="flexColumnWidth('Patient Name', 'patientName')"
       >
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column
         label="Self Report"
         prop="selfReport"
@@ -91,6 +91,7 @@ export default {
           appointmentDate: "",
           status: "",
           time: "",
+          patientName: "",
         },
       ],
       search: "",
@@ -161,6 +162,7 @@ export default {
       .then((res) => {
         if (res.data.code === 1) {
           this.zoomlink = res.data.info.doctor.zoomlink;
+          // alert("这是医生的id： " + res.data.info.doctor.id);
           let datas2 = {
             doctorId: res.data.info.doctor.id,
           };
@@ -169,6 +171,10 @@ export default {
             .then((res) => {
               if (res.data.code === 1) {
                 this.tableData = res.data.info;
+                alert("0000: " + JSON.stringify(this.tableData));
+
+                //拿到的是患者的id
+                alert("0001: " + JSON.stringify(this.tableData[0].userId));
               } else {
                 alert(res.data.info);
               }

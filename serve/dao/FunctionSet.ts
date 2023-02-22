@@ -523,8 +523,8 @@ function getDateList(data: Record<string, string>, res: Response) {
  * @param { createDistributionType } data 请求数据
  * @param { Response } res 响应
  */
-function createDistribution({ id, name, phone, period, quantities, subject, other }: createDistributionType, res: Response) {
-  let data = { userId: id, name, phone, period, quantities, subject, other }
+function createDistribution({ id, name, phone, period, deliverDate, subject, other }: createDistributionType, res: Response) {
+  let data = { userId: id, name, phone, period, deliverDate, subject, other }
   new DrugDeliveryModel(data).save().then((result: any) => {
     res.send(responseInfo.success('Successfully created'))
   }).catch((err: Error) => res.send(responseInfo.updataException(err)))
@@ -535,11 +535,11 @@ function createDistribution({ id, name, phone, period, quantities, subject, othe
  * @param { createDistributionType } data 请求数据 如果不需要修改对应的数据， 可以不给对应的字段
  * @param { Response } res 响应
  */
-function updataDistribution({ id, drugId, name, phone, period, quantities, subject, status, other }: updataDistributionType, res: Response) {
+function updataDistribution({ id, drugId, name, phone, period, deliverDate, subject, status, other }: updataDistributionType, res: Response) {
   DrugDeliveryModel.find({ _id: drugId }).then((result: Array<any>) => {
     if (result.length == 0) { throw new Error('No such order can be found') }
     if (result[0].userId !== id) { throw new Error('You do not have permission to change this distribution') }
-    let updata = { name, phone, period, quantities, subject, status, other }
+    let updata = { name, phone, period, deliverDate, subject, status, other }
     return DrugDeliveryModel.updateOne({ _id: drugId }, updata)
   }).then((result: any) => {
     res.send(responseInfo.success('Modified successfully'))

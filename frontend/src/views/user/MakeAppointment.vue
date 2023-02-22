@@ -22,6 +22,7 @@
             type="date"
             @change="dateChange"
             :picker-options="datePickerOption"
+            value-format="yyyy-MM-dd"
             placeholder="选择日期"
           >
           </el-date-picker>
@@ -143,18 +144,24 @@ export default {
       rules: {},
       options: [],
       availableTime: [{ startTime: "", endTime: "" }],
+      availableDate: [
+        { Mon: "", Tues: "", Wed: "", Thurs: "", Fri: "", Sat: "", Sun: "" },
+      ],
       dayjs,
-      // appointmentDate: "",
-      // appointmentTime: "",
       timeList: [],
       datePickerOption: {
-        disabledDate(appointmentDate) {
+        disabledDate: function (appointmentDate) {
           // 设置日期禁用
           return (
-            dayjs(appointmentDate).format("d") === "2" ||
-            dayjs(appointmentDate).format("d") === "4"
+            dayjs(appointmentDate).format("d") === this.availableDate.Mon ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Tues ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Wed ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Thurs ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Fri ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Sat ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Sun
           );
-        },
+        }.bind(this),
       },
     };
   },
@@ -198,8 +205,8 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+
     getTimeList2() {
-      //传实际的值，得改
       const start = this.availableTime.startTime;
       const end = this.availableTime.endTime;
       const step = this.step;
@@ -259,6 +266,61 @@ export default {
   },
   mounted() {
     this.ruleForm.doctorId = this.$route.params.id;
+
+    //拿到医生的出诊日期
+    doctorService
+      .getDateList()
+      .then((res) => {
+        if (res.data.code === 1) {
+          for (let i = 0; i < res.data.info.length; i++) {
+            if (res.data.info[i].doctorId == this.ruleForm.doctorId) {
+              this.availableDate = res.data.info[i];
+              console.log("test-1-date: " + JSON.stringify(this.availableDate.Mon));
+              if (res.data.info[i].Mon == true) {
+                this.availableDate.Mon = "";
+              } else {
+                this.availableDate.Mon = "1";
+              }
+              if (res.data.info[i].Tues == true) {
+                this.availableDate.Tues = "";
+              } else {
+                this.availableDate.Tues = "2";
+              }
+              if (res.data.info[i].Wed == true) {
+                this.availableDate.Wed = "";
+              } else {
+                this.availableDate.Wed = "3";
+              }
+              if (res.data.info[i].Thurs == true) {
+                this.availableDate.Thurs = "";
+              } else {
+                this.availableDate.Thurs = "4";
+              }
+              if (res.data.info[i].Fri == true) {
+                this.availableDate.Fri = "";
+              } else {
+                this.availableDate.Fri = "5";
+              }
+              if (res.data.info[i].Sat == true) {
+                this.availableDate.Sat = "";
+              } else {
+                this.availableDate.Sat = "6";
+              }
+              if (res.data.info[i].Sun == true) {
+                this.availableDate.Sun = "";
+              } else {
+                this.availableDate.Sun = "7";
+              }
+              break;
+            }
+          }
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     //拿到该医生的出诊时间
     doctorService
