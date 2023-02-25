@@ -8,7 +8,7 @@ type checkCodeDataType = { [key: string]: checkCodeType }
 
 type resetPassDatType = { id: string, email: string, pass: string, againPass: string, code: string }
 
-type resetUserInfoType = { id: string, name: string, phone: string, address: string, allergy: string, birth: Date, gender: string, photo: string }
+type resetUserInfoType = { id: string, name: string, email: string, address: string, allergy: string, birth: Date, gender: string, photo: string }
 
 type resetDoctorInfoType = { id: string, photo: string, identity: string, hospitalName: string, name: string, hospitalLevel: string, hospitalAddress: string, job: string, strength: string, selfIntro: string, departmentId: string, gender: string }
 

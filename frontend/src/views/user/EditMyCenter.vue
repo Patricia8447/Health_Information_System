@@ -54,7 +54,6 @@ export default {
         gender: "",
         birth: "",
         email: "",
-        phone: "",
         address: "",
         allergy: "",
       },

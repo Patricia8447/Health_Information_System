@@ -13,7 +13,7 @@ const UserSchema = new Schema({
   gender: { type: String, enum: GENDER, default: GENDER.Neutral },                // 性别
   role: { type: String, enum: ROLE, default: ROLE.Normal },                       // 功能权限
   address: { type: String, default: '' },                                        // 用户住址
-  allergy: { type: String, default: '' },                                         // 过敏药物
+  allergy: { type: String, default: 'no' },                                         // 过敏药物
   birth: { type: Date, default: new Date(0) },                                  // 出生日期
   register: { type: Date, default: new Date() },                                // 注册时间
   lastLogin: { type: Date, default: new Date() },                               // 最后登录时间

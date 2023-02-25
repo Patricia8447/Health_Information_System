@@ -75,6 +75,7 @@ import { Survey, StylesManager, Model } from "survey-vue";
 import Service from "@/service/common.service.js";
 import Service2 from "@/service/upload.service.js";
 import doctorService from "@/service/doctor.service.js";
+import userService from "@/service/user.service.js";
 
 const parseTime = function (time) {
   const values = (time || "").split(":");
@@ -141,6 +142,7 @@ export default {
         appointmentDate: "",
         doctorId: "",
       },
+      personalInfos: JSON.parse(localStorage.getItem("user")),
       rules: {},
       options: [],
       availableTime: [{ startTime: "", endTime: "" }],
@@ -190,10 +192,38 @@ export default {
     async submitForm() {
       Service.personAskDoctor(this.ruleForm)
         .then((res) => {
-          console.log("test1" + JSON.stringify(res.data));
+          // console.log("test1" + JSON.stringify(res.data));
           if (res.data.code === 1) {
-            alert(res.data.info);
-            location.assign("/appointmentorderrecord");
+            if (this.personalInfos.allergy !== this.ruleForm.allergyMedicine) {
+              // this.open3();
+              let datas = {
+                id: this.personalInfos.id,
+                email: this.personalInfos.email,
+                address: this.personalInfos.address,
+                allergy: this.ruleForm.allergyMedicine[0],
+                name: this.personalInfos.name,
+                birth: this.personalInfos.birth,
+                gender: this.personalInfos.gender,
+              };
+
+              userService
+                .resaveUserInfo(datas)
+                .then((res) => {
+                  if (res.data.code === 1) {
+                    alert(res.data.info);
+                    localStorage.setItem("user", JSON.stringify(datas));
+                    location.assign("/mycenter");
+                  } else {
+                    alert(res.data.info);
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            } else {
+              alert(res.data.info);
+              location.assign("/appointmentorderrecord");
+            }
           } else {
             alert(res.data.info);
           }
@@ -202,6 +232,15 @@ export default {
           console.log(err);
         });
     },
+
+    open3() {
+      this.$confirm("确认关闭？")
+        .then((_) => {
+          done();
+        })
+        .catch((_) => {});
+    },
+
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },

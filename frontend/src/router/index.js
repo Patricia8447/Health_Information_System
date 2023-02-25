@@ -50,6 +50,7 @@ export default new Router({
             import(/* webpackChunkName: "about" */ "../views/user/HealthInformation.vue"),
           meta: { requireAuth: false, visiable: true, roles: ['user'] }
         },
+       
         {
           path: "/searchdrug",
           name: "SearchDrug",

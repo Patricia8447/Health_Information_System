@@ -98,7 +98,7 @@ export default {
     return {
       isAuth: "", //是否保持登录状态
       personalInfos: JSON.parse(localStorage.getItem("user")),
-      // personalInfos
+      // personalInfos: {},
       CS: {
         "text-align": "left", //文本居中
         "min-width": "40px", //最小宽度
@@ -115,11 +115,11 @@ export default {
       this.$router.replace("/healthinformation"); //页面跳转至健康資訊页面
     },
   },
-  //  async mounted() {
-  //     personalInfos = JSON.parse(localStorage.getItem("user"));
-  //     console.log(personalInfos);
-  //     console.log(personalInfos.value);
-  //   },
+  // async mounted() {
+  //   this.personalInfos = localStorage.getItem("user");
+  //   // console.log(personalInfos);
+  //   // console.log(personalInfos.value);
+  // },
 };
 </script>
 

@@ -167,8 +167,8 @@ function resavePassword({ id, pass, againPass, code }: resetPassDatType, res: Re
  * @param { resetUserInfo } data 请求数据
  * @param { Response } res 响应
  */
-function resaveUserInfo({ id, phone, address, allergy, name, birth, gender }: resetUserInfoType, res: Response) {
-  let updateObject = { phone, address, allergy, name, birth, gender }
+function resaveUserInfo({ id, email, address, allergy, name, birth, gender }: resetUserInfoType, res: Response) {
+  let updateObject = { email, address, allergy, name, birth, gender }
   UserModel.updateOne({ _id: id }, updateObject)
     .then(() => { res.send(responseInfo.success('modify successfully')) })
     .catch(() => { res.send(responseInfo.updataException('modify failed')) })
