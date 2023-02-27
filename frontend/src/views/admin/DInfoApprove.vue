@@ -65,11 +65,6 @@
         </template>
         <template slot-scope="scope" class="btns">
           <!-- 同意或者拒绝没有页面的跳转，会有popoup再次确认操作 -->
-          <!-- <el-button size="mini" type="warning" plain
-            ><router-link to="/admindoctordetail"
-              >View Doctor Detail</router-link
-            ></el-button
-          > -->
           <el-button
             type="success"
             plain
@@ -94,8 +89,8 @@
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-            >Delete</el-button
+            @click="openInactive(scope.$index, scope.row.userId, scope.row.status)"
+            >Inactive</el-button
           >
           <!-- 该按钮在审核完成后才能进行点击，在此之前应该是unclickable的状态 -->
         </template>
@@ -106,6 +101,7 @@
 
 <script>
 import Service from "@/service/common.service.js";
+import doctorService from "@/service/doctor.service.js";
 import adminService from "@/service/admin.service.js";
 import { ref } from "vue";
 
@@ -127,6 +123,19 @@ export default {
           status: "",
         },
       ],
+      affectedTableData: [
+        {
+          _id: "",
+          userId: "",
+          doctorId: "",
+          selfReport: "",
+          allergyMedicine: "",
+          appointmentTime: "",
+          appointmentDate: "",
+          status: "",
+          time: "",
+        },
+      ],
       search: "",
     };
   },
@@ -135,13 +144,6 @@ export default {
       let data = this.tableData;
       this.$router.push({ name: "AdminDoctorDetail", params: { id: data[e]._id } });
     },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
-
     /**
      * 遍历列的所有内容，获取最宽一列的宽度
      * @param arr
@@ -177,12 +179,9 @@ export default {
      * @param table_data: 表格数据
      */
     flexColumnWidth(label, prop) {
-      // console.log('label', label)
-      // console.log('prop', prop)
       // 1.获取该列的所有数据
       const arr = this.tableData.map((x) => x[prop]);
       arr.push(label); // 把每列的表头也加进去算
-      // console.log(arr)
       // 2.计算每列内容最大的宽度 + 表格的内间距（依据实际情况而定）
       return this.getMaxLength(arr) + 28 + "px";
     },
@@ -280,14 +279,68 @@ export default {
       //     });
       //   });
     },
+    openInactive(e, _id, status) {
+      console.log("admin inactive 医生申请接口");
+      let datas = {
+        userId: _id,
+        status: "Reviewing",
+      };
+
+      let datas2 = {
+        doctorId: this.tableData[e]._id,
+      };
+      doctorService
+        .getInquiryList(datas2)
+        .then((res) => {
+          if (res.data.code === 1) {
+            this.affectedTableData = res.data.info;
+          } else {
+            alert(res.data.info);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      //改变医生的审核状态为reviewing
+      adminService
+        .InactiveDoctorStatus(datas)
+        .then((res) => {
+          console.log("test-inactive-function: " + JSON.stringify(res.data));
+          if (res.data.code === 1) {
+            alert(res.data.info);
+            //改变受影响但未进行的预约订单
+            for (let i = 0; i < this.affectedTableData.length; i++) {
+              let datas3 = {
+                inquiryId: this.affectedTableData[i]._id,
+              };
+              alert("inquiryid: " + this.affectedTableData[i]._id);
+              adminService
+                .changeInquiryStatus(datas3)
+                .then((res) => {
+                  if (res.data.code === 1) {
+                    alert(res.data.info);
+                  } else {
+                    alert(res.data.info);
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+          } else {
+            alert(res.data.info);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   async mounted() {
     console.log("发送获取医生列表接口");
-    // TODO 医生列表接口
     Service.getAllDoctor()
       .then((res) => {
-        console.log("test" + res.data);
-        console.log("test1" + JSON.stringify(res.data));
         if (res.data.code === 1) {
           this.tableData = res.data.info;
         } else {

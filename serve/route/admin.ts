@@ -36,6 +36,10 @@ adminRouter.post('/doctor/apply/reject', (req: Request, res: Response) => {
   adminServe.rejectDoctorStatus(req, res)
 })
 
+adminRouter.post('/doctor/apply/inactive', (req: Request, res: Response) => {
+  adminServe.adminInactiveDoctorStatus(req, res)
+})
+
 adminRouter.post('/doctor/cancel/approval', (req: Request, res: Response) => {
   adminServe.approvalDoctorCancelStatus(req, res)
 })
@@ -61,6 +65,10 @@ adminRouter.post('/doctor/one', (req: Request, res: Response) => {
 
 adminRouter.post('/doctor/finddoc', (req: Request, res: Response) => {
   adminServe.findDoc(req, res)
+})
+
+adminRouter.post('/inquiry/changestatus', (req: Request, res: Response) => {
+  adminServe.changeInquiryStatus(req, res)
 })
 
 export default adminRouter

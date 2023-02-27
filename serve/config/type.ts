@@ -51,9 +51,11 @@ interface pushInfoType extends pushInfoModelType { id: string }
 interface updatePushInfoType extends pushInfoType { infoId: string }
 
 type inqueryType = {
-  userId: string, doctorId: string, selfReport: string, allergyMedicine: Array<string>, appointmentTime: String, appointmentDate: Date,
+  userId: string, doctorId: string, selfReport: string, allergyMedicine: string, appointmentTime: string, appointmentDate: Date,
   status: string, time: Date
 }
+
+type changeInquiryStatusType = { id: string, userId: string, doctorId: string, status: string }
 
 interface updateinqueryType extends inqueryType { inqueryId: string }
 
@@ -65,5 +67,5 @@ export {
   availableTimeType, changeDoctorStatusType, adminApprovalDoctorCancelStatusType, resetDoctorInfoType,
   getOneDoctorType, personAskDoctorType, doctorWirteVisitRecordType, createDistributionType,
   updataDistributionType, judgeDoctorIsFreeType, pushInfoModelType, pushInfoType,
-  updatePushInfoType, inqueryType, updateinqueryType, findDocType
+  updatePushInfoType, inqueryType, updateinqueryType, findDocType, changeInquiryStatusType
 }

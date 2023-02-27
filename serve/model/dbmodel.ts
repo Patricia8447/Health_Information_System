@@ -84,7 +84,8 @@ const InquirySchema = new Schema({
   userId: { type: String, require: true },                                       // 用户ID
   doctorId: { type: String, require: true },                                     // 医生标识ID
   selfReport: { type: String, require: true },                                   // 病情自述
-  allergyMedicine: { type: Array<string>, default: [] },                         // 过敏药物
+  // allergyMedicine: { type: Array<string>, default: [] },                         // 过敏药物
+  allergyMedicine: { type: String, require: true },                         // 过敏药物
   appointmentTime: { type: String, require: true },                              // 预约时间
   appointmentDate: { type: String, require: true },                              // 预约日期
   status: { type: String, default: APPOINTMENT.Not },                            // 问诊预约状态

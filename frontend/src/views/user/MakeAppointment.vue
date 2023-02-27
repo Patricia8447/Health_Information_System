@@ -200,7 +200,7 @@ export default {
                 id: this.personalInfos.id,
                 email: this.personalInfos.email,
                 address: this.personalInfos.address,
-                allergy: this.ruleForm.allergyMedicine[0],
+                allergy: this.ruleForm.allergyMedicine,
                 name: this.personalInfos.name,
                 birth: this.personalInfos.birth,
                 gender: this.personalInfos.gender,

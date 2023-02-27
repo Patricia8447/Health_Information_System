@@ -22,27 +22,44 @@ export default {
     console.log(data)
     return request.post('/admin/doctor/apply/approval', data)
   },
+
   RejectDoctorStatus: (data) => {
     console.log(data)
     return request.post('/admin/doctor/apply/reject', data)
   },
+
+  InactiveDoctorStatus: (data) => {
+    console.log(data)
+    return request.post('/admin/doctor/apply/inactive', data)
+  },
+
   getOneDoctor: (data) => {
     return request.post('/admin/doctor/one', data)
   },
+
   addPushInfo: (data) => {
     console.log(data)
     return request.post('/admin/info/add', data)
   },
+
   updataPushInfo: (data) => {
     console.log(data)
     return request.post('/admin/info/updata', data)
   },
+
   deletePushInfo: (data) => {
     console.log(data)
     return request.post('/admin/info/delete', data)
   },
+
   findDoc: (data) => {
     console.log(data)
     return request.post('/admin/doctor/finddoc', data)
   },
+
+  changeInquiryStatus: (data) => {
+    console.log(data)
+    return request.post('/admin/inquiry/changestatus', data)
+  },
+
 }

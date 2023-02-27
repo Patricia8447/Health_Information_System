@@ -276,8 +276,6 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
  */
 function adminApprovalDoctorStatus({ userId, status }: changeDoctorStatusType, res: Response) {
   // TODO 后续有兴趣可以通过id写审批日志
-  console.log(userId);
-  console.log(status);
   if (!status) {
     res.send(responseInfo.requestException('Missing request parameter'))
     return;
@@ -300,8 +298,6 @@ function adminApprovalDoctorStatus({ userId, status }: changeDoctorStatusType, r
  */
 function adminRejectDoctorStatus({ userId, status }: changeDoctorStatusType, res: Response) {
   // TODO 后续有兴趣可以通过id写审批日志
-  console.log(userId);
-  console.log(status);
   if (!status) {
     res.send(responseInfo.requestException('Missing request parameter'))
     return;
@@ -313,7 +309,28 @@ function adminRejectDoctorStatus({ userId, status }: changeDoctorStatusType, res
   DoctorModel.findOneAndUpdate({ userId }, { status: AUDITSTATUS[(status as keyof typeof AUDITSTATUS)] }).then(() => {
     return UserModel.findOneAndUpdate({ _id: userId }, { role: status === 'NoPass' ? ROLE.Docotr : ROLE.Normal })
   }).then(() => {
-    res.send(responseInfo.success('Approve succcessfully'))
+    res.send(responseInfo.success('Rejected succcessfully'))
+  }).catch((error: Error) => res.send(responseInfo.requestException(error)))
+}
+
+/**
+ * 管理员inactive医生状态
+ * @param { applyToBeDoctorType } data 请求数据
+ * @param { Response } res 响应
+ */
+function adminInactiveDoctorStatus({ userId, status }: changeDoctorStatusType, res: Response) {
+  if (!status) {
+    res.send(responseInfo.requestException('Missing request parameter'))
+    return;
+  }
+  if (!(status in AUDITSTATUS)) {
+    res.send(responseInfo.registerException('Approval type error'))
+    return;
+  }
+  DoctorModel.findOneAndUpdate({ userId }, { status: AUDITSTATUS[(status as keyof typeof AUDITSTATUS)] }).then(() => {
+    return UserModel.findOneAndUpdate({ _id: userId }, { role: status === 'Reviewing' ? ROLE.Docotr : ROLE.Normal })
+  }).then(() => {
+    res.send(responseInfo.success('Inactive succcessfully'))
   }).catch((error: Error) => res.send(responseInfo.requestException(error)))
 }
 
@@ -375,11 +392,11 @@ function getAllDoctor({ status }: Record<string, string>, res: Response) {
  * @param { Response } res 响应
  */
 function getApprovedDoctor({ status }: Record<string, string>, res: Response) {
-  DoctorModel.find({status: AUDITSTATUS.Approved}).then((result:Array<any>) => {
+  DoctorModel.find({ status: AUDITSTATUS.Approved }).then((result: Array<any>) => {
     console.log("this is res " + res);
     console.log("this is result " + result);
     res.send(responseInfo.success(result))
-  }).catch((err:Error) => {res.send(responseInfo.getException(err))})
+  }).catch((err: Error) => { res.send(responseInfo.getException(err)) })
 }
 
 function getOneDoctor({ id, name, hospitalName, hospitalLevel, hospitalAddress, job, strength, status, selfIntro }: getOneDoctorType, res: Response) {
@@ -449,6 +466,20 @@ function getInquiryList({ doctorId }: Record<string, string>, res: Response) {
 }
 
 /**
+ * 管理者改变受影响账户的预约状态
+ * * @param { doctorWirteVisitRecordType } data 请求数据
+ * @param { Response } res 响应
+ */
+function changeInquiryStatus({ inquiryId }: Record<string, string>, res: Response) {
+  InquiryModel.findOneAndUpdate({ _id: inquiryId }, { status: APPOINTMENT.End }).then((result: any) => {
+    if (!result) { throw new Error() }
+  }).then(() => {
+    console.log("ok");
+  }).catch((error: Error) => res.send(responseInfo.getException(error)))
+
+}
+
+/**
  * 医生写就诊记录
  * @param { Record<string, string> } data 请求数据
  * @param { Response } res 响应
@@ -489,11 +520,11 @@ function getVisitRecordList(data: Record<string, string>, res: Response) {
 function getVisitRecordList2({ inquiryId, doctorId }: doctorWirteVisitRecordType, res: Response) {
   console.log(inquiryId);
   console.log(doctorId);
-  VisitRecordModel.findOne({ inquiryId: inquiryId }).then((result: any) =>{
+  VisitRecordModel.findOne({ inquiryId: inquiryId }).then((result: any) => {
     // VisitRecordModel.find(data).then((result: Array<any>) => {
     console.log(result);
-  res.send(responseInfo.success(result))
-}).catch ((err: Error) => res.send(responseInfo.getException(err)))
+    res.send(responseInfo.success(result))
+  }).catch((err: Error) => res.send(responseInfo.getException(err)))
 }
 
 /**
@@ -639,9 +670,12 @@ function deletePushInfo({ infoId }: updatePushInfoType, res: Response) {
 let FunctionSet = {
   newUser, login, sendCheckMail, resavePassword, resaveUserInfo, addDepartment, updateDepartmentName,
   getAllDepartment, applyToBeDoctor, adminApprovalDoctorStatus, doctorCancelToBeDoctor,
-  adminApprovalDoctorCancelStatus, adminRejectDoctorStatus, getAllDoctor, resaveDoctorInfo, getOneDoctor, personAskDoctor, getInquiryList,
+  adminApprovalDoctorCancelStatus, adminRejectDoctorStatus, getAllDoctor,
+  resaveDoctorInfo, getOneDoctor, personAskDoctor, getInquiryList,
   doctorWirteVisitRecord, getVisitRecordList, createDistribution, updataDistribution,
-  judgeDoctorIsFree, getPushInfoList, addPushInfo, updataPushInfo, deletePushInfo, getUserInfo, getTimeList, getDateList, findDoc, getVisitRecordList2, getApprovedDoctor
+  judgeDoctorIsFree, getPushInfoList, addPushInfo, updataPushInfo, deletePushInfo,
+  getUserInfo, getTimeList, getDateList,
+  findDoc, getVisitRecordList2, getApprovedDoctor, adminInactiveDoctorStatus, changeInquiryStatus
 }
 
 export default FunctionSet
