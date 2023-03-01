@@ -15,12 +15,12 @@
         :width="flexColumnWidth('Doctor ID', 'doctorId')"
       >
       </el-table-column>
-      <!-- <el-table-column
+      <el-table-column
         label="Doctor Name"
-        prop="name"
-        :width="flexColumnWidth('Doctor Name', 'name')"
+        prop="doctorName"
+        :width="flexColumnWidth('Doctor Name', 'doctorName')"
       >
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column
         label="Allergy Medicine"
         prop="allergyMedicine"
@@ -95,6 +95,7 @@
 import Service from "@/service/doctor.service.js";
 import Doctor from "@/service/user.service.js";
 import Common from "@/service/common.service.js";
+import Admin from "@/service/admin.service.js";
 
 export default {
   data() {
@@ -109,6 +110,7 @@ export default {
           appointmentTime: "",
           allergyMedicine: "",
           appointmentDate: "",
+          zoomlink: "",
         },
       ],
       alldoctordetails: [
@@ -218,10 +220,9 @@ export default {
     console.log("发送获取就诊记录列表接口");
     Common.getVisitRecordList()
       .then((res) => {
-        console.log("test1" + JSON.stringify(res.data));
+        // console.log("test1" + JSON.stringify(res.data));
         if (res.data.code === 1) {
           this.tableData = res.data.info;
-          this.te;
         } else {
           alert(res.data.info);
         }
@@ -230,26 +231,29 @@ export default {
         console.log(err);
       });
 
-    Common.getAllDoctor(this.tableData[0].doctorId)
-      .then((res) => {
-        if (res.data.code === 1) {
-          // this.tableData.doctorName = this.alldoctordetails.name;
-          for (let i = 0; i < res.data.info.length; i++) {
-            if (res.data.info[i]._id == this.tableData[0].doctorId) {
-              // console.log("11111: " + JSON.stringify(res.data.info[i]));
-              this.alldoctordetails = res.data.info[i];
-              // alert("2345: " + this.alldoctordetails.name);
-              this.tableData.doctorName = this.alldoctordetails.name;
-              break;
-            }
-          }
-        } else {
-          alert(res.data.info);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // Common.getAllDoctor()
+    //   .then((res) => {
+    //     if (res.data.code === 1) {
+    //       console.log("11111: " + JSON.stringify(res.data.info));
+    //       for (let i = 0; i < res.data.info.length; i++) {
+    //         for (let j = 0; j < this.tableData.length; j++) {
+    //           if (res.data.info[i]._id == this.tableData[j].doctorId) {
+    //             // console.log("11111: " + JSON.stringify(res.data.info[i]));
+    //             this.alldoctordetails = res.data.info[i];
+    //             alert("2345: " + this.alldoctordetails.name);
+    //             this.tableData.doctorName = this.alldoctordetails.name;
+    //             console.log("check: " + this.tableData.doctorName);
+    //             break;
+    //           }
+    //         }
+    //       }
+    //     } else {
+    //       alert(res.data.info);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   },
 };
 </script>

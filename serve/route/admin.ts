@@ -63,6 +63,10 @@ adminRouter.post('/doctor/one', (req: Request, res: Response) => {
   adminServe.getOneDoctor(req, res)
 })
 
+adminRouter.post('/doctor/a', (req: Request, res: Response) => {
+  adminServe.getaDoctor(req, res)
+})
+
 adminRouter.post('/doctor/finddoc', (req: Request, res: Response) => {
   adminServe.findDoc(req, res)
 })

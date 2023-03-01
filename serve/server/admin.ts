@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { ObjectSimpleShallowCopy } from '../config/default';
 import {
   adminApprovalDoctorCancelStatusType, changeDoctorStatusType, pushInfoType,
-  updateDepartmentNameType, getOneDoctorType, changeInquiryStatusType
+  updateDepartmentNameType, getOneDoctorType, changeInquiryStatusType, getaDoctorType
 } from '../config/type';
 import FunctionSet from "../dao/FunctionSet";
 
@@ -41,6 +41,11 @@ function getOneDoctor(req: Request, res: Response) {
   FunctionSet.getOneDoctor((data as getOneDoctorType), res)
 }
 
+function getaDoctor(req: Request, res: Response) {
+  let data: Record<string, string | boolean> = ObjectSimpleShallowCopy(req.body)
+  FunctionSet.getaDoctor((data as getaDoctorType), res)
+}
+
 function addPushInfo(req: Request, res: Response) {
   let data: Record<string, string> = ObjectSimpleShallowCopy(req.body)
   FunctionSet.addPushInfo((data as any), res)
@@ -69,7 +74,7 @@ function changeInquiryStatus(req: Request, res: Response) {
 let adminServe = {
   addDepartment, updateDepartmentName, approvalDoctorStatus, approvalDoctorCancelStatus,
   addPushInfo, updataPushInfo, deletePushInfo, getOneDoctor, rejectDoctorStatus, findDoc
-  , adminInactiveDoctorStatus, changeInquiryStatus
+  , adminInactiveDoctorStatus, changeInquiryStatus, getaDoctor
 }
 
 export default adminServe

@@ -76,6 +76,7 @@ import Service from "@/service/common.service.js";
 import Service2 from "@/service/upload.service.js";
 import doctorService from "@/service/doctor.service.js";
 import userService from "@/service/user.service.js";
+import adminService from "@/service/admin.service.js";
 
 const parseTime = function (time) {
   const values = (time || "").split(":");
@@ -141,6 +142,8 @@ export default {
         appointmentTime: "",
         appointmentDate: "",
         doctorId: "",
+        doctorName: "",
+        userName: JSON.parse(localStorage.getItem("user")).name,
       },
       personalInfos: JSON.parse(localStorage.getItem("user")),
       rules: {},
@@ -305,6 +308,24 @@ export default {
   },
   mounted() {
     this.ruleForm.doctorId = this.$route.params.id;
+    console.log("hiii: " + this.ruleForm.doctorId);
+
+    let data = {
+      doctorId: this.ruleForm.doctorId,
+    };
+    adminService
+      .getaDoctor(data)
+      .then((res) => {
+        if (res.data.code === 1) {
+          console.log("8888: " + JSON.stringify(res.data.info));
+          this.ruleForm.doctorName = res.data.info.name;
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     //拿到医生的出诊日期
     doctorService

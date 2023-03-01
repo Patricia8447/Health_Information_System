@@ -18,8 +18,8 @@
       </el-table-column>
       <el-table-column
         label="Patient Name"
-        prop="patientName"
-        :width="flexColumnWidth('Patient Name', 'patientName')"
+        prop="userName"
+        :width="flexColumnWidth('Patient Name', 'userName')"
       >
       </el-table-column>
       <el-table-column
@@ -91,7 +91,7 @@ export default {
           appointmentDate: "",
           status: "",
           time: "",
-          patientName: "",
+          userName: "",
         },
       ],
       search: "",
@@ -171,10 +171,6 @@ export default {
             .then((res) => {
               if (res.data.code === 1) {
                 this.tableData = res.data.info;
-                alert("0000: " + JSON.stringify(this.tableData));
-
-                //拿到的是患者的id
-                alert("0001: " + JSON.stringify(this.tableData[0].userId));
               } else {
                 alert(res.data.info);
               }

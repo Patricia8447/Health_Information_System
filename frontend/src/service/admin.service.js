@@ -37,6 +37,10 @@ export default {
     return request.post('/admin/doctor/one', data)
   },
 
+  getaDoctor: (data) => {
+    return request.post('/admin/doctor/a', data)
+  },
+
   addPushInfo: (data) => {
     console.log(data)
     return request.post('/admin/info/add', data)

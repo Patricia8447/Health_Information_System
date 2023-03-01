@@ -82,6 +82,8 @@ const DoctorPictureSchema = new Schema({
 // 问诊表
 const InquirySchema = new Schema({
   userId: { type: String, require: true },                                       // 用户ID
+  userName: { type: String, require: true },                                       // 用户ID
+  doctorName: { type: String, require: true },                                       // 用户ID
   doctorId: { type: String, require: true },                                     // 医生标识ID
   selfReport: { type: String, require: true },                                   // 病情自述
   // allergyMedicine: { type: Array<string>, default: [] },                         // 过敏药物

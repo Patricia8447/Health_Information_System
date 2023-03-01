@@ -9,7 +9,7 @@ import {
   resetPassDatType, resetUserInfoType, sendCheckDataType, updateDepartmentNameType,
   availableTimeType, resetDoctorInfoType,
   changeDoctorStatusType,
-  adminApprovalDoctorCancelStatusType, getOneDoctorType, personAskDoctorType,
+  adminApprovalDoctorCancelStatusType, personAskDoctorType,
   doctorWirteVisitRecordType,
   createDistributionType,
   updataDistributionType,
@@ -19,7 +19,9 @@ import {
   updatePushInfoType,
   inqueryType,
   updateinqueryType,
-  findDocType
+  findDocType,
+  getOneDoctorType,
+  getaDoctorType
 } from '../config/type'
 import { checkCodeEmail, signUpEmail, checkStatusEmail } from './emailServe'
 import { getRandOmCode, resetPassCodeTime, Token, ObjectSimpleShallowCopy, ROLE, AUDITSTATUS, APPOINTMENT } from '../config/default'
@@ -401,10 +403,18 @@ function getApprovedDoctor({ status }: Record<string, string>, res: Response) {
   }).catch((err: Error) => { res.send(responseInfo.getException(err)) })
 }
 
+
 function getOneDoctor({ id, name, hospitalName, hospitalLevel, hospitalAddress, job, strength, status, selfIntro }: getOneDoctorType, res: Response) {
   let findObject = { name, hospitalName, hospitalLevel, hospitalAddress, job, strength, status, selfIntro }
   DoctorModel.findOne({ userId: id }, findObject)
     .then(() => { res.send(responseInfo.success('found')) })
+    .catch(() => { res.send(responseInfo.updataException('not found')) })
+}
+
+function getaDoctor({ doctorId }: getaDoctorType, res: Response) {
+  console.log("get-a-doctor: " + doctorId);
+  DoctorModel.findOne({ _id: doctorId })
+    .then((result: any) => { res.send(responseInfo.success(result)) })
     .catch(() => { res.send(responseInfo.updataException('not found')) })
 }
 
@@ -413,8 +423,8 @@ function getOneDoctor({ id, name, hospitalName, hospitalLevel, hospitalAddress, 
  * @param { personAskDoctorType } data 请求数据
  * @param { Response } res 响应
  */
-function personAskDoctor({ id, doctorId, selfReport, allergyMedicine, appointmentTime, appointmentDate }: personAskDoctorType, res: Response) {
-  let InquiryData = { userId: id, doctorId, selfReport, allergyMedicine, appointmentTime, appointmentDate }
+function personAskDoctor({ id, userName, doctorName, doctorId, selfReport, allergyMedicine, appointmentTime, appointmentDate }: personAskDoctorType, res: Response) {
+  let InquiryData = { userId: id, doctorId, userName, doctorName,selfReport, allergyMedicine, appointmentTime, appointmentDate }
   DoctorModel.countDocuments({ _id: doctorId }).then((num: number) => {
     if (num == 0) { throw new Error('The doctor does not exist') }
     return new InquiryModel(InquiryData).save()
@@ -678,7 +688,9 @@ let FunctionSet = {
   doctorWirteVisitRecord, getVisitRecordList, createDistribution, updataDistribution,
   judgeDoctorIsFree, getPushInfoList, addPushInfo, updataPushInfo, deletePushInfo,
   getUserInfo, getTimeList, getDateList,
-  findDoc, getVisitRecordList2, getApprovedDoctor, adminInactiveDoctorStatus, changeInquiryStatus
+  findDoc, getVisitRecordList2, getApprovedDoctor, 
+  adminInactiveDoctorStatus, changeInquiryStatus,
+  getaDoctor
 }
 
 export default FunctionSet

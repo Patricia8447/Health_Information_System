@@ -32,7 +32,9 @@ type adminApprovalDoctorCancelStatusType = { id: string, userId: string, bool: b
 
 type getOneDoctorType = { id: string, phone: string, name: string, email: string, hospitalName: string, hospitalLevel: string, hospitalAddress: string, pos: string, job: string, slot: string, strength: string, status: string, selfIntro: string }
 
-type personAskDoctorType = { id: string, doctorId: string, selfReport: string, allergyMedicine: string, appointmentTime: string, appointmentDate: string }
+type getaDoctorType = {doctorId: string, doctorName: string }
+
+type personAskDoctorType = { id: string, userName: string, doctorName: string,doctorId: string, selfReport: string, allergyMedicine: string, appointmentTime: string, appointmentDate: string }
 
 type doctorWirteVisitRecordType = { id: string, inquiryId: string, doctorId: string, userId: string, name: string, age: string, gender: string, consultDate: string, departmentId: string, doctorName: string, symptoms: string, drugsage: string, remark: string }
 
@@ -67,5 +69,6 @@ export {
   availableTimeType, changeDoctorStatusType, adminApprovalDoctorCancelStatusType, resetDoctorInfoType,
   getOneDoctorType, personAskDoctorType, doctorWirteVisitRecordType, createDistributionType,
   updataDistributionType, judgeDoctorIsFreeType, pushInfoModelType, pushInfoType,
-  updatePushInfoType, inqueryType, updateinqueryType, findDocType, changeInquiryStatusType
+  updatePushInfoType, inqueryType, updateinqueryType, findDocType, 
+  changeInquiryStatusType, getaDoctorType
 }
