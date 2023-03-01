@@ -103,6 +103,7 @@
 import Service from "@/service/common.service.js";
 import doctorService from "@/service/doctor.service.js";
 import adminService from "@/service/admin.service.js";
+import userService from "@/service/user.service.js";
 import { ref } from "vue";
 
 let json = ref({});
@@ -137,6 +138,9 @@ export default {
         },
       ],
       search: "",
+      user: {
+        email: "patricia8447@163.com",
+      },
     };
   },
   methods: {
@@ -314,12 +318,16 @@ export default {
               let datas3 = {
                 inquiryId: this.affectedTableData[i]._id,
               };
-              alert("inquiryid: " + this.affectedTableData[i]._id);
+              let datas4 = {
+                userId: this.affectedTableData[i].userId,
+              };
+              // alert("datas4: " + this.affectedTableData[i].userId);
+
               adminService
                 .changeInquiryStatus(datas3)
                 .then((res) => {
                   if (res.data.code === 1) {
-                    alert(res.data.info);
+                    // alert(res.data.info);
                   } else {
                     alert(res.data.info);
                   }

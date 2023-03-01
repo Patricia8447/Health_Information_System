@@ -1,7 +1,9 @@
 import responseInfo from '../config/responseInfo'
 import User from '../static/User'
 import { Response } from 'express'
-import { UserModel, DepartmentModel, DoctorModel, DoctorPictureModel, DoctorAvailableWeekModel, DoctorAvailableTimeModel, InquiryModel, VisitRecordModel, DrugDeliveryModel, PushInformationModel } from '../model/dbmodel'
+import { UserModel, DepartmentModel, DoctorModel, DoctorPictureModel, DoctorAvailableWeekModel, 
+  DoctorAvailableTimeModel, InquiryModel, VisitRecordModel, 
+  DrugDeliveryModel, PushInformationModel } from '../model/dbmodel'
 import {
   applyToBeDoctorType, checkCodeDataType, checkCodeType, loginDataType,
   resetPassDatType, resetUserInfoType, sendCheckDataType, updateDepartmentNameType,
@@ -19,7 +21,7 @@ import {
   updateinqueryType,
   findDocType
 } from '../config/type'
-import { checkCodeEmail, signUpEmail } from './emailServe'
+import { checkCodeEmail, signUpEmail, checkStatusEmail } from './emailServe'
 import { getRandOmCode, resetPassCodeTime, Token, ObjectSimpleShallowCopy, ROLE, AUDITSTATUS, APPOINTMENT } from '../config/default'
 import { createToken } from './jsonWebToken'
 import { Document as mongoDocument } from 'mongoose'
@@ -473,6 +475,7 @@ function getInquiryList({ doctorId }: Record<string, string>, res: Response) {
 function changeInquiryStatus({ inquiryId }: Record<string, string>, res: Response) {
   InquiryModel.findOneAndUpdate({ _id: inquiryId }, { status: APPOINTMENT.End }).then((result: any) => {
     if (!result) { throw new Error() }
+    checkStatusEmail("patricia8447@163.com")
   }).then(() => {
     console.log("ok");
   }).catch((error: Error) => res.send(responseInfo.getException(error)))

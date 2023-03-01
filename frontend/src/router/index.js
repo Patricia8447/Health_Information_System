@@ -248,13 +248,6 @@ export default new Router({
             import(/* webpackChunkName: "about" */ "../views/admin/AdminDoctorDetail.vue"),
         },
         {
-          path: "/testing",
-          name: "testing",
-          meta: { requireAuth: true, visible: true, roles: ['admin,doctor,user'] },
-          component: () =>
-            import(/* webpackChunkName: "about" */ "../views/testing.vue"),
-        },
-        {
           path: "/policy",
           name: "SafePolicy",
           meta: { requireAuth: true, visible: true, roles: ['admin,doctor,user'] },

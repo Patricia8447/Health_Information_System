@@ -58,6 +58,24 @@ function checkCodeEmail(email:string, code:string){
   })
 }
 
+function checkStatusEmail(email:string){
+ //  发送信息内容
+ let options = {
+  from: sendEmailData[sendEmailType].user,
+  to: email,
+  subject: '预约状态提醒',
+  html: '<span>检测到您的预约有变化，请登入您的账户查看当前预约状态</span>',
+}
+// 发送邮件
+transporter.sendMail(options, (err:any, msg:string) => {
+  if(err){
+    console.error(err);
+    throw new Error(err)
+  }else {
+    console.log('邮箱发送成功! -> ' + options.to);
+  }
+})
+}
 export {
-  signUpEmail, checkCodeEmail
+  signUpEmail, checkCodeEmail, checkStatusEmail
 }
