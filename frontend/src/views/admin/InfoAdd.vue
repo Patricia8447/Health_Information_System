@@ -1,7 +1,27 @@
 <template>
   <div class="container has-text-left">
     <h1>Adding Health Information</h1>
-    <survey :survey="survey"></survey>
+    <el-form
+      :model="ruleForm"
+      :rules="rules"
+      ref="ruleForm"
+      label-width="150px"
+      class="ruleForm"
+    >
+      <el-form-item label="Display Title" prop="title">
+        <el-input type="input" v-model.trim="ruleForm.title"></el-input>
+      </el-form-item>
+      <el-form-item label="Link" prop="link">
+        <el-input type="url" v-model.trim="ruleForm.link"></el-input>
+      </el-form-item>
+      <el-form-item label="Cover Link" prop="coverLink">
+        <el-input type="url" v-model.trim="ruleForm.coverLink"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="submit" @click="alertResults()">Submit</el-button>
+        <el-button type="success" plain @click="resetForm('ruleForm')">Reset</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -10,67 +30,48 @@ import "survey-vue/modern.min.css";
 import { Survey, StylesManager, Model } from "survey-vue";
 import adminService from "@/service/admin.service.js";
 
-StylesManager.applyTheme("modern");
-
 export default {
-  components: {
-    Survey,
-  },
   data() {
-    var json = {
-      pages: [
-        {
-          questions: [
-            {
-              name: "title",
-              type: "text",
-              title: "Display Title",
-              placeHolder: "please enter the display title",
-              isRequired: true,
-              autoComplete: "title",
-            },
-            {
-              name: "link",
-              type: "text",
-              title: "Link",
-              placeHolder: "please enter the link",
-              isRequired: true,
-              autoComplete: "link",
-            },
-            {
-              name: "coverLink",
-              type: "text",
-              title: "Cover Link",
-              placeHolder: "please enter the cover link",
-              isRequired: true,
-              autoComplete: "coverlink",
-            },
-          ],
-        },
-      ],
-    };
-
-    const model = new Model(json);
-    model.showPreviewBeforeComplete = "showAnsweredQuestions";
-    model.onComplete.add(this.alertResults);
-    model.completedHtml = "Information added successfully!";
-
     return {
-      survey: model,
+      ruleForm: {
+        title: "",
+        link: "",
+        coverLink: "",
+      },
+      rules: {
+        title: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        link: [
+          {
+            type: "url",
+            message: "please check the format ",
+            required: true,
+            trigger: "blur",
+          },
+        ],
+        coverLink: [
+          {
+            type: "url",
+            required: true,
+            message: "please check the format",
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   methods: {
-    async alertResults(sender) {
-      console.log(sender);
-      console.log(sender.data);
+    async alertResults() {
       adminService
-        .addPushInfo(sender.data)
+        .addPushInfo(this.ruleForm)
         .then((res) => {
           console.log(JSON.stringify(res.data));
           if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
             alert(res.data.info);
-            location.assign("/healthinformation");
+            if (res.data.info == "Please input the form completely") {
+              console.log("not yet submitted");
+            } else {
+              location.assign("/healthinformation");
+            }
           } else {
             alert(res.data.info);
           }
@@ -78,6 +79,9 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     },
   },
 };
@@ -95,5 +99,11 @@ export default {
   font-size: 2em;
   text-align: center;
   margin-top: 5%;
+}
+
+.ruleForm {
+  width: 780px;
+  margin-top: 50px;
+  margin-left: 10%;
 }
 </style>

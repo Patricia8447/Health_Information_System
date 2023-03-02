@@ -1,9 +1,11 @@
 import responseInfo from '../config/responseInfo'
 import User from '../static/User'
 import { Response } from 'express'
-import { UserModel, DepartmentModel, DoctorModel, DoctorPictureModel, DoctorAvailableWeekModel, 
-  DoctorAvailableTimeModel, InquiryModel, VisitRecordModel, 
-  DrugDeliveryModel, PushInformationModel } from '../model/dbmodel'
+import {
+  UserModel, DepartmentModel, DoctorModel, DoctorPictureModel, DoctorAvailableWeekModel,
+  DoctorAvailableTimeModel, InquiryModel, VisitRecordModel,
+  DrugDeliveryModel, PushInformationModel
+} from '../model/dbmodel'
 import {
   applyToBeDoctorType, checkCodeDataType, checkCodeType, loginDataType,
   resetPassDatType, resetUserInfoType, sendCheckDataType, updateDepartmentNameType,
@@ -424,7 +426,7 @@ function getaDoctor({ doctorId }: getaDoctorType, res: Response) {
  * @param { Response } res 响应
  */
 function personAskDoctor({ id, userName, doctorName, doctorId, selfReport, allergyMedicine, appointmentTime, appointmentDate }: personAskDoctorType, res: Response) {
-  let InquiryData = { userId: id, doctorId, userName, doctorName,selfReport, allergyMedicine, appointmentTime, appointmentDate }
+  let InquiryData = { userId: id, doctorId, userName, doctorName, selfReport, allergyMedicine, appointmentTime, appointmentDate }
   DoctorModel.countDocuments({ _id: doctorId }).then((num: number) => {
     if (num == 0) { throw new Error('The doctor does not exist') }
     return new InquiryModel(InquiryData).save()
@@ -607,9 +609,13 @@ function getPushInfoList({ }: Record<string, string>, res: Response) {
  * @param { Response } res 响应
  */
 function addPushInfo({ title, link, coverLink }: pushInfoType, res: Response) {
-  new PushInformationModel({ title, link, coverLink }).save().then((result: pushInfoModelType) => {
-    res.send(responseInfo.success('Save successfully'))
-  }).catch((err: Error) => res.send(responseInfo.updataException(err)))
+  if (title == "" || link == "" || coverLink == "")
+    res.send(responseInfo.success('Please input the form completely'))
+  else {
+    new PushInformationModel({ title, link, coverLink }).save().then((result: pushInfoModelType) => {
+      res.send(responseInfo.success('Save successfully'))
+    }).catch((err: Error) => res.send(responseInfo.updataException(err)))
+  }
 }
 
 /**
@@ -688,7 +694,7 @@ let FunctionSet = {
   doctorWirteVisitRecord, getVisitRecordList, createDistribution, updataDistribution,
   judgeDoctorIsFree, getPushInfoList, addPushInfo, updataPushInfo, deletePushInfo,
   getUserInfo, getTimeList, getDateList,
-  findDoc, getVisitRecordList2, getApprovedDoctor, 
+  findDoc, getVisitRecordList2, getApprovedDoctor,
   adminInactiveDoctorStatus, changeInquiryStatus,
   getaDoctor
 }

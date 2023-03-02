@@ -127,9 +127,9 @@ const DrugDeliverySchema = new Schema({
 
 // 推送信息
 const PushInformationSchema = new Schema<pushInfoModelType>({
-  title: String,                                                                // 标题
-  link: String,                                                                 // 网页链接
-  coverLink: String,                                                            // 背景图
+  title: {type:String, required: true},   
+  link: {type:String, required: true}, 
+  coverLink: {type:String, required: true},                                                              
 })
 
 let UserModel = db.model('User', UserSchema)
