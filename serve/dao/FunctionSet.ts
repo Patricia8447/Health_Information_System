@@ -67,43 +67,47 @@ function newUser({ name, password, email, phone, role }: User, res: Response) {
  */
 function login({ username, password }: loginDataType, res: Response) {
   // console.log(username);
-  UserModel.findOne({ email: username }, { lastLogin: 0 }).then(async (result: any) => {
-    if (!result) {      // 没有检索到数据
-      res.send(responseInfo.loginException('wrong email or password'))
-    }
-    if (User.check(password, result.password)) {
-      let back: Record<string, any> = ObjectSimpleShallowCopy(result._doc)
-      createToken(result._id).then(token => {
-        back.token = token
-        delete back.password
-        delete back.__v
-        return UserModel.updateOne({ email: username }, { lastLogin: new Date() })
-      }).then(() => {
-        // if (result.role == ROLE.Docotr) {
-        //   console.log(back.id);
-        //   DoctorModel.findOne({ userId: back.id }).then((res1: any) => {
-        //     console.log(res1);
-        //     console.log(res1._doc);
-        //     back.doctor = ObjectSimpleShallowCopy(res1._doc)
-        //     res.send(responseInfo.success(back))
-        //   }).catch((err) => {
-        //     console.log(err);
-        //     res.send(responseInfo.getException(err))
-        //   })
-        // } else {
-        res.send(responseInfo.success(back))
-        // }
-      }).catch((error) => {
-        console.log(error);
-        res.send(responseInfo.loginException(error))
-      })
-    } else {
-      res.send(responseInfo.loginException('wrong email or password'))
-    }
-  }).catch((err) => {
-    console.log(err);
-    res.send(responseInfo.searchException(err))
-  })
+  if (username == "" || password == "") {
+    res.send(responseInfo.loginException('the term cannot be empty'))
+  } else {
+    UserModel.findOne({ email: username }, { lastLogin: 0 }).then(async (result: any) => {
+      if (!result) {      // 没有检索到数据
+        res.send(responseInfo.loginException('wrong email or password'))
+      }
+      if (User.check(password, result.password)) {
+        let back: Record<string, any> = ObjectSimpleShallowCopy(result._doc)
+        createToken(result._id).then(token => {
+          back.token = token
+          delete back.password
+          delete back.__v
+          return UserModel.updateOne({ email: username }, { lastLogin: new Date() })
+        }).then(() => {
+          // if (result.role == ROLE.Docotr) {
+          //   console.log(back.id);
+          //   DoctorModel.findOne({ userId: back.id }).then((res1: any) => {
+          //     console.log(res1);
+          //     console.log(res1._doc);
+          //     back.doctor = ObjectSimpleShallowCopy(res1._doc)
+          //     res.send(responseInfo.success(back))
+          //   }).catch((err) => {
+          //     console.log(err);
+          //     res.send(responseInfo.getException(err))
+          //   })
+          // } else {
+          res.send(responseInfo.success(back))
+          // }
+        }).catch((error) => {
+          console.log(error);
+          res.send(responseInfo.loginException(error))
+        })
+      } else {
+        res.send(responseInfo.loginException('wrong email or password'))
+      }
+    }).catch((err) => {
+      console.log(err);
+      res.send(responseInfo.searchException(err))
+    })
+  }
 }
 
 /**
