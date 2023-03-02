@@ -90,15 +90,20 @@
 <script>
 import Router from "vue-router";
 import { ref } from "vue";
-let personalInfos = ref({});
+import User from "@/service/user.service.js";
 
 export default {
-  // name: "Home",
   data() {
     return {
       isAuth: "", //是否保持登录状态
-      personalInfos: JSON.parse(localStorage.getItem("user")),
-      // personalInfos: {},
+      personalInfos: {
+        name: "",
+        gender: "",
+        birth: "",
+        email: "",
+        address: "",
+        allergy: "",
+      },
       CS: {
         "text-align": "left", //文本居中
         "min-width": "40px", //最小宽度
@@ -115,11 +120,24 @@ export default {
       this.$router.replace("/healthinformation"); //页面跳转至健康資訊页面
     },
   },
-  // async mounted() {
-  //   this.personalInfos = localStorage.getItem("user");
-  //   // console.log(personalInfos);
-  //   // console.log(personalInfos.value);
-  // },
+  async mounted() {
+    let datas1 = {
+      userId: JSON.parse(localStorage.getItem("user")).id,
+    };
+    console.log(datas1);
+
+    User.getUserInfo(datas1)
+      .then((res) => {
+        if (res.data.code === 1) {
+          this.personalInfos = res.data.info;
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 </script>
 

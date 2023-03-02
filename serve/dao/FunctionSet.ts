@@ -71,10 +71,11 @@ function login({ username, password }: loginDataType, res: Response) {
     res.send(responseInfo.loginException('the term cannot be empty'))
   } else {
     UserModel.findOne({ email: username }, { lastLogin: 0 }).then(async (result: any) => {
+      console.log(result)
       if (!result) {      // 没有检索到数据
-        res.send(responseInfo.loginException('wrong email or password'))
+        res.send(responseInfo.loginException('wrong user name'))
       }
-      if (User.check(password, result.password)) {
+      if ( result != 'null'&& User.check(password, result.password)) {
         let back: Record<string, any> = ObjectSimpleShallowCopy(result._doc)
         createToken(result._id).then(token => {
           back.token = token
@@ -97,14 +98,14 @@ function login({ username, password }: loginDataType, res: Response) {
           res.send(responseInfo.success(back))
           // }
         }).catch((error) => {
-          console.log(error);
+          // console.log(error);
           res.send(responseInfo.loginException(error))
         })
       } else {
-        res.send(responseInfo.loginException('wrong email or password'))
+        res.send(responseInfo.loginException('wrong password'))
       }
     }).catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.send(responseInfo.searchException(err))
     })
   }

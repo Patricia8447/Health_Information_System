@@ -214,8 +214,8 @@ export default {
                 .then((res) => {
                   if (res.data.code === 1) {
                     alert(res.data.info);
-                    localStorage.setItem("user", JSON.stringify(datas));
-                    location.assign("/mycenter");
+                    // localStorage.setItem("user", JSON.stringify(datas));
+                    location.assign("/appointmentorderrecord");
                   } else {
                     alert(res.data.info);
                   }
@@ -308,7 +308,6 @@ export default {
   },
   mounted() {
     this.ruleForm.doctorId = this.$route.params.id;
-    console.log("hiii: " + this.ruleForm.doctorId);
 
     let data = {
       doctorId: this.ruleForm.doctorId,
@@ -317,7 +316,6 @@ export default {
       .getaDoctor(data)
       .then((res) => {
         if (res.data.code === 1) {
-          console.log("8888: " + JSON.stringify(res.data.info));
           this.ruleForm.doctorName = res.data.info.name;
         } else {
           alert(res.data.info);
