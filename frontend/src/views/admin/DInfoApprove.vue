@@ -76,19 +76,21 @@
           <el-button
             size="mini"
             type="primary"
-            plain
+            :disabled="scope.row.status != 'Reviewing'"
             @click="openAgree(scope.row.userId, scope.row.status)"
             >Agree</el-button
           >
           <el-button
             size="mini"
             type="danger"
+            :disabled="scope.row.status != 'Reviewing'"
             @click="openReject(scope.row.userId, scope.row.status)"
             >Reject</el-button
           >
           <el-button
             size="mini"
             type="danger"
+            :disabled="scope.row.status != 'Approved'"
             @click="openInactive(scope.$index, scope.row.userId, scope.row.status)"
             >Inactive</el-button
           >
