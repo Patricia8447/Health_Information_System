@@ -40,24 +40,29 @@ let checkCodeObject: checkCodeDataType = {}
  * @param { Response } res 响应
  */
 function newUser({ name, password, email, phone, role }: User, res: Response) {
-  // 判断当前邮箱是否已经被注册
-  UserModel.countDocuments({ email: email }).then((result: number) => {
-    console.log(result);
+  if (name != "" && password != "" && email != "" && role != "") {
+    // 判断当前邮箱是否已经被注册
+    UserModel.countDocuments({ email: email }).then((result: number) => {
+      console.log(result);
 
-    if (result !== 0) {
-      res.send(responseInfo.registerException('register failed, the email has been used!'))
-      // 中断Promise调用链
-      return new Promise((resolve, reject) => { })
-    }
-    // 密码加密
-    let user = new User(name, password, email, phone, role)
-    return new UserModel(user.encrypt()).save()
-  }).then(() => {
-    try {
-      signUpEmail(email)
-      res.send(responseInfo.success('register successfully'))
-    } catch (error) { res.send(responseInfo.emailException('register failed, wrong email')) }// 获取邮箱发送失败的异常，避免服务端崩溃
-  }).catch(err => { res.send(responseInfo.requestException(err)) })
+      if (result !== 0) {
+        res.send(responseInfo.registerException('register failed, the email has been used!'))
+        // 中断Promise调用链
+        return new Promise((resolve, reject) => { })
+      }
+      // 密码加密
+      let user = new User(name, password, email, phone, role)
+      return new UserModel(user.encrypt()).save()
+    }).then(() => {
+      try {
+        signUpEmail(email)
+        res.send(responseInfo.success('register successfully'))
+      } catch (error) { res.send(responseInfo.emailException('register failed, wrong email')) }// 获取邮箱发送失败的异常，避免服务端崩溃
+    }).catch(err => { res.send(responseInfo.requestException(err)) })
+  } else {
+    res.send(responseInfo.success('please complete the form'))
+    console.log("not register")
+  }
 }
 
 /**
@@ -75,7 +80,7 @@ function login({ username, password }: loginDataType, res: Response) {
       if (!result) {      // 没有检索到数据
         res.send(responseInfo.loginException('wrong user name'))
       }
-      if ( result != 'null'&& User.check(password, result.password)) {
+      if (result != 'null' && User.check(password, result.password)) {
         let back: Record<string, any> = ObjectSimpleShallowCopy(result._doc)
         createToken(result._id).then(token => {
           back.token = token

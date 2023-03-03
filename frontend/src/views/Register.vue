@@ -1,68 +1,50 @@
 <template>
-  <form @submit.prevent="createUser()">
-    <div id="background">
-      <img :src="bgurl" />
-      <div id="contain">
-        <h1>Welcome New User</h1>
-        <div class="form">
-          <label>Username: </label
-          ><input
+  <div id="background">
+    <!-- <img :src="bgurl" /> -->
+    <div class="container has-text-center">
+      <h1>Welcome New User</h1>
+      <el-form :model="json" :rules="rules" ref="json" label-width="150px" class="json">
+        <el-form-item label="User Name" prop="name">
+          <el-input
             type="text"
             v-model.trim="json.name"
-            required
-            pattern="^[^\u4e00-\u9fa5]+$"
-            title="不能包含中文"
-          /><br />
-        </div>
-        <div class="form">
-          <label>Password: </label
-          ><input
+            title="please do not cotain Chinese"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="Password" prop="password">
+          <el-input
             type="password"
             v-model.trim="json.password"
-            minlength="8"
             required
             placeholder="Need to contain character, number and special character, between 6 and 10"
-          /><br />
-          <!-- pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$"
-          title="至少八个字符，至少一个字母，一个数字和一个特殊字符" -->
-        </div>
-        <div class="form">
-          <label>Email: </label
-          ><input type="email" v-model.trim="json.email" required /><br />
-        </div>
+          ></el-input>
+        </el-form-item>
 
-        <div class="form">
-          <input
-            type="radio"
-            id="user"
-            name="role"
-            value="NORMAL"
-            v-model.trim="json.role"
-            required
-          />
-          <label for="user">User</label><br />
-          <input
-            type="radio"
-            id="doctor"
-            name="role"
-            value="DOCTOR"
-            v-model.trim="json.role"
-          />
-          <label for="doctor">Doctor</label><br />
-        </div>
-        <br /> <br /> 
-        <div class="form">
+        <el-form-item label="Email" prop="email">
+          <el-input type="email" v-model.trim="json.email" required></el-input>
+        </el-form-item>
+        <el-form-item label="Choose Your Role" prop="role">
+          <el-radio-group v-model.trim="json.role">
+            <el-radio label="NORMAL"></el-radio>
+            <el-radio label="DOCTOR"></el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item>
           <strong>
-            <a href="http://localhost:8080/policy" target="_blank">隐私条款</a></strong
+            <a href="http://localhost:8080/policy" target="_blank"
+              >Private Policy</a
+            ></strong
           >
-        </div>
-        <div class="btns">
-          <button type="submit">Submit</button>
-          <button @click.prevent="handleup">Cancel</button>
-        </div>
-      </div>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="submit" @click="createUser()">Submit</el-button>
+          <el-button type="success" plain @click.prevent="handleup">Cancel</el-button>
+        </el-form-item>
+      </el-form>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -75,13 +57,46 @@ export default {
   },
   data() {
     return {
-      json: {},
+      json: {
+        name: "",
+        password: "",
+        role: "",
+        email: "",
+      },
       bgurl: bg,
+      rules: {
+        name: [
+          {
+            required: true,
+            pattern: /^[^\u4e00-\u9fa5]+$/,
+            message: "cannot be null",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          {
+            required: true,
+            // pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,10}$/,
+            message: "cannot be null",
+            trigger: "blur",
+          },
+        ],
+        email: [
+          {
+            type: "email",
+            required: true,
+            message: "please enter the correct email format",
+            trigger: ["blur", "change"],
+          },
+        ],
+        role: [{ required: true, trigger: ["blur", "change"] }],
+      },
     };
   },
   methods: {
     async createUser() {
       console.log("发送注册接口");
+      console.log(this.json.role);
       // TODO 注册接口
       Service.signUp(this.json)
         .then((res) => {
@@ -89,7 +104,11 @@ export default {
           if (res.data.code === 1) {
             // 根据原本的校验逻辑进行添加
             alert(res.data.info);
-            location.assign("/login");
+            if (res.data.info == "please complete the form") {
+              console.log("not yet register");
+            } else {
+              location.assign("/login");
+            }
           } else {
             alert(res.data.info);
           }
@@ -162,6 +181,13 @@ img {
   /* 属性定义元素是否对指针事件做出反应 */
   pointer-events: none;
 }
+
+.json {
+  width: 800px;
+  margin-top: 7%;
+  margin-left: 17%;
+}
+
 #contain {
   width: 550px;
   height: 550px;
@@ -237,7 +263,7 @@ strong {
   text-align: right;
 }
 
-.form a{
+.form a {
   text-align: right;
   margin-left: 350px;
 }
