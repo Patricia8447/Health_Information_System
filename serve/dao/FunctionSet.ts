@@ -40,29 +40,23 @@ let checkCodeObject: checkCodeDataType = {}
  * @param { Response } res 响应
  */
 function newUser({ name, password, email, phone, role }: User, res: Response) {
-  if (name != "" && password != "" && email != "" && role != "") {
-    // 判断当前邮箱是否已经被注册
-    UserModel.countDocuments({ email: email }).then((result: number) => {
-      console.log(result);
-
-      if (result !== 0) {
-        res.send(responseInfo.registerException('register failed, the email has been used!'))
-        // 中断Promise调用链
-        return new Promise((resolve, reject) => { })
-      }
-      // 密码加密
-      let user = new User(name, password, email, phone, role)
-      return new UserModel(user.encrypt()).save()
-    }).then(() => {
-      try {
-        signUpEmail(email)
-        res.send(responseInfo.success('register successfully'))
-      } catch (error) { res.send(responseInfo.emailException('register failed, wrong email')) }// 获取邮箱发送失败的异常，避免服务端崩溃
-    }).catch(err => { res.send(responseInfo.requestException(err)) })
-  } else {
-    res.send(responseInfo.success('please complete the form'))
-    console.log("not register")
-  }
+  // 判断当前邮箱是否已经被注册
+  UserModel.countDocuments({ email: email }).then((result: number) => {
+    console.log(result);
+    if (result !== 0) {
+      res.send(responseInfo.registerException('register failed, the email has been registered!'))
+      // 中断Promise调用链
+      return new Promise((resolve, reject) => { })
+    }
+    // 密码加密
+    let user = new User(name, password, email, phone, role)
+    return new UserModel(user.encrypt()).save()
+  }).then(() => {
+    try {
+      signUpEmail(email)
+      res.send(responseInfo.success('register successfully'))
+    } catch (error) { res.send(responseInfo.emailException('register failed, wrong email')) }// 获取邮箱发送失败的异常，避免服务端崩溃
+  }).catch(err => { res.send(responseInfo.requestException(err)) })
 }
 
 /**
@@ -76,7 +70,7 @@ function login({ username, password }: loginDataType, res: Response) {
     res.send(responseInfo.loginException('the term cannot be empty'))
   } else {
     UserModel.findOne({ email: username }, { lastLogin: 0 }).then(async (result: any) => {
-      console.log(result)
+      // console.log(result)
       if (!result) {      // 没有检索到数据
         res.send(responseInfo.loginException('wrong user name'))
       }
@@ -103,7 +97,6 @@ function login({ username, password }: loginDataType, res: Response) {
           res.send(responseInfo.success(back))
           // }
         }).catch((error) => {
-          // console.log(error);
           res.send(responseInfo.loginException(error))
         })
       } else {
@@ -145,14 +138,23 @@ function getUserInfo({ id }: Record<string, any>, res: Response) {
  * @param { Response } res 响应
  */
 function sendCheckMail({ id, email }: sendCheckDataType, res: Response) {
-  let checkData: checkCodeType = { code: getRandOmCode(), time: new Date(new Date().getTime() + resetPassCodeTime) }
-  checkCodeObject[id] = checkData
-  try {
-    checkCodeEmail(email, checkData.code)
-    res.send(responseInfo.success('verify code has been sent, valid in 2 min'))
-  } catch (error) {
-    res.send(responseInfo.emailException(error))
-  }
+  // console.log(id);
+  UserModel.countDocuments({ email: email }).then((result: number) => {
+    console.log(result);
+    if (result === 0) {
+      res.send(responseInfo.registerException('email sent failed, the email has not been registered!'))
+      return new Promise((resolve, reject) => { })
+    }
+  }).then(() => {
+    let checkData: checkCodeType = { code: getRandOmCode(), time: new Date(new Date().getTime() + resetPassCodeTime) }
+    checkCodeObject[id] = checkData
+    try {
+      checkCodeEmail(email, checkData.code)
+      res.send(responseInfo.success('verify code has been sent, valid in 2 mins.'))
+    } catch (error) {
+      res.send(responseInfo.emailException(error))
+    }
+  }).catch(err => { res.send(responseInfo.requestException(err)) })
 }
 
 /**
@@ -160,7 +162,8 @@ function sendCheckMail({ id, email }: sendCheckDataType, res: Response) {
  * @param { resetPassDatType } data 请求数据
  * @param { Response } res 响应
  */
-function resavePassword({ id, pass, againPass, code }: resetPassDatType, res: Response) {
+function resavePassword({ id, email, pass, againPass, code }: resetPassDatType, res: Response) {
+  // console.log("the id is: " + id);
   if (!checkCodeObject[id]) {                      // 没有生成验证码前不能进行修改密码的操作
     res.send(responseInfo.requestException('please get the verify code'))
   } else if (code !== checkCodeObject[id].code) {         // 检验验证码是否正确
@@ -171,8 +174,9 @@ function resavePassword({ id, pass, againPass, code }: resetPassDatType, res: Re
   } else if (pass !== againPass) {                        // 两次密码不一致
     res.send(responseInfo.requestException('the two passwords are different. Please re-enter them'))
   } else {
+    console.log(email);
     delete checkCodeObject[id]
-    UserModel.updateOne({ _id: id }, { password: User.encryptPass(pass) })
+    UserModel.updateOne({ email: email }, { password: User.encryptPass(pass) })
       .then(() => { res.send(responseInfo.success('modify successfully')) })
       .catch(() => { res.send(responseInfo.updataException('Failed to change the password. Please try again')) })
   }

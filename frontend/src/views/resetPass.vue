@@ -1,80 +1,127 @@
 <template>
-  <form @submit.prevent="resetpass()">
-    <div id="background">
-      <img :src="bgurl" />
-      <div id="contain">
-        <h1>Reset Password</h1>
-        <div class="form">
-          <label>New Password: </label
-          ><input type="password" v-model.trim="json.pass" /><br />
-        </div>
-        <div class="form">
-          <label>Comfirm Password: </label
-          ><input type="password" v-model.trim="json.againPass" placeholder="" /><br />
-        </div>
-        <div class="form"><label>Code: </label><input type="text" v-model.trim="json.code"/><br /></div>
-
-        <div class="btns">
-          <button type="submit" @click="resetPass()">Submit</button>
-          <button @click.prevent="handleup">Cancel</button>
-        </div>
-      </div>
+  <div id="background">
+    <!-- <img :src="bgurl" /> -->
+    <div class="container has-text-center">
+      <h1>Reset Password</h1>
+      <el-form :model="json" :rules="rules" ref="json" label-width="150px" class="json">
+        <el-form-item label="Email" prop="email">
+          <el-input type="email" v-model.trim="json.email" required></el-input>
+        </el-form-item>
+        <el-form-item label="New Password" prop="password">
+          <el-input
+            type="password"
+            v-model.trim="json.pass"
+            title="Need to contain character, number and special character, between 6 and 10"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="Comfirm Password" prop="againPass">
+          <el-input
+            type="password"
+            v-model.trim="json.againPass"
+            placeholder="Need to contain character, number and special character, between 6 and 10"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="Verify Code" prop="code">
+          <el-input type="text" v-model.trim="json.code" required></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="submit" @click="resetPass('json')">Submit</el-button>
+          <el-button type="success" plain @click.prevent="handleup">Cancel</el-button>
+        </el-form-item>
+      </el-form>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
 import bg from "@/assets/image/bg.jpg";
 import Service from "@/service/user.service.js";
+
 export default {
-  name: "register",
+  name: "resetPass",
   props: {
     msg: String,
   },
   data() {
+    var validatePass2 = (rule, value, callback) => {
+      console.log("i am in!!");
+      if (value === "") {
+        callback(new Error("please enter the password"));
+      } else if (value !== this.json.pass) {
+        callback(new Error("the passwords are different!"));
+      } else {
+        callback();
+      }
+    };
     return {
-      json: {},
+      json: { email: "", pass: "", againPass: "", code: "" },
       bgurl: bg,
+      rules: {
+        email: [
+          {
+            type: "email",
+            required: true,
+            message: "please enter the correct email format",
+            trigger: ["blur", "change"],
+            pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+          },
+        ],
+        pass: [
+          {
+            required: true,
+            trigger: "blur",
+            // pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,10}$/,
+            pattern: /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]{6,10}$/,
+            message:
+              "密码为数字，小写字母，大写字母，特殊符号 至少包含三种，长度为 6 - 10位，密码不能包含 用户名，公司名称(lidian), 公司域名(rekoon) （判断的时候不区分大小写)",
+          },
+        ],
+        againPass: [
+          {
+            required: true,
+            validator: validatePass2,
+            trigger: "blur",
+          },
+        ],
+        code: [
+          {
+            required: true,
+            message: "cannot be null",
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   methods: {
-    async resetPass() {
-      console.log("发送修改密码接口");
-      // TODO 修改密码接口
-      Service.resetPass(this.json)
-        .then((res) => {
-          console.log(res.data);
-          alert(res.data);
-          if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
-            alert(res.data.info);
-            location.assign("/login");
-          } else {
-            alert(res.data.info);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      // var response = await fetch("http://localhost:3001/user/signup", {
-      //   method: "POST",
-      //   headers: {
-      //     "content-type": "application/json",
-      //   },
-      //   body: JSON.stringify(this.json),
-      // });
-      // // console.log(body);
-      // // alert(response);
-      // if (response.ok) {
-      //   var newUser = await response.json();
-      //   // re-direct to login page
-      //   alert(newUser.info);
-      //   location.assign("/login");
-      //   // this.handlefinish();
-      // } else {
-      //   alert(response.statusText);
-      //   console.log("sth wrong happend");
-      // }
+    async resetPass(formName) {
+      this.$refs[formName].validate((valid) => {
+        //开启校验
+        if (valid) {
+          console.log("发送修改密码接口");
+          //修改密码接口
+          Service.resetPass(this.json)
+            .then((res) => {
+              if (res.data.code === 1) {
+                if (res.data.info == "modify successfully") {
+                  alert(res.data.info);
+                  location.assign("/login");
+                } else {
+                  console.log("some where need to be double check");
+                }
+              } else {
+                alert(res.data.info);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          //校验不通过
+          alert("please check the required item(s)");
+          return false;
+        }
+      });
     },
 
     async resetpass() {

@@ -39,7 +39,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="submit" @click="createUser()">Submit</el-button>
+          <el-button type="submit" @click="createUser('json')">Submit</el-button>&nbsp
           <el-button type="success" plain @click.prevent="handleup">Cancel</el-button>
         </el-form-item>
       </el-form>
@@ -87,6 +87,7 @@ export default {
             required: true,
             message: "please enter the correct email format",
             trigger: ["blur", "change"],
+            pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
           },
         ],
         role: [{ required: true, trigger: ["blur", "change"] }],
@@ -94,28 +95,33 @@ export default {
     };
   },
   methods: {
-    async createUser() {
-      console.log("发送注册接口");
-      console.log(this.json.role);
-      // TODO 注册接口
-      Service.signUp(this.json)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
-            alert(res.data.info);
-            if (res.data.info == "please complete the form") {
-              console.log("not yet register");
-            } else {
-              location.assign("/login");
-            }
-          } else {
-            alert(res.data.info);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    async createUser(formName) {
+      this.$refs[formName].validate((valid) => {
+        //开启校验
+        if (valid) {
+          // 如果校验通过，请求接口，允许提交表单
+          console.log("发送注册接口");
+          console.log(this.json.role);
+          //注册接口
+          Service.signUp(this.json)
+            .then((res) => {
+              console.log(res.data);
+              if (res.data.code === 1) {
+                alert(res.data.info);
+                location.assign("/login");
+              } else {
+                alert(res.data.info);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          //校验不通过
+          alert("please check the required item(s)");
+          return false;
+        }
+      });
     },
 
     //点击完成按钮触发handlefinish

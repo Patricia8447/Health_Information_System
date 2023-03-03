@@ -1,27 +1,25 @@
 <template>
   <div id="background">
     <img :src="bgurl" />
-    <div class="container">
-      <form @submit.prevent="forgetPassword">
-        <h1>Forget Password</h1>
-        <div class="form">
-          <div class="item">
-            <label>Email: </label
-            ><input
-              type="email"
-              v-model="user.email"
-              placeholder="Please enter the email..."
-              required
-            />
-          </div>
-        </div>
-      </form>
-      <div class="btns">
-        <button type="submit" @click.prevent="forgetPassword">Submit</button>
-        <!-- v-on点击按钮触发handlelogin方法 -->
-        <button @click.prevent="handlecancel">Cancel</button>
-      </div>
-      <router-view></router-view>
+    <div class="container has-text-center">
+      <h1>Forget Password</h1>
+      <el-form
+        :model="json"
+        :rules="rules"
+        ref="json"
+        label-color="black"
+        label-width="150px"
+        class="json"
+      >
+        <el-form-item label="Email" prop="email">
+          <el-input type="email" v-model.trim="json.email" required></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="submit" @click="forgetPassword('json')">Submit</el-button>
+          <el-button type="success" plain @click.prevent="handlecancel">Cancel</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -36,35 +34,51 @@ import Service from "@/service/user.service.js";
 export default {
   data() {
     return {
-      user: {
+      json: {
         email: "",
       },
       bgurl: bg,
+      rules: {
+        email: [
+          {
+            type: "email",
+            required: true,
+            message: "please enter the correct email format",
+            trigger: ["blur", "change"],
+            pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+          },
+        ],
+      },
     };
   },
   methods: {
-    forgetPassword() {
-      // TODO 忘记密码接口
-      console.log("发送忘记密码接口", this.user.email);
-      console.log(this.user.email);
-      if (this.user.email == "") {
-        alert("The email can not be empty!");
-      } else {
-        Service.sendCheckMail(this.user)
-          .then((res) => {
-            console.log(res.data);
-            if (res.data.code === 1) {
-              // 根据原本的逻辑进行添加
-              alert(res.data.info + " Please check your registered email to reset the password!");
-              this.$router.replace("/resetpass");
-            } else {
-              alert(res.data.info);
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+    forgetPassword(formName) {
+      this.$refs[formName].validate((valid) => {
+        //开启校验
+        if (valid) {
+          // 忘记密码接口
+          console.log("发送忘记密码接口", this.json);
+          Service.sendCheckMail(this.json)
+            .then((res) => {
+              if (res.data.code === 1) {
+                alert(
+                  res.data.info +
+                    " Please check your registered email to reset the password!"
+                );
+                this.$router.replace("/resetpass");
+              } else {
+                alert(res.data.info);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          //校验不通过
+          alert("please check the email format");
+          return false;
+        }
+      });
     },
     handlecancel: function () {
       this.$router.replace("/login"); // 點擊取消按鈕，跳轉至健康資訊頁面
