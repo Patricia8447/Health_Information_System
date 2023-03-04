@@ -35,7 +35,7 @@
         </div>
         &nbsp
         <el-form-item>
-          <el-button type="submit" @click="loginUser()">Login</el-button>
+          <el-button type="submit" @click="loginUser('json')">Login</el-button>
           <el-button type="success" plain @click.prevent="handlecancel()"
             >Cancel</el-button
           >
@@ -61,31 +61,40 @@ export default {
     };
   },
   methods: {
-    async loginUser() {
-      console.log("发送登录接口", this.json);
-      userService
-        .login(this.json)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.code === 1) {
-            alert("login Successfully.");
-            //缓存用户信息
-            localStorage.setItem("user", JSON.stringify(res.data.info));
-            localStorage.setItem("user_id", res.data.info.id);
-            localStorage.setItem("user_role", res.data.info.role);
-            localStorage.setItem("user_time", res.data.info.time);
-            localStorage.setItem("user_token", res.data.info.token);
-            if (res.data.info.role == "DOCTOR")
-              location.assign("/qualificationapplication");
-            else location.assign("/healthinformation");
-          } else {
-            alert(res.data.info);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          alert(err);
-        });
+    async loginUser(formName) {
+      this.$refs[formName].validate((valid) => {
+        //开启校验
+        if (valid) {
+          console.log("发送登录接口", this.json);
+          userService
+            .login(this.json)
+            .then((res) => {
+              console.log(res.data);
+              if (res.data.code === 1) {
+                alert("login Successfully.");
+                //缓存用户信息
+                localStorage.setItem("user", JSON.stringify(res.data.info));
+                localStorage.setItem("user_id", res.data.info.id);
+                localStorage.setItem("user_role", res.data.info.role);
+                localStorage.setItem("user_time", res.data.info.time);
+                localStorage.setItem("user_token", res.data.info.token);
+                if (res.data.info.role == "DOCTOR")
+                  location.assign("/qualificationapplication");
+                else location.assign("/healthinformation");
+              } else {
+                alert(res.data.info);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              alert(err);
+            });
+        } else {
+          //校验不通过
+          alert("please check the format of login form");
+          return false;
+        }
+      });
     },
     handlelogin: function () {
       if (
