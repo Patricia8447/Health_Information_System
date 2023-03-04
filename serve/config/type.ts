@@ -17,7 +17,7 @@ type updateDepartmentNameType = { id: string, name: string, departId: string }
 type availableWeekType = { Mon: boolean, Tues: boolean, Wed: boolean, Thurs: boolean, Fri: boolean, Sat: boolean, Sun: boolean }
 
 type applyToBeDoctorType = {
-  id: string, doctorName: string, gender: string, zoomlink: string, phone: string, email: string, identity: string,
+  id: string, doctorName: string, gender: string, zoomlink: string, email: string, identity: string,
   hospitalName: string, hospitalLevel: string, hospitalAddress: string,
   departmentId: string, job: string, strength: string, selfIntro: string,
   availabletime: Array<string>, availableWeek: availableWeekType, identityFront: string,

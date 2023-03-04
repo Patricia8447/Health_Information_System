@@ -245,9 +245,9 @@ function getAllDepartment({ id }: Record<string, string>, res: Response) {
  */
 function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response) {
   let {
-    doctorName, id, identity, hospitalName, hospitalLevel, hospitalAddress,
-    departmentId, job, strength, selfIntro, availabletime, availableWeek,
-    identityFront, identityBack, certification, workCertificate, photo, gender, zoomlink
+    id, doctorName, identity, gender, email, zoomlink, hospitalName, hospitalLevel, hospitalAddress,
+    departmentId, job, availableWeek, availabletime, strength, selfIntro,
+    identityFront, identityBack, certification, workCertificate, photo,
   }: applyToBeDoctorType = applyToBeDoctorData
   let arr = [undefined, '', null]
   for (let v in applyToBeDoctorData) {
@@ -256,11 +256,12 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
       return;
     }
   }
-  let doctorData = { name: doctorName, userId: id, identity, hospitalName, hospitalLevel, hospitalAddress, departmentId, job, strength, selfIntro, gender, zoomlink }
+  let doctorData = { name: doctorName, userId: id, identity, email, hospitalName, hospitalLevel, hospitalAddress, departmentId, job, strength, selfIntro, gender, zoomlink }
   DoctorModel.findOne({ userId: id }).then((result: any) => {
+    console.log(result);
     let tmpAry = [AUDITSTATUS.NoPass, AUDITSTATUS.Canceled]
     if (result && tmpAry.includes(result.status)) DoctorModel.deleteMany({ userId: id })         // 删除之前申请失败的数据，可以直接异步删除
-    else if (result && result.status === AUDITSTATUS.Reviewing) throw new Error('already have applicaion data')       // 如果有数据，并且状态为申请中，则直接抛出申请中的异常
+    else if (result && result.status === AUDITSTATUS.Reviewing) throw new Error('already have application data, please wait for the admin to approve')       // 如果有数据，并且状态为申请中，则直接抛出申请中的异常
     else if (result && result.status === AUDITSTATUS.Approved) throw new Error('already qualified')     // 如果有数据，并且状态为申请成功，则直接抛出已成为医生的异常
     return new DoctorModel(doctorData).save()           // 如果没有数据，则直接保存新的医生申请
   }).then((result: any) => {   // 保存成功之后获取对应的doctorId
@@ -278,7 +279,16 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
   }).then((result: Array<any>) => {
     res.send(responseInfo.success('The application is successful, please wait for the administrator further review'))
   }).catch((error: Error) => {
-    res.send(responseInfo.applyException(error))
+    // console.log(error.toString().split(": ")[1]);
+    // console.log(error.toString().split(": ")[1] == "already qualified")
+    if (error.toString().split(": ")[1] == "already qualified") {
+      res.send(responseInfo.applyException('already qualified'))
+    }
+    else if (error.toString().split(": ")[1] == "already have application data, please wait for the admin to approve") {
+      res.send(responseInfo.applyException('already have application data, please wait for the admin to approve'))
+    }
+    else
+      res.send(responseInfo.applyException(error))
   })
 }
 
