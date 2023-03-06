@@ -35,7 +35,7 @@ export default {
               name: "remark",
               type: "comment",
               title: "Result",
-              placeHolder: "please tell the patient the result clearly",
+              placeHolder: "please tell the patient about their result clearly",
               isRequired: true,
               autoComplete: "remark",
             },

@@ -60,12 +60,21 @@
           <el-input v-model="search" size="mini" placeholder="search your patient..." />
         </template>
         <template slot-scope="scope" class="btns">
-          <el-button type="primary" plain class="button">
+          <el-button
+            type="primary"
+            plain
+            class="button"
+            :disabled="getCurrentDate(scope.row.appointmentDate)"
+          >
             <a :href="zoomlink" target="_blank" style="text-decoration: none"> Start </a>
           </el-button>
-
-          <!-- 问诊结束之后才能click以下按钮 -->
-          <el-button type="success" plain class="button" @click="goRoute(scope.$index)">
+          <el-button
+            type="success"
+            plain
+            class="button"
+            @click="goRoute(scope.$index)"
+            :disabled="scope.row.status != 'finished'"
+          >
             Write Diagnosis Result
           </el-button>
         </template>
@@ -99,6 +108,17 @@ export default {
     };
   },
   methods: {
+    //还要加一个时间判断
+    getCurrentDate(appointmentDate) {
+      var myDate = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
+      var time = myDate.toJSON().split("T").join(" ").substr(0, 19); //将1970/08/08转化成1970-08-08
+      console.log(time);
+      if (appointmentDate > time) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     goRoute(e) {
       let data = this.tableData;
       this.$router.push({ name: "ConRecord", params: { id: data[e]._id } });
