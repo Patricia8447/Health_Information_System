@@ -206,7 +206,6 @@ export default {
           selfIntro: "",
           departmentId: "",
           zoomlink: "",
-          photo: "",
           _id: "",
         },
       ],
@@ -220,39 +219,16 @@ export default {
   },
   mounted() {
     console.log("发送获取医生列表接口");
-    // TODO 医生列表接口
-    Service.getAllDoctor()
+    let data = {
+      userId: JSON.parse(localStorage.getItem("user")).id,
+    };
+    console.log(data);
+    adminService
+      .getaDoctorbyUserId(data)
       .then((res) => {
-        // console.log("test" + res.data);
-        // console.log("test1" + JSON.stringify(res.data));
         if (res.data.code === 1) {
-          for (let i = 0; i < res.data.info.length; i++) {
-            if (
-              res.data.info[i].userInfo[0].name ==
-              JSON.parse(localStorage.getItem("user")).name
-            ) {
-              this.doctorPart = res.data.info[i];
-              console.log(JSON.stringify(this.doctorPart._id));
-
-              let datas = {
-                doctorId: this.doctorPart._id,
-              };
-              adminService
-                .findDoc(datas)
-                .then((res) => {
-                  console.log("test_findDoc" + this.doctorPart._id);
-                  if (res.data.code === 1) {
-                    this.doctorPart.photo = res.data.info.photo;
-                    console.log(JSON.stringify(this.doctorPart.photo));
-                  } else {
-                    alert(res.data.info);
-                  }
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }
-          }
+          // alert(JSON.stringify(res.data.info));
+          this.doctorPart = res.data.info;
         } else {
           alert(res.data.info);
         }
