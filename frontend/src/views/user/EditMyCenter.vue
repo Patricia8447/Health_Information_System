@@ -1,6 +1,6 @@
 <template>
-  <el-form class="container" ref="form" :model="form" label-width="80px">
-    <el-form-item label="Name">
+  <el-form class="container" ref="form" :model="form" label-width="80px" :rules="rules">
+    <el-form-item label="Name" prop="name">
       <el-input v-model.trim="form.name" disabled></el-input>
     </el-form-item>
     <el-form-item label="Gender" prop="gender">
@@ -9,7 +9,7 @@
         <el-option label="female" value="female"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="Birth">
+    <el-form-item label="Birth" prop="birth">
       <el-date-picker
         type="date"
         placeholder="choose the date"
@@ -17,18 +17,18 @@
         style="width: 100%"
       ></el-date-picker>
     </el-form-item>
-    <el-form-item label="Email">
+    <el-form-item label="Email" prop="email">
       <el-input type="email" v-model.trim="form.email" disabled></el-input>
     </el-form-item>
-    <el-form-item label="Address">
+    <el-form-item label="Address" prop="address">
       <el-input v-model.trim="form.address"></el-input>
     </el-form-item>
-    <el-form-item label="allergy">
+    <el-form-item label="allergy" prop="allergy">
       <el-input type="textarea" v-model.trim="form.allergy"></el-input>
     </el-form-item>
 
     <el-form-item>
-      <el-button type="submit" @click="onSubmit()">UPDATE</el-button>
+      <el-button type="submit" @click="onSubmit('form')">UPDATE</el-button>
       <el-button type="danger" plain @click="handleup()">CANCEL</el-button>
     </el-form-item>
     <router-view></router-view>
@@ -54,26 +54,42 @@ export default {
         address: "",
         allergy: "",
       },
+      rules: {
+        name: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        gender: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        birth: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        email: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        allergy: [{ required: true, message: "cannot be null", trigger: "blur" }],
+      },
     };
   },
   methods: {
-    async onSubmit() {
+    async onSubmit(formName) {
       console.log("发送修改用户个人信息接口");
       //修改用户个人信息接口
-      console.log(this.form);
-      Service.resaveUserInfo(this.form)
-        .then((res) => {
-          if (res.data.code === 1) {
-            alert(res.data.info);
-            // localStorage.setItem("user", JSON.stringify(this.json));
-            location.assign("/mycenter");
-          } else {
-            alert(res.data.info);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.$refs[formName].validate((valid) => {
+        //开启校验
+        if (valid) {
+          console.log(this.form);
+          Service.resaveUserInfo(this.form)
+            .then((res) => {
+              if (res.data.code === 1) {
+                alert(res.data.info);
+                // localStorage.setItem("user", JSON.stringify(this.json));
+                location.assign("/mycenter");
+              } else {
+                alert(res.data.info);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          //校验不通过
+          alert("please check the email format");
+          return false;
+        }
+      });
     },
     handleup: function () {
       this.$router.replace("/mycenter");
