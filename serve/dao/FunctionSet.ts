@@ -67,7 +67,7 @@ function newUser({ name, password, email, phone, role }: User, res: Response) {
 function login({ username, password }: loginDataType, res: Response) {
   UserModel.findOne({ email: username }, { lastLogin: 0 }).then(async (result: any) => {
     if (!result) {      // 没有检索到数据
-      res.send(responseInfo.loginException('wrong user name'))
+      return res.send(responseInfo.loginException('wrong user name'))
     }
     if (result != 'null' && User.check(password, result.password)) {
       let back: Record<string, any> = ObjectSimpleShallowCopy(result._doc)
