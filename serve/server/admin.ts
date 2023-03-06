@@ -67,14 +67,19 @@ function findDoc(req: Request, res: Response) {
 }
 
 function changeInquiryStatus(req: Request, res: Response) {
-  let data: Record<string, string| boolean> = ObjectSimpleShallowCopy(req.body)
- FunctionSet.changeInquiryStatus((data as changeInquiryStatusType), res)
+  let data: Record<string, string | boolean> = ObjectSimpleShallowCopy(req.body)
+  FunctionSet.changeInquiryStatus((data as changeInquiryStatusType), res)
+}
+
+function getaDoctorbyUserId(req: Request, res: Response) {
+  let data: Record<string, string | boolean> = ObjectSimpleShallowCopy(req.body)
+  FunctionSet.getaDoctorbyUserId((data as getaDoctorType), res)
 }
 
 let adminServe = {
   addDepartment, updateDepartmentName, approvalDoctorStatus, approvalDoctorCancelStatus,
   addPushInfo, updataPushInfo, deletePushInfo, getOneDoctor, rejectDoctorStatus, findDoc
-  , adminInactiveDoctorStatus, changeInquiryStatus, getaDoctor
+  , adminInactiveDoctorStatus, changeInquiryStatus, getaDoctor, getaDoctorbyUserId
 }
 
 export default adminServe

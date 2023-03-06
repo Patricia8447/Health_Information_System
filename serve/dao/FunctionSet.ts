@@ -194,7 +194,7 @@ function resaveUserInfo({ id, email, address, allergy, name, birth, gender }: re
  */
 function resaveDoctorInfo({ id, photo, identity, hospitalName, name, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId, gender }: resetDoctorInfoType, res: Response) {
   let updateObject = { photo, identity, hospitalName, name, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId, gender }
-  UserModel.updateOne({ _id: id }, updateObject)
+  DoctorModel.updateOne({ _id: id }, updateObject)
     .then(() => { res.send(responseInfo.success('modify successfully')) })
     .catch(() => { res.send(responseInfo.updataException('modify failed')) })
 }
@@ -426,17 +426,26 @@ function getApprovedDoctor({ status }: Record<string, string>, res: Response) {
 function getOneDoctor({ id, name, hospitalName, hospitalLevel, hospitalAddress, job, strength, status, selfIntro }: getOneDoctorType, res: Response) {
   let findObject = { name, hospitalName, hospitalLevel, hospitalAddress, job, strength, status, selfIntro }
   DoctorModel.findOne({ userId: id }, findObject)
-    .then(() => { res.send(responseInfo.success('found')) })
+    .then((result: any) => { res.send(responseInfo.success(result)) })
     .catch(() => { res.send(responseInfo.updataException('not found')) })
 }
 
 function getaDoctor({ doctorId }: getaDoctorType, res: Response) {
-  console.log("get-a-doctor: " + doctorId);
+  // console.log("get-a-doctor: " + doctorId);
   DoctorModel.findOne({ _id: doctorId })
     .then((result: any) => { res.send(responseInfo.success(result)) })
     .catch(() => { res.send(responseInfo.updataException('not found')) })
 }
 
+function getaDoctorbyUserId({ userId }: getaDoctorType, res: Response) {
+  console.log("get-a-doctor-new: " + userId);
+  DoctorModel.findOne({ userId: userId })
+    .then((result: any) => {
+      // console.log(result);
+      res.send(responseInfo.success(result))
+    })
+    .catch(() => { res.send(responseInfo.updataException('not found')) })
+}
 /**
  * 用户进行问诊预约
  * @param { personAskDoctorType } data 请求数据
@@ -713,7 +722,7 @@ let FunctionSet = {
   getUserInfo, getTimeList, getDateList,
   findDoc, getVisitRecordList2, getApprovedDoctor,
   adminInactiveDoctorStatus, changeInquiryStatus,
-  getaDoctor
+  getaDoctor, getaDoctorbyUserId
 }
 
 export default FunctionSet

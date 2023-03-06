@@ -6,21 +6,6 @@
           ><router-link to="/editdpersonalinfo">Edit</router-link></el-button
         >
       </template>
-      <!-- <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-picture"></i>
-            photo
-          </div>
-        </template>
-        <div class="my-content">
-          <el-image
-            style="width: 100px; height: 100px"
-            :src="`http://127.0.0.1:6/img/${doctorPart.photo}`"
-          ></el-image>
-        </div>
-      </el-descriptions-item> -->
-
       <el-descriptions-item>
         <template slot="label">
           <div class="my-label">
