@@ -1,5 +1,5 @@
 <template>
-  <el-form class="container" ref="form" :model="json" label-width="120px">
+  <el-form class="container" ref="form" :model="form" label-width="160px" :rules="rules">
     <!-- <el-form-item label="personal photo">
       <el-upload
         class="avatar-uploader"
@@ -12,46 +12,42 @@
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </el-form-item> -->
-    <el-form-item label="Name">
-      <el-input v-model.trim="json.name" disabled></el-input>
+    <el-form-item label="Hospital Name" prop="hospitalName">
+      <el-input v-model.trim="form.hospitalName"></el-input>
     </el-form-item>
-    <el-form-item label="Email">
-      <el-input type="email" v-model.trim="json.email" disabled></el-input>
+    <el-form-item label="Hospital Level" prop="hospitalLevel">
+      <el-select v-model.trim="form.hospitalLevel">
+        <el-option label="Govern Hospital" value="GovernHospital"></el-option>
+        <el-option label="personal Hospital" value="personalHospital"></el-option>
+        <el-option label="Clinic" value="Clinic"></el-option>
+        <el-option label="Service Station" value="ServiceStation"></el-option>
+      </el-select>
     </el-form-item>
-    <el-form-item label="Hospital Name">
-      <el-input v-model.trim="json.hospitalName"></el-input>
+    <el-form-item label="Hospital Address" prop="hospitalAddress">
+      <el-input v-model.trim="form.hospitalAddress"></el-input>
     </el-form-item>
-    <el-form-item label="Hospital Level">
-      <el-input v-model.trim="json.hospitalLevel"></el-input>
+    <el-form-item label="Department" prop="departmentId">
+      <el-select v-model.trim="form.departmentId">
+        <el-option label="pharmacy department" value="medicine"></el-option>
+        <el-option label="pediatric department" value="children"></el-option>
+        <el-option label="dermatology department" value="skin"></el-option>
+      </el-select>
     </el-form-item>
-    <el-form-item label="Hospital Address">
-      <el-input v-model.trim="json.hospitalAddress"></el-input>
+    <el-form-item label="Job" prop="job">
+      <el-select v-model.trim="form.job">
+        <el-option label="doctor" value="doctor"></el-option>
+        <el-option label="nurse" value="nurse"></el-option>
+      </el-select>
     </el-form-item>
-    <el-form-item label="Department">
-      <el-input v-model.trim="json.departmentId"></el-input>
+    <el-form-item label="Strength" prop="strength">
+      <el-input v-model.trim="form.strength"></el-input>
     </el-form-item>
-    <el-form-item label="Job">
-      <el-input v-model.trim="json.job"></el-input>
+    <el-form-item label="Self Introduction" prop="selfIntro">
+      <el-input v-model.trim="form.selfIntro"></el-input>
     </el-form-item>
-    <el-form-item label="Strength">
-      <el-input v-model.trim="json.strength"></el-input>
-    </el-form-item>
-    <el-form-item label="Self Introduction">
-      <el-input v-model.trim="json.selfIntro"></el-input>
-    </el-form-item>
-    <!-- <el-form-item label="photo">
-      <label>Please upload the your photo:</label>
-      <input
-        type="file"
-        accept=".jpg"
-        @change="test($event, 'photo')"
-        id="photo"
-        name="photo"
-      />
-    </el-form-item> -->
     <el-form-item>
-      <el-button type="submit" @click="onSubmit()">UPDATE</el-button>
-      <el-button type="danger" plain @click="handleup()">CANCEL</el-button>
+      <el-button type="submit" @click="onSubmit('form')">UPDATE</el-button>
+      <el-button type="danger" plain @click="handleup('form')">CANCEL</el-button>
     </el-form-item>
     <router-view></router-view>
   </el-form>
@@ -63,6 +59,7 @@ import { Survey, StylesManager, Model } from "survey-vue";
 import Service from "@/service/user.service.js";
 import { ref } from "vue";
 import Service2 from "@/service/upload.service.js";
+import adminService from "@/service/admin.service.js";
 
 let json = ref({});
 export default {
@@ -71,12 +68,6 @@ export default {
       imageUrl: "",
       json: JSON.parse(localStorage.getItem("user")),
       form: {
-        name: "",
-        gender: "",
-        email: "",
-        status: "",
-        phone: "",
-        identity: "",
         hospitalName: "",
         hospitalLevel: "",
         hospitalAddress: "",
@@ -84,29 +75,44 @@ export default {
         job: "",
         strength: "",
         selfIntro: "",
-        photo: "",
+      },
+      rules: {
+        hospitalName: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        hospitalLevel: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        hospitalAddress: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        departmentId: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        job: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        strength: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        selfIntro: [{ required: true, message: "cannot be null", trigger: "blur" }],
       },
     };
   },
   methods: {
-    async onSubmit() {
-      console.log("发送修改doctor个人信息接口");
-      console.log(this.json);
-      Service.resaveDoctorInfo(this.json)
-        .then((res) => {
-          console.log("test" + res.data);
-          console.log("test1" + JSON.stringify(this.json));
-          if (res.data.code === 1) {
-            alert(res.data.info);
-            localStorage.setItem("user", JSON.stringify(this.json));
-            location.assign("/dpersonalcenter");
-          } else {
-            alert(res.data.info);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    async onSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        //开启校验
+        if (valid) {
+          console.log("发送修改doctor个人信息接口");
+          Service.resaveDoctorInfo(this.form)
+            .then((res) => {
+              console.log("test" + JSON.stringify(this.form));
+              if (res.data.code === 1) {
+                alert(res.data.info);
+                // localStorage.setItem("user", JSON.stringify(this.json));
+                location.assign("/dpersonalcenter");
+              } else {
+                alert(res.data.info);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          //校验不通过
+          alert("please check the email format");
+          return false;
+        }
+      });
     },
     handleup: function () {
       this.$router.replace("/dpersonalcenter");
@@ -136,6 +142,25 @@ export default {
         console.log(this.ruleForm[type], type);
       });
     },
+  },
+  mounted() {
+    let data = {
+      userId: JSON.parse(localStorage.getItem("user")).id,
+    };
+    console.log(data);
+    adminService
+      .getaDoctorbyUserId(data)
+      .then((res) => {
+        if (res.data.code === 1) {
+          // alert(JSON.stringify(res.data.info));
+          this.form = res.data.info;
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

@@ -192,9 +192,9 @@ function resaveUserInfo({ id, email, address, allergy, name, birth, gender }: re
  * @param { resetDoctorInfo } data 请求数据
  * @param { Response } res 响应
  */
-function resaveDoctorInfo({ id, photo, identity, hospitalName, name, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId, gender }: resetDoctorInfoType, res: Response) {
-  let updateObject = { photo, identity, hospitalName, name, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId, gender }
-  DoctorModel.updateOne({ _id: id }, updateObject)
+function resaveDoctorInfo({ id, hospitalName, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId }: resetDoctorInfoType, res: Response) {
+  let updateObject = { hospitalName, hospitalLevel, hospitalAddress, job, strength, selfIntro, departmentId }
+  DoctorModel.updateOne({ userId: id }, updateObject)
     .then(() => { res.send(responseInfo.success('modify successfully')) })
     .catch(() => { res.send(responseInfo.updataException('modify failed')) })
 }
@@ -438,7 +438,7 @@ function getaDoctor({ doctorId }: getaDoctorType, res: Response) {
 }
 
 function getaDoctorbyUserId({ userId }: getaDoctorType, res: Response) {
-  console.log("get-a-doctor-new: " + userId);
+  // console.log("get-a-doctor-new: " + userId);
   DoctorModel.findOne({ userId: userId })
     .then((result: any) => {
       // console.log(result);
