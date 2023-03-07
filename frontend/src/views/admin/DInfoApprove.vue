@@ -66,8 +66,8 @@
         <template slot-scope="scope" class="btns">
           <!-- 同意或者拒绝没有页面的跳转，会有popoup再次确认操作 -->
           <el-button
+            size="mini"
             type="success"
-            plain
             class="button"
             @click="viewDetail(scope.$index)"
           >
@@ -317,26 +317,29 @@ export default {
             alert(res.data.info);
             //改变受影响但未进行的预约订单
             for (let i = 0; i < this.affectedTableData.length; i++) {
-              let datas3 = {
-                inquiryId: this.affectedTableData[i]._id,
-              };
-              let datas4 = {
-                userId: this.affectedTableData[i].userId,
-              };
-              // alert("datas4: " + this.affectedTableData[i].userId);
-
-              adminService
-                .changeInquiryStatus(datas3)
-                .then((res) => {
-                  if (res.data.code === 1) {
-                    // alert(res.data.info);
-                  } else {
-                    alert(res.data.info);
-                  }
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
+              if (this.affectedTableData[i].status == "Not yet start") {
+                let datas3 = {
+                  inquiryId: this.affectedTableData[i]._id,
+                };
+                let datas4 = {
+                  userId: this.affectedTableData[i].userId,
+                };
+                // alert("datas4: " + this.affectedTableData[i].userId);
+                adminService
+                  .changeInquiryStatus(datas3)
+                  .then((res) => {
+                    if (res.data.code === 1) {
+                      // alert(res.data.info);
+                    } else {
+                      alert(res.data.info);
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              } else {
+                console.log("status not equal 'not yet start'");
+              }
             }
           } else {
             alert(res.data.info);

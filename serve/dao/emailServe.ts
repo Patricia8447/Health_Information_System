@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
  * 发送注册成功邮箱
  * @param { string } email 目标邮箱
  */
-function signUpEmail(email:string){
+function signUpEmail(email: string) {
   //  发送信息内容
   let options = {
     from: sendEmailData[sendEmailType].user,
@@ -24,11 +24,11 @@ function signUpEmail(email:string){
     html: '<span>欢迎您的加入</span>',
   }
   // 发送邮件
-  transporter.sendMail(options, (err:any, msg:string) => {
-    if(err){
+  transporter.sendMail(options, (err: any, msg: string) => {
+    if (err) {
       console.error(err);
       throw new Error(err)
-    }else {
+    } else {
       console.log('邮箱发送成功! -> ' + options.to);
     }
   })
@@ -39,7 +39,7 @@ function signUpEmail(email:string){
  * @param { string } email 目标邮箱
  * @param { string } code 对应的验证码
  */
-function checkCodeEmail(email:string, code:string){
+function checkCodeEmail(email: string, code: string) {
   //  发送信息内容
   let options = {
     from: sendEmailData[sendEmailType].user,
@@ -48,34 +48,53 @@ function checkCodeEmail(email:string, code:string){
     html: '<span>' + code + '</span>',
   }
   // 发送邮件
-  transporter.sendMail(options, (err:any, msg:string) => {
-    if(err){
+  transporter.sendMail(options, (err: any, msg: string) => {
+    if (err) {
       console.error(err);
       throw new Error(err)
-    }else {
+    } else {
       console.log('邮箱发送成功! -> ' + options.to);
     }
   })
 }
 
-function checkStatusEmail(email:string){
- //  发送信息内容
- let options = {
-  from: sendEmailData[sendEmailType].user,
-  to: email,
-  subject: '预约状态提醒',
-  html: '<span>检测到您的预约有变化，请登入您的账户查看当前预约状态</span>',
-}
-// 发送邮件
-transporter.sendMail(options, (err:any, msg:string) => {
-  if(err){
-    console.error(err);
-    throw new Error(err)
-  }else {
-    console.log('邮箱发送成功! -> ' + options.to);
+function checkStatusEmail(email: string) {
+  //  发送信息内容
+  let options = {
+    from: sendEmailData[sendEmailType].user,
+    to: email,
+    subject: '预约状态提醒',
+    html: '<span>检测到您的预约有变化，请登入您的账户查看当前预约状态</span>',
   }
-})
+  // 发送邮件
+  transporter.sendMail(options, (err: any, msg: string) => {
+    if (err) {
+      console.error(err);
+      throw new Error(err)
+    } else {
+      console.log('邮箱发送成功! -> ' + options.to);
+    }
+  })
+}
+
+function allertDoctorStatusEmail(email: string) {
+  //  发送信息内容
+  let options = {
+    from: sendEmailData[sendEmailType].user,
+    to: email,
+    subject: '账户状态改变',
+    html: '<span>检测到您的账户有变化，请登入您的账户查看当前状态。请及时查看所有受影响的病人预约。如有任何疑问，请联络管理者 admin@admin.com</span>',
+  }
+  // 发送邮件
+  transporter.sendMail(options, (err: any, msg: string) => {
+    if (err) {
+      console.error(err);
+      throw new Error(err)
+    } else {
+      console.log('邮箱发送成功! -> ' + options.to);
+    }
+  })
 }
 export {
-  signUpEmail, checkCodeEmail, checkStatusEmail
+  signUpEmail, checkCodeEmail, checkStatusEmail, allertDoctorStatusEmail
 }

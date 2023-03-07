@@ -25,7 +25,7 @@ import {
   getOneDoctorType,
   getaDoctorType
 } from '../config/type'
-import { checkCodeEmail, signUpEmail, checkStatusEmail } from './emailServe'
+import { checkCodeEmail, signUpEmail, checkStatusEmail, allertDoctorStatusEmail } from './emailServe'
 import { getRandOmCode, resetPassCodeTime, Token, ObjectSimpleShallowCopy, ROLE, AUDITSTATUS, APPOINTMENT } from '../config/default'
 import { createToken } from './jsonWebToken'
 import { Document as mongoDocument } from 'mongoose'
@@ -511,13 +511,13 @@ function getInquiryList({ doctorId }: Record<string, string>, res: Response) {
  * @param { Response } res 响应
  */
 function changeInquiryStatus({ inquiryId }: Record<string, string>, res: Response) {
-  InquiryModel.findOneAndUpdate({ _id: inquiryId }, { status: APPOINTMENT.End }).then((result: any) => {
+  InquiryModel.findOneAndUpdate({ _id: inquiryId }, { status: APPOINTMENT.Void }).then((result: any) => {
     if (!result) { throw new Error() }
-    checkStatusEmail("patricia8447@163.com")
+    checkStatusEmail("testFYP@163.com") // for user
+    allertDoctorStatusEmail("testFYP@163.com") // for doctor
   }).then(() => {
     console.log("ok");
   }).catch((error: Error) => res.send(responseInfo.getException(error)))
-
 }
 
 /**

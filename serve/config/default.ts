@@ -19,7 +19,7 @@ export enum ROLE {
 // 配送状态
 export enum DELIVERY { Undelivered = 'Undelivered', Delivering = 'Delivering', Delivered = 'Delivered' }
 
-export enum APPOINTMENT{ Not='Not yet start', End='finished' }
+export enum APPOINTMENT{ Not='Not yet start', End='finished', Void='void' }
 // 发送注册成功的邮箱数据
 export let sendEmailData = {
   '163': {

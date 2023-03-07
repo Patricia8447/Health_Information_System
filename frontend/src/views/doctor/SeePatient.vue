@@ -64,7 +64,10 @@
             type="primary"
             plain
             class="button"
-            :disabled="getCurrentDate(scope.row.appointmentDate)"
+            :disabled="
+              getCurrentDate(scope.row.appointmentDate) ||
+              scope.row.status != 'Not yet start'
+            "
           >
             <a :href="zoomlink" target="_blank" style="text-decoration: none"> Start </a>
           </el-button>
