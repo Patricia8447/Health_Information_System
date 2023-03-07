@@ -60,7 +60,7 @@
             Make Appointment
           </el-button>
           <el-button
-            type="success"
+            type="primary"
             plain
             class="button"
             @click="viewDetail(scope.$index)"
