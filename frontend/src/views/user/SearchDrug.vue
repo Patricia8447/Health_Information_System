@@ -18,7 +18,7 @@
         >
       </el-row>
     </div>
-    <el-table :data="tableData" style="width: 100%;margin-left:5%;">
+    <el-table :data="tableData" style="width: 100%; margin-left: 5%">
       <el-table-column prop="title" label="Drug Name"> </el-table-column>
       <el-table-column prop="content" label="Detail Content"> </el-table-column>
     </el-table>
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       input: "",
-      tableData: "",
+      tableData: [],
     };
   },
   methods: {

@@ -6,7 +6,7 @@
       :autoplay="true"
       trigger="click"
     >
-      <el-carousel-item v-for="item in images" :key="item">
+      <el-carousel-item v-for="item in images" :key="item.id">
         <img class="carousel" :src="item.url" alt="无图片" />
       </el-carousel-item>
     </el-carousel>
@@ -18,7 +18,7 @@
           <el-card
             :body-style="{ padding: '10px' }"
             v-for="info in infos"
-            :key="infos.coverLink"
+            :key="infos._id"
           >
             <template slot-scope="scope">
               <div><img :src="info.coverLink" class="image" /></div>
