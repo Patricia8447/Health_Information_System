@@ -14,10 +14,10 @@
           <div>
             <div style="margin: 20px 0px">{{ resultMessage }}</div>
             <div style="background-color: #0d6efd" class="btn" @click="reCheck()">
-              重新评估
+              Re-take the test
             </div>
             <div style="background-color: #f4c807" class="btn">
-              <router-link to="/showdoctor">预约医生</router-link>
+              <router-link to="/showdoctor">Make an Appointment</router-link>
             </div>
           </div>
         </div>
@@ -60,13 +60,13 @@
             fill="#087E6A"
             p-id="1096"
           ></path></svg
-        >COIVD-19 investigation
+        >COIVD-19 Investigation
       </div>
       <div class="body">
         <div class="item">
           <div style="display: inline-block">
-            在过去14 天内，是否去过<span style="color: red">已确诊</span> 2019
-            新型冠状病毒的<span style="color: red">国家</span>?
+            * In the past 14 days, whether or not been to countries with 2019 novel
+            coronavirus?
           </div>
           <svg
             @click="selected(0, true)"
@@ -116,8 +116,8 @@
         </div>
         <div class="item">
           <div style="display: inline-block">
-            在过去 14 天内，是否与<span style="color: red">已确诊</span> 2019
-            新型冠状病毒的病人<span style="color: red">接触</span>过?
+            * Have you been in contact with someone who has been diagnosed with 2019 novel
+            coronavirus in the past 14 days?
           </div>
           <svg
             @click="selected(1, true)"
@@ -166,31 +166,33 @@
           </svg>
         </div>
         <div class="item">
-          <div style="display: inline-block">呼吸道症状(点击选择):</div>
+          <div style="display: inline-block">
+            * Respiratory symptoms (click to select):
+          </div>
           <div
             class="subItem"
             @click="symptomSelect(0)"
             :style="{ color: symptomList[0].state ? '#0d6efd' : '#000' }"
           >
-            咳嗽
+            Cough
           </div>
           <div
             class="subItem"
             @click="symptomSelect(1)"
             :style="{ color: symptomList[1].state ? '#0d6efd' : '#000' }"
           >
-            咽痛
+            Sore throat
           </div>
           <div
             class="subItem"
             @click="symptomSelect(2)"
             :style="{ color: symptomList[2].state ? '#0d6efd' : '#000' }"
           >
-            呼吸困难
+            Dyspnea
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">全身症状(点击选择):</div>
+          <div style="display: inline-block">* Systemic symptoms (click to select):</div>
         </div>
         <div class="item" style="border: none">
           <div
@@ -198,42 +200,42 @@
             @click="symptomSelect(3)"
             :style="{ color: symptomList[3].state ? '#0d6efd' : '#000' }"
           >
-            体重下降
+            Weight loss
           </div>
           <div
             class="subItem"
             @click="symptomSelect(4)"
             :style="{ color: symptomList[4].state ? '#0d6efd' : '#000' }"
           >
-            发烧或低烧
+            Fever or low fever
           </div>
           <div
             class="subItem"
             @click="symptomSelect(5)"
             :style="{ color: symptomList[5].state ? '#0d6efd' : '#000' }"
           >
-            头痛
+            Headache
           </div>
           <div
             class="subItem"
             @click="symptomSelect(6)"
             :style="{ color: symptomList[6].state ? '#0d6efd' : '#000' }"
           >
-            肌肉疼痛
+            Muscle pain
           </div>
           <div
             class="subItem"
             @click="symptomSelect(7)"
             :style="{ color: symptomList[7].state ? '#0d6efd' : '#000' }"
           >
-            全身不适
+            General malaise
           </div>
           <div
             class="subItem"
             @click="symptomSelect(8)"
             :style="{ color: symptomList[8].state ? '#0d6efd' : '#000' }"
           >
-            虚弱无力
+            Weakness
           </div>
         </div>
         <div class="item" style="border: none">
@@ -242,46 +244,46 @@
             @click="symptomSelect(9)"
             :style="{ color: symptomList[9].state ? '#0d6efd' : '#000' }"
           >
-            厌食
+            Anorexia
           </div>
           <div
             class="subItem"
             @click="symptomSelect(10)"
             :style="{ color: symptomList[10].state ? '#0d6efd' : '#000' }"
           >
-            意识模糊
+            Blurred consciousness
           </div>
           <div
             class="subItem"
             @click="symptomSelect(11)"
             :style="{ color: symptomList[11].state ? '#0d6efd' : '#000' }"
           >
-            头晕
+            Dizziness
           </div>
           <div
             class="subItem"
             @click="symptomSelect(12)"
             :style="{ color: symptomList[12].state ? '#0d6efd' : '#000' }"
           >
-            腹泻
+            Diarrhea
           </div>
           <div
             class="subItem"
             @click="symptomSelect(13)"
             :style="{ color: symptomList[13].state ? '#0d6efd' : '#000' }"
           >
-            嗅觉丧失或味觉丧失
+            Loss of smell or taste
           </div>
           <div
             class="subItem"
             @click="symptomSelect(14)"
             :style="{ color: symptomList[14].state ? '#0d6efd' : '#000' }"
           >
-            胸痛
+            Chest pain
           </div>
         </div>
       </div>
-      <div class="check" @click="check()">查看结果</div>
+      <div class="check" @click="check()">Check the Results</div>
     </div>
   </div>
 </template>
@@ -321,36 +323,50 @@ export default {
       this.symptomList[target].state = !this.symptomList[target].state;
     },
     check() {
-      if (this.selectList[0].state === "none" || this.selectList[1].state === "none")
-        return;
       let res = 0;
-      this.selectList.forEach((item) => {
-        if (item.state) {
-          console.log(item);
-          res += 1;
-        } else {
-          res += 0.5;
-        }
-      });
+      let count = 0;
+
       this.symptomList.forEach((item, index) => {
         if (index === 4 && item.state) {
           res += 2;
+          count += 1;
         } else if (item.state) {
           res += 1;
+          count += 1;
         }
       });
-      if (res <= 2) {
-        this.resultMessage =
-          "您感染 2019 新型冠狀病毒的機會較微，不過但凡身體出現任何不適，亦應盡快向醫生徵詢意見，以免病情惡化，甚至傳染給身邊的人。";
-      } else if (res >= 3 && res <= 4) {
-        this.resultMessage =
-          "根據您的回答，您感染 2019 新型冠狀病毒的機會相對較高，特別是老人家和患有其他醫療間題的人更容易轉爲重病。建議盡快尋求醫生作進一步評估及治療。";
-      } else if (res >= 5) {
-        this.resultMessage =
-          "您己出現警告症狀，請盡早到公立醫院急症室求診，告知醫護人員您出現 2019 新型冠狀病毒的警告症狀，並根據指引接受進一步治療";
+
+      alert(count);
+      if (
+        this.selectList[0].state === "none" ||
+        this.selectList[1].state === "none" ||
+        count === 0
+      ) {
+        alert("The test is not finished");
+      } else {
+        this.selectList.forEach((item) => {
+          if (item.state) {
+            console.log(item);
+            res += 1;
+          } else {
+            res += 0.5;
+          }
+        });
+
+        if (res <= 2) {
+          this.resultMessage =
+            "There is a small chance that you will be infected with the 2019-ncov, but you should seek advice from your doctor if you feel unwell in order not to get worse and even spread the disease to people around you.";
+        } else if (res >= 3 && res <= 4) {
+          this.resultMessage =
+            "According to your answers, you have a relatively high chance of being infected with 2019 novel coronavirus, especially the elderly and people with other medical problems are more likely to become seriously ill. It is recommended to seek medical advice for further evaluation and treatment as soon as possible.";
+        } else if (res >= 5) {
+          this.resultMessage =
+            "If you have developed warning symptoms, please go to the emergency department of a public hospital as soon as possible, inform the medical staff of the warning symptoms of 2019 novel coronavirus, and receive further treatment according to the guidelines.";
+        }
+        this.result = true;
       }
-      this.result = true;
     },
+
     reCheck() {
       this.selectList = [{ state: "none" }, { state: "none" }];
       this.symptomList = [
@@ -383,8 +399,9 @@ export default {
   user-select: none;
 }
 .covid19investigationBody {
-  width: 700px;
+  width: 1100px;
   margin: 0 auto;
+  margin-top: 5%;
 }
 .title {
   font-size: 25px;

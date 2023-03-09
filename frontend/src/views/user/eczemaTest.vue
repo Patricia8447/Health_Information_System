@@ -14,10 +14,10 @@
           <div>
             <div style="margin: 20px 0px">{{ resultMessage }}</div>
             <div style="background-color: #0d6efd" class="btn" @click="reCheck()">
-              重新评估
+              Re-take the test
             </div>
             <div style="background-color: #f4c807" class="btn">
-              <router-link to="/showdoctor">预约医生</router-link>
+              <router-link to="/showdoctor">Make an Appointment</router-link>
             </div>
           </div>
         </div>
@@ -64,30 +64,37 @@
       </div>
 
       <div>
-        濕疹又稱為異位性皮膚炎。不少濕疹患者受病患困擾多年，患處痕癢、紅腫、脱屑、長水泡，甚至出水等情況，除了帶來身體上的不適，影響工作、學業和睡眠，更同時對患者自信和社交造成困擾。以下的異位性皮膚炎控制工具
-        (ADCT)
-        測試根據患者可見的皮膚徵象、搔癢和疼痛等症狀，以及整體生活質素，評估患者濕疹平清的受控程度，協助患者及其醫生更全面地掌握其病情，有助醫生為其制定更有效的治療方案。
+        Eczema is also known as ectopic dermatitis. Many eczema patients have been
+        suffering for many years with itchiness, redness, desquamation, long blisters and
+        even water. In addition to the physical discomfort, work, school and sleep are
+        affected, and at the same time, the patient's self-confidence and social
+        difficulties. The following control tools for atopic dermatitis (ADCT) The test
+        assesses how well the patient is under control based on visible skin signs,
+        symptoms such as itching and pain, as well as overall quality of life. It helps
+        the patient and his/her doctor to have a more complete picture of his/her
+        condition and help the doctor to make more effective treatment plans for him/her.
       </div>
 
       <div class="body">
         <div class="item">
-          <div style="display: inline-block">您的年齡為？</div>
+          <div style="display: inline-block">* What's your age?</div>
           <div>
             <el-radio-group v-model="radio" @change="ageSelect">
-              <el-radio label="18">18 歲或以上</el-radio>
-              <el-radio label="12">12 至 17 歲</el-radio>
-              <el-radio label="11">11 歲或以下</el-radio>
+              <el-radio label="18">Age 18 or above</el-radio>
+              <el-radio label="12">12 to 17 years old</el-radio>
+              <el-radio label="11">Age 11 or younger</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
           <div style="display: inline-block">
-            在接觸此測試之前，您有完成過異位性皮膚炎控制工具 (ADCT) 嗎？
+            * Have you completed the atopic dermatitis Control Tool (ADCT) before being
+            exposed to this test?
           </div>
           <div>
             <el-radio-group v-model="radio1" @change="selected6">
               <el-radio label="7">
-                有 - 我上一次完成的得分為
+                Yes -- My last score was
                 <el-input
                   min="0"
                   max="24"
@@ -98,97 +105,100 @@
                   @change="checkInput"
                 ></el-input>
               </el-radio>
-              <el-radio label="0">沒有 - 我初次接受次測試</el-radio>
+              <el-radio label="0">No -- I was tested for the first time</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
           <div style="display: inline-block">
-            在過去一週，您會如何評價您的濕疹相關症狀（例如瘙癢、皮膚乾燥、皮疹）？
+            * In the past week, how would you rate your eczema related symptoms (e.g.
+            itching, dry skin, rash)?
           </div>
           <div>
             <el-radio-group v-model="radio2" @change="selected">
-              <el-radio label="0">沒有症狀</el-radio>
-              <el-radio label="1">輕微</el-radio>
-              <el-radio label="2">中度</el-radio>
-              <el-radio label="3">嚴重</el-radio>
-              <el-radio label="4">非常嚴重</el-radio>
+              <el-radio label="0">Asymptomatic</el-radio>
+              <el-radio label="1">Slight</el-radio>
+              <el-radio label="2">Moderate</el-radio>
+              <el-radio label="3">Serious</el-radio>
+              <el-radio label="4">Very Serious</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
           <div style="display: inline-block">
-            在過去一週，您有多少天因為濕疹而出現強烈的瘙癢發作？
+            * On how many days in the past week have you had intense itching episodes due
+            to eczema?
           </div>
           <div>
             <el-radio-group v-model="radio3" @change="selected1">
-              <el-radio label="0">完全沒有</el-radio>
-              <el-radio label="1">1-2 天</el-radio>
-              <el-radio label="2">3-4 天</el-radio>
-              <el-radio label="3">5-6 天</el-radio>
-              <el-radio label="4">每天</el-radio>
+              <el-radio label="0">Not at all</el-radio>
+              <el-radio label="1">1-2 days</el-radio>
+              <el-radio label="2">3-4 days</el-radio>
+              <el-radio label="3">5-6 days</el-radio>
+              <el-radio label="4">Everyday</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
           <div style="display: inline-block">
-            在過去一週，您的濕疹帶來的困擾程度有多大？
+            * How much has your eczema been bothering you in the past week?
           </div>
           <div>
             <el-radio-group v-model="radio4" @change="selected2">
-              <el-radio label="0">沒有影响</el-radio>
-              <el-radio label="1">輕微</el-radio>
-              <el-radio label="2">中度</el-radio>
-              <el-radio label="3">嚴重</el-radio>
-              <el-radio label="4">非常嚴重</el-radio>
+              <el-radio label="0">Asymptomatic</el-radio>
+              <el-radio label="1">Slight</el-radio>
+              <el-radio label="2">Moderate</el-radio>
+              <el-radio label="3">Serious</el-radio>
+              <el-radio label="4">Very Serious</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
           <div style="display: inline-block">
-            在過去一週，您有幾晚因為濕疹而難以入睡或睡不好？
+            * How many nights in the past week have you had difficulty falling asleep or
+            sleeping well because of eczema?
           </div>
           <div>
             <el-radio-group v-model="radio5" @change="selected3">
-              <el-radio label="0">完全沒有</el-radio>
-              <el-radio label="1">1-2 晚</el-radio>
-              <el-radio label="2">3-4 晚</el-radio>
-              <el-radio label="3">5-6 晚</el-radio>
-              <el-radio label="4">每晚</el-radio>
+              <el-radio label="0">Not at all</el-radio>
+              <el-radio label="1">1-2 nights</el-radio>
+              <el-radio label="2">3-4 danightsys</el-radio>
+              <el-radio label="3">5-6 nights</el-radio>
+              <el-radio label="4">Everynight</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
           <div style="display: inline-block">
-            在過去一週，您的濕疹對您日常活動影響多大？
+            * How much has your eczema affected your daily activities in the past week?
           </div>
           <div>
             <el-radio-group v-model="radio6" @change="selected4">
-              <el-radio label="0">沒有影响</el-radio>
-              <el-radio label="1">輕微</el-radio>
-              <el-radio label="2">中度</el-radio>
-              <el-radio label="3">嚴重</el-radio>
-              <el-radio label="4">非常嚴重</el-radio>
+              <el-radio label="0">Asymptomatic</el-radio>
+              <el-radio label="1">Slight</el-radio>
+              <el-radio label="2">Moderate</el-radio>
+              <el-radio label="3">Serious</el-radio>
+              <el-radio label="4">Very Serious</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
           <div style="display: inline-block">
-            在過去一週，您的濕疹對您心情或情緒影響多大？
+            * How much has your eczema affected your mood or mood in the past week?
           </div>
           <div>
             <el-radio-group v-model="radio7" @change="selected5">
-              <el-radio label="0">沒有影响</el-radio>
-              <el-radio label="1">輕微</el-radio>
-              <el-radio label="2">中度</el-radio>
-              <el-radio label="3">嚴重</el-radio>
-              <el-radio label="4">非常嚴重</el-radio>
+              <el-radio label="0">Asymptomatic</el-radio>
+              <el-radio label="1">Slight</el-radio>
+              <el-radio label="2">Moderate</el-radio>
+              <el-radio label="3">Serious</el-radio>
+              <el-radio label="4">Very Serious</el-radio>
             </el-radio-group>
           </div>
         </div>
       </div>
 
-      <div class="check" @click="check()">查看结果</div>
+      <div class="check" @click="check()">Check the Result</div>
     </div>
   </div>
 </template>
@@ -221,15 +231,6 @@ export default {
     };
   },
   methods: {
-    // inputOk: function (val) {
-    //   if (val == "1") {
-    //     alert(isDisabled);
-    //     this.isDisabled = true;
-    //     alert(isDisabled);
-    //   } else {
-    //     this.isDisabled = false;
-    //   }
-    // },
     checkInput() {
       if (this.input > 24) {
         this.input = 24;
@@ -258,13 +259,10 @@ export default {
     },
     selected6: function (val) {
       if (parseInt(val) >= this.input) {
-        alert(parseInt(this.input));
         this.selectList6[0].state = this.input;
       } else {
-        alert(parseInt(this.input));
         let temp = 0;
         temp = parseInt(this.input) - parseInt(val);
-        alert(temp);
         this.selectList6[0].state = temp.toString();
       }
     },
@@ -273,43 +271,56 @@ export default {
         this.ageList[0].state = true;
       } else {
         alert(
-          "此測試只適用於評估 12 歲或以上人士的濕疹受控狀況。如您擔心自己的濕疹可能未獲得良好的控制，您應當尋求醫療上的建議。"
+          "This test is only for the assessment of controlled eczema in persons aged 12 years or over. If you are concerned that your eczema may not be well controlled, you should seek medical advice."
         );
         location.reload();
       }
     },
     check() {
       let res = 0;
-      this.selectList.forEach((item) => {
-        res = res + parseInt(item.state);
-      });
-      this.selectList1.forEach((item) => {
-        res = res + parseInt(item.state);
-      });
-      this.selectList2.forEach((item) => {
-        res = res + parseInt(item.state);
-      });
-      this.selectList3.forEach((item) => {
-        res = res + parseInt(item.state);
-      });
-      this.selectList4.forEach((item) => {
-        res = res + parseInt(item.state);
-      });
-      this.selectList5.forEach((item) => {
-        res = res + parseInt(item.state);
-      });
-      this.selectList6.forEach((item) => {
-        res = res + parseInt(item.state);
-      });
-
-      if (res >= 7) {
-        this.resultMessage =
-          "您的濕疹可能尚未受到良好的控制。如果您擔心自己的濕疹可能未獲得良好的控制，您應當尋求醫療上的建議。下次預約諮詢時，請攜帶填妥的ADCT將您對測試問題的回答以及濕疹對您日常生活的影響告訴您的醫生。";
+      if (
+        this.ageList[0].state == "none" ||
+        this.selectList[0].state == "" ||
+        this.selectList1[0].state == "" ||
+        this.selectList2[0].state == "" ||
+        this.selectList3[0].state == "" ||
+        this.selectList4[0].state == "" ||
+        this.selectList5[0].state == "" ||
+        this.selectList6[0].state == ""
+      ) {
+        alert("The test is not finished");
       } else {
-        this.resultMessage =
-          "您的濕疹可能已經受到控制您的濕疹可能已經受到控制，但由於濕疹不能完全被根治，您應該定期進行此測試，確保自己的濕疹持續受控。如果您仍然擔心自己的濕疹可能未獲得良好的控制，您應當尋求醫療上的建議。下次預約諮詢時，請攜帶填妥的ADCT將您對測試問題的回答以及濕疹對您日常生活的影響告訴您的醫生。";
+        this.selectList.forEach((item) => {
+          res = res + parseInt(item.state);
+        });
+        this.selectList1.forEach((item) => {
+          res = res + parseInt(item.state);
+        });
+        this.selectList2.forEach((item) => {
+          res = res + parseInt(item.state);
+        });
+        this.selectList3.forEach((item) => {
+          res = res + parseInt(item.state);
+        });
+        this.selectList4.forEach((item) => {
+          res = res + parseInt(item.state);
+        });
+        this.selectList5.forEach((item) => {
+          res = res + parseInt(item.state);
+        });
+        this.selectList6.forEach((item) => {
+          res = res + parseInt(item.state);
+        });
+
+        if (res >= 7) {
+          this.resultMessage =
+            "Your eczema may not be well controlled. If you are concerned that your eczema may not be well controlled, you should seek medical advice. At your next consultation appointment, please bring your completed ADCT with you to inform your doctor of your answers to the test questions and the impact of eczema on your daily life.";
+        } else {
+          this.resultMessage =
+            "Your eczema may be under control, but since eczema cannot be completely cured, you should take this test regularly to ensure that your eczema remains under control. If you are still concerned that your eczema may not be well controlled, you should seek medical advice. At your next consultation appointment, please bring your completed ADCT with you to inform your doctor of your answers to the test questions and the impact of eczema on your daily life.";
+        }
+        this.result = true;
       }
-      this.result = true;
     },
     reCheck() {
       location.reload();
@@ -330,8 +341,9 @@ export default {
   margin-right: 70%;
 }
 .eczematestBody {
-  width: 700px;
+  width: 1500px;
   margin: 0 auto;
+  margin-top: 5%;
 }
 .title {
   font-size: 25px;

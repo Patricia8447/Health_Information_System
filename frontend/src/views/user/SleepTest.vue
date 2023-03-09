@@ -14,10 +14,10 @@
           <div>
             <div style="margin: 20px 0px">{{ resultMessage }}</div>
             <div style="background-color: #0d6efd" class="btn" @click="reCheck()">
-              重新评估
+              Re-take the test
             </div>
             <div style="background-color: #f4c807" class="btn">
-              <router-link to="/showdoctor">预约医生</router-link>
+              <router-link to="/showdoctor">Make an Appointment</router-link>
             </div>
           </div>
         </div>
@@ -64,12 +64,21 @@
       </div>
 
       <div>
-        近期受到疫情的影響，大家的生活都遇到了大大小小的改變，許多人的工作型態突然改變成居家辦公，原本用來休息放鬆的空間，一夕之間成為了工作的場所，工作與生活之間的界線日漸模糊，降低了大家的生活品質與工作效率，甚至產生許多身心疾病，其中又以失眠狀況最為常見，這儼然已成為現代人嚴重的健康問題。我們可以透過「匹茲堡睡眠品質量表（PSQI）」自己做睡眠品質的評估檢測！這份量表是由美國學者Buysse,D.J.等人所提出，共有七個面向的分數，當PSQI分數越高，表示睡眠品質越差，一起來看看測試內容吧！
+        Recently affected by the epidemic, everyone's life has encountered big and small
+        changes. Many people's work style has suddenly changed to work from home. The
+        space originally used for rest and relaxation has become the working place
+        overnight. Among them, insomnia is the most common, which has become a serious
+        health problem of modern people. We can use the Pittsburgh Sleep Quality Index
+        (PSQI) to evaluate our sleep quality. This scale is proposed by the American
+        scholar Buysse,D.J. et al., which has a total of seven aspects. When the PSQI
+        score is higher, the sleep quality is worse.
       </div>
 
       <div class="body">
         <div class="item">
-          <div style="display: inline-block">近1個月，晚上通常點鐘上牀睡覺。</div>
+          <div style="display: inline-block">
+            * At what time you usually go to bed at night (number from 0-24)
+          </div>
           <el-input
             min="0"
             max="24"
@@ -80,7 +89,10 @@
           ></el-input>
         </div>
         <div class="item">
-          <div style="display: inline-block">近1個月，從上牀到入睡通常需要几分鐘。</div>
+          <div style="display: inline-block">
+            * It usually takes how many minutes from going to bed to fall asleep (number
+            from 0-60)
+          </div>
           <el-input
             min="0"
             max="60"
@@ -92,7 +104,9 @@
           ></el-input>
         </div>
         <div class="item">
-          <div style="display: inline-block">近1個月，通常早上几點起牀。</div>
+          <div style="display: inline-block">
+            * What time do you usually get up in the morning (number from 0-24)
+          </div>
           <el-input
             min="0"
             max="24"
@@ -104,7 +118,8 @@
         </div>
         <div class="item">
           <div style="display: inline-block">
-            近1個月，每夜通常實際睡眠小時（不等於卧牀時間）
+            * Actual sleeping hours per night (not equivalent to bed time) in the past one
+            month
           </div>
           <el-input
             min="0"
@@ -118,171 +133,181 @@
         </div>
 
         <div class="item">
-          <div style="display: inline-block">入睡困難（30分鐘內不能入睡）</div>
+          <div style="display: inline-block">
+            * Difficulty falling asleep (unable to fall asleep within 30 minutes)
+          </div>
           <div>
             <el-radio-group v-model="radio5a" @change="selected5a">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">夜間易醒或早醒</div>
+          <div style="display: inline-block">* Easy to wake up at night or early</div>
           <div>
             <el-radio-group v-model="radio5b" @change="selected5b">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
 
         <div class="item">
-          <div style="display: inline-block">入夜間去廁所</div>
+          <div style="display: inline-block">* Go to the toilet often at night</div>
           <div>
             <el-radio-group v-model="radio5c" @change="selected5c">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
 
         <div class="item">
-          <div style="display: inline-block">呼吸不暢</div>
+          <div style="display: inline-block">* Poor breathing</div>
           <div>
             <el-radio-group v-model="radio5d" @change="selected5d">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
 
         <div class="item">
-          <div style="display: inline-block">咳嗽或鼾聲高</div>
+          <div style="display: inline-block">* Coughing or snoring loudly</div>
           <div>
             <el-radio-group v-model="radio5e" @change="selected5e">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
 
         <div class="item">
-          <div style="display: inline-block">感覺冷</div>
+          <div style="display: inline-block">* Feeling cold</div>
           <div>
             <el-radio-group v-model="radio5f" @change="selected5f">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
 
         <div class="item">
-          <div style="display: inline-block">感覺熱</div>
+          <div style="display: inline-block">* Feeling hot</div>
           <div>
             <el-radio-group v-model="radio5g" @change="selected5g">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
 
         <div class="item">
-          <div style="display: inline-block">做惡夢</div>
+          <div style="display: inline-block">* Having bad dreams</div>
           <div>
             <el-radio-group v-model="radio5h" @change="selected5h">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
 
         <div class="item">
-          <div style="display: inline-block">疼痛不適</div>
+          <div style="display: inline-block">* Pain and discomfort</div>
           <div>
             <el-radio-group v-model="radio5i" @change="selected5i">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
 
         <div class="item">
-          <div style="display: inline-block">其它影響睡眠的事情</div>
+          <div style="display: inline-block">* Other things that affect sleep</div>
           <div>
             <el-radio-group v-model="radio5j" @change="selected5j">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">＜1次/周</el-radio>
-              <el-radio label="2"> 1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
 
         <div class="item">
-          <div style="display: inline-block">近1個月，總的來説，您認為自己的睡眠質量</div>
+          <div style="display: inline-block">
+            * In the past month, how do you think of your sleeping quality
+          </div>
           <div>
             <el-radio-group v-model="radio6" @change="selected6">
-              <el-radio label="0">很好 </el-radio>
-              <el-radio label="1">較好</el-radio>
-              <el-radio label="2">較差 </el-radio>
-              <el-radio label="3">很差</el-radio>
+              <el-radio label="0">Very good </el-radio>
+              <el-radio label="1">good</el-radio>
+              <el-radio label="2">bad</el-radio>
+              <el-radio label="3">vert bad</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">近1個月，您用藥物催眠的情況</div>
+          <div style="display: inline-block">
+            * In the past month, have you used drugs to hypnotize
+          </div>
           <div>
             <el-radio-group v-model="radio7" @change="selected7">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">1次/周</el-radio>
-              <el-radio label="2">1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">近1個月，您常感到睏倦嗎</div>
+          <div style="display: inline-block">
+            * In the past month, do you often feel sleepy
+          </div>
           <div>
             <el-radio-group v-model="radio8" @change="selected8">
-              <el-radio label="0">無 </el-radio>
-              <el-radio label="1">1次/周</el-radio>
-              <el-radio label="2">1-2次/周</el-radio>
-              <el-radio label="3">≥3次/周</el-radio>
+              <el-radio label="0">No </el-radio>
+              <el-radio label="1">Less than 1 time/week</el-radio>
+              <el-radio label="2"> 1-2 times/week</el-radio>
+              <el-radio label="3">Equal or more than 3 times/week</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">近1個月，您做事情的精力不足嗎</div>
+          <div style="display: inline-block">
+            * In the past month, do you have insufficient energy to do things
+          </div>
           <div>
             <el-radio-group v-model="radio9" @change="selected9">
-              <el-radio label="0">沒有</el-radio>
-              <el-radio label="1">偶爾有</el-radio>
-              <el-radio label="2">有時有</el-radio>
-              <el-radio label="3">經常</el-radio>
+              <el-radio label="0">No</el-radio>
+              <el-radio label="1">Occasionally</el-radio>
+              <el-radio label="2">Sometimes</el-radio>
+              <el-radio label="3">Often</el-radio>
             </el-radio-group>
           </div>
         </div>
       </div>
 
-      <div class="check" @click="check()">查看结果</div>
+      <div class="check" @click="check()">Check the Result</div>
     </div>
   </div>
 </template>
@@ -400,158 +425,171 @@ export default {
       this.selectList9[0].state = val;
     },
 
-    // selected: function (val) {
-    //   if (parseInt(val) >= this.input) {
-    //     alert(parseInt(this.input));
-    //     this.selectList6[0].state = this.input;
-    //   } else {
-    //     alert(parseInt(this.input));
-    //     let temp = 0;
-    //     temp = parseInt(this.input) - parseInt(val);
-    //     alert(temp);
-    //     this.selectList6[0].state = temp.toString();
-    //   }
-    // },
-
     check() {
-      let res = 0;
-      let resA = 0;
-      let resB = 0;
-      let resC = 0;
-      let resD = 0;
-      let resE = 0;
-      let resF = 0;
-      let resG = 0;
-
-      //A
-      this.selectList6.forEach((item) => {
-        resA = resA + parseInt(item.state);
-      });
-
-      //B
-      this.selectList5a.forEach((item) => {
-        resB = resB + parseInt(this.input2) + parseInt(item.state);
-      });
-      if (resB == 0) {
-        resB = 0;
-      }
-      if (resB >= 1 && resB <= 2) {
-        resB = 1;
-      }
-      if (resB >= 3 && resB <= 4) {
-        resB = 2;
-      }
-      if (resB >= 5 && resB <= 6) {
-        resB = 3;
-      }
-
-      //C
-      resC = parseInt(this.input4);
-
-      //D
-      let onBed = parseInt(this.input1) - parseInt(this.input3);
-      if (onBed < 0) {
-        onBed = -onBed;
-      }
-      let temp = parseInt(this.input4) / onBed;
-      if (temp > 0.85) {
-        resD = 0;
-      }
-      if (temp >= 0.75 && temp <= 0.84) {
-        resD = 1;
-      }
-      if (temp >= 0.65 && temp <= 0.74) {
-        resD = 2;
-      }
-      if (temp <= 0.65) {
-        resD = 3;
-      }
-
-      //E
-      this.selectList5b.forEach((item) => {
-        resE = resE + parseInt(item.state);
-      });
-      this.selectList5c.forEach((item) => {
-        resE = resE + parseInt(item.state);
-      });
-      this.selectList5d.forEach((item) => {
-        resE = resE + parseInt(item.state);
-      });
-      this.selectList5e.forEach((item) => {
-        resE = resE + parseInt(item.state);
-      });
-      this.selectList5f.forEach((item) => {
-        resE = resE + parseInt(item.state);
-      });
-      this.selectList5g.forEach((item) => {
-        resE = resE + parseInt(item.state);
-      });
-      this.selectList5h.forEach((item) => {
-        resE = resE + parseInt(item.state);
-      });
-      this.selectList5i.forEach((item) => {
-        resE = resE + parseInt(item.state);
-      });
-      this.selectList5j.forEach((item) => {
-        resE = resE + parseInt(item.state);
-      });
-      if (resE == 0) {
-        resE = 0;
-      }
-      if (resE >= 1 && resE <= 9) {
-        resE = 1;
-      }
-      if (resE >= 10 && resE <= 18) {
-        resE = 2;
-      }
-      if (resE >= 19 && resE <= 27) {
-        resE = 3;
-      }
-
-      //F
-      this.selectList7.forEach((item) => {
-        resF = resF + parseInt(item.state);
-      });
-
-      //G
-      this.selectList8.forEach((item) => {
-        resG = resG + parseInt(item.state);
-      });
-      this.selectList9.forEach((item) => {
-        resG = resG + parseInt(item.state);
-      });
-      if (resG == 0) {
-        resG = 0;
-      }
-      if (resG >= 1 && resG <= 2) {
-        resG = 1;
-      }
-      if (resG >= 3 && resG <= 4) {
-        resG = 2;
-      }
-      if (resG >= 5 && resG <= 6) {
-        resE = 3;
-      }
-
-      //   alert("resA" + resA);
-      //   alert("resB" + resB);
-      //   alert("resC" + resC);
-      //   alert("resD" + resD);
-      //   alert("resE" + resE);
-      //   alert("resF" + resF);
-      //   alert("resG" + resG);
-      res = resA + resB + resC + resD + resE + resF + resG;
-      //   alert(res);
-
-      if (res >= 5) {
-        this.resultMessage =
-          "您的PSQI值为： " +
-          res +
-          "。您在過去這一個月的時間裡有失眠的症狀。而失眠的原因複雜，可能經物理治療、肌肉放鬆伸展等改善，但仍建議先看家醫科或身心科。";
+      if (
+        this.input == "" ||
+        this.input1 == "" ||
+        this.input2 == "" ||
+        this.input3 == "" ||
+        this.input4 == "" ||
+        this.selectList5a[0].state == "" ||
+        this.selectList5b[0].state == "" ||
+        this.selectList5c[0].state == "" ||
+        this.selectList5d[0].state == "" ||
+        this.selectList5e[0].state == "" ||
+        this.selectList5f[0].state == "" ||
+        this.selectList5g[0].state == "" ||
+        this.selectList5h[0].state == "" ||
+        this.selectList5i[0].state == "" ||
+        this.selectList6[0].state == "" ||
+        this.selectList7[0].state == "" ||
+        this.selectList8[0].state == "" ||
+        this.selectList9[0].state == ""
+      ) {
+        alert("The test is not finished");
       } else {
-        this.resultMessage = "您的PSQI值为： " + res + "，睡眠质量被认为暂时没问题";
+        let res = 0;
+        let resA = 0;
+        let resB = 0;
+        let resC = 0;
+        let resD = 0;
+        let resE = 0;
+        let resF = 0;
+        let resG = 0;
+
+        //A
+        this.selectList6.forEach((item) => {
+          resA = resA + parseInt(item.state);
+        });
+
+        //B
+        this.selectList5a.forEach((item) => {
+          resB = resB + parseInt(this.input2) + parseInt(item.state);
+        });
+        if (resB == 0) {
+          resB = 0;
+        }
+        if (resB >= 1 && resB <= 2) {
+          resB = 1;
+        }
+        if (resB >= 3 && resB <= 4) {
+          resB = 2;
+        }
+        if (resB >= 5 && resB <= 6) {
+          resB = 3;
+        }
+
+        //C
+        resC = parseInt(this.input4);
+
+        //D
+        let onBed = parseInt(this.input1) - parseInt(this.input3);
+        if (onBed < 0) {
+          onBed = -onBed;
+        }
+        let temp = parseInt(this.input4) / onBed;
+        if (temp > 0.85) {
+          resD = 0;
+        }
+        if (temp >= 0.75 && temp <= 0.84) {
+          resD = 1;
+        }
+        if (temp >= 0.65 && temp <= 0.74) {
+          resD = 2;
+        }
+        if (temp <= 0.65) {
+          resD = 3;
+        }
+
+        //E
+        this.selectList5b.forEach((item) => {
+          resE = resE + parseInt(item.state);
+        });
+        this.selectList5c.forEach((item) => {
+          resE = resE + parseInt(item.state);
+        });
+        this.selectList5d.forEach((item) => {
+          resE = resE + parseInt(item.state);
+        });
+        this.selectList5e.forEach((item) => {
+          resE = resE + parseInt(item.state);
+        });
+        this.selectList5f.forEach((item) => {
+          resE = resE + parseInt(item.state);
+        });
+        this.selectList5g.forEach((item) => {
+          resE = resE + parseInt(item.state);
+        });
+        this.selectList5h.forEach((item) => {
+          resE = resE + parseInt(item.state);
+        });
+        this.selectList5i.forEach((item) => {
+          resE = resE + parseInt(item.state);
+        });
+        this.selectList5j.forEach((item) => {
+          resE = resE + parseInt(item.state);
+        });
+        if (resE == 0) {
+          resE = 0;
+        }
+        if (resE >= 1 && resE <= 9) {
+          resE = 1;
+        }
+        if (resE >= 10 && resE <= 18) {
+          resE = 2;
+        }
+        if (resE >= 19 && resE <= 27) {
+          resE = 3;
+        }
+
+        //F
+        this.selectList7.forEach((item) => {
+          resF = resF + parseInt(item.state);
+        });
+
+        //G
+        this.selectList8.forEach((item) => {
+          resG = resG + parseInt(item.state);
+        });
+        this.selectList9.forEach((item) => {
+          resG = resG + parseInt(item.state);
+        });
+        if (resG == 0) {
+          resG = 0;
+        }
+        if (resG >= 1 && resG <= 2) {
+          resG = 1;
+        }
+        if (resG >= 3 && resG <= 4) {
+          resG = 2;
+        }
+        if (resG >= 5 && resG <= 6) {
+          resE = 3;
+        }
+
+        //   alert("resA" + resA);
+        //   alert("resB" + resB);
+        //   alert("resC" + resC);
+        //   alert("resD" + resD);
+        //   alert("resE" + resE);
+        //   alert("resF" + resF);
+        //   alert("resG" + resG);
+        res = resA + resB + resC + resD + resE + resF + resG;
+        //   alert(res);
+
+        if (res >= 5) {
+          this.resultMessage =
+            "Your PSQI score is : " +
+            res +
+            ". You have had symptoms of insomnia for the past month. The causes of insomnia are complex and may be improved by physical therapy, muscle relaxation and stretching, but it is still recommended to see a family doctor or psychosomatic department first.";
+        } else {
+          this.resultMessage =
+            "Your PSQI score is : " +
+            res +
+            ". The sleep quality is considered to be temporarily ok.";
+        }
+        this.result = true;
       }
-      this.result = true;
     },
     reCheck() {
       location.reload();
@@ -572,8 +610,9 @@ export default {
   margin-right: 70%;
 }
 .sleepBody {
-  width: 700px;
+  width: 1200px;
   margin: 0 auto;
+  margin-top: 5%;
 }
 .title {
   font-size: 25px;
@@ -603,6 +642,7 @@ export default {
   display: flex;
   justify-items: center;
   border-left: 10px solid #0d6efd;
+  width: 1200px;
 }
 .item svg {
   margin: 0px 10px;

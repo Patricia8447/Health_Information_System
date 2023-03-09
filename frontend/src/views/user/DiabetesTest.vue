@@ -14,10 +14,10 @@
           <div>
             <div style="margin: 20px 0px">{{ resultMessage }}</div>
             <div style="background-color: #0d6efd" class="btn" @click="reCheck()">
-              重新评估
+              Re-take the test
             </div>
             <div style="background-color: #f4c807" class="btn">
-              <router-link to="/showdoctor">预约医生</router-link>
+              <router-link to="/showdoctor">Make an Appointment</router-link>
             </div>
           </div>
         </div>
@@ -60,156 +60,179 @@
             fill="#087E6A"
             p-id="1096"
           ></path></svg
-        >Diabetes Test 糖尿病危險度自我檢測評量表
+        >Diabetes Test Self-testing Scale of Diabetes Risk
       </div>
 
       <div>
-        中国糖尿病患者人数高达1.3亿，糖尿病已成为中国慢性肾病(CKD)的首要因素，约20%-40%的糖尿病患者合并慢性肾病，合并症患者的心肾事件风险显著增加，预期寿命显著降低，且近10年发病人数快速增长，成为严重影响中国国民健康的公共问题之一。
+        The number of diabetic patients in China is up to 130 million, and diabetes has
+        become the primary factor of chronic kidney disease (CKD) in China. About 20%-40%
+        of diabetic patients are complicated by CKD, and the risk of cardiac and renal
+        events in patients with complications is significantly increased, and life
+        expectancy is significantly decreased. In addition, the number of cases has
+        increased rapidly in the past 10 years, which has become one of the public
+        problems seriously affecting the health of Chinese people.
       </div>
 
       <div class="body">
         <div class="item">
-          <div style="display: inline-block">家族中的親屬有糖尿病遺傳病史</div>
+          <div style="display: inline-block">
+            * A family relative had a genetic history of diabetes
+          </div>
           <div>
             <el-radio-group v-model="radio1" @change="selected1">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
-            </el-radio-group>
-          </div>
-        </div>
-        <div class="item">
-          <div style="display: inline-block">經常容易口乾，不斷喝水</div>
-          <div>
-            <el-radio-group v-model="radio2" @change="selected2">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
-            </el-radio-group>
-          </div>
-        </div>
-        <div class="item">
-          <div style="display: inline-block">胃口變得很好，食量愈來愈大</div>
-          <div>
-            <el-radio-group v-model="radio3" @change="selected3">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
-            </el-radio-group>
-          </div>
-        </div>
-        <div class="item">
-          <div style="display: inline-block">尿頻，尿量增加</div>
-          <div>
-            <el-radio-group v-model="radio4" @change="selected4">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
           <div style="display: inline-block">
-            沒有運動的習慣，（男）腰圍>90cm，（女）腰圍>80cm
+            * Often prone to dry mouth and need constantly drink water
+          </div>
+          <div>
+            <el-radio-group v-model="radio2" @change="selected2">
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
+            </el-radio-group>
+          </div>
+        </div>
+        <div class="item">
+          <div style="display: inline-block">
+            * The appetite becomes very good and eats more
+          </div>
+          <div>
+            <el-radio-group v-model="radio3" @change="selected3">
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
+            </el-radio-group>
+          </div>
+        </div>
+        <div class="item">
+          <div style="display: inline-block">
+            * Frequent urination and increased urine output
+          </div>
+          <div>
+            <el-radio-group v-model="radio4" @change="selected4">
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
+            </el-radio-group>
+          </div>
+        </div>
+        <div class="item">
+          <div style="display: inline-block">
+            * No habit of exercise, (male) waist circumference > 90cm, (female) waist
+            circumference > 80cm
           </div>
           <div>
             <el-radio-group v-model="radio5" @change="selected5">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
           <div style="display: inline-block">
-            過去一直肥胖，進來體重卻突然沒有原因的減輕
+            * I used to be obese and then suddenly lose weight for no reason
           </div>
           <div>
             <el-radio-group v-model="radio6" @change="selected6">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">經常容易感到疲倦和勞累</div>
+          <div style="display: inline-block">* Feel tired and tired easily</div>
           <div>
             <el-radio-group v-model="radio7" @change="selected7">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">眼睛疲勞，視力模糊變差</div>
+          <div style="display: inline-block">* Eye fatigue and blurred vision worsen</div>
           <div>
             <el-radio-group v-model="radio8" @change="selected8">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">耳垢異常增加或是二道經常發炎</div>
+          <div style="display: inline-block">
+            * Abnormally increased earwax or frequent inflammation of the second canal
+          </div>
           <div>
             <el-radio-group v-model="radio9" @change="selected9">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">皮膚感覺變得遲鈍，皮膚容易發癢</div>
+          <div style="display: inline-block">* The skin feels dull and itchy</div>
           <div>
             <el-radio-group v-model="radio10" @change="selected10">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">肢體末梢麻痺，經常會有蟲爬或是針刺感</div>
+          <div style="display: inline-block">
+            * Limb terminal paralysis, often have insect crawling or pinprick sensation
+          </div>
           <div>
             <el-radio-group v-model="radio11" @change="selected11">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">皮膚一旦有傷口，久久不容易愈合</div>
+          <div style="display: inline-block">
+            * Once the skin has a wound, it is not easy to heal for a long time
+          </div>
           <div>
             <el-radio-group v-model="radio12" @change="selected12">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">生活工作壓力大</div>
+          <div style="display: inline-block">* Life and work are stressful</div>
           <div>
             <el-radio-group v-model="radio13" @change="selected13">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">性功能減低，日常作息習慣變得不正常</div>
+          <div style="display: inline-block">
+            * Sexual function is reduced and daily routines become abnormal
+          </div>
           <div>
             <el-radio-group v-model="radio14" @change="selected14">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
         <div class="item">
-          <div style="display: inline-block">曾檢查出尿液中含有糖分</div>
+          <div style="display: inline-block">* Sugar was detected in the urine</div>
           <div>
             <el-radio-group v-model="radio15" @change="selected15">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">不是</el-radio>
+              <el-radio label="1">Yes</el-radio>
+              <el-radio label="0">NO</el-radio>
             </el-radio-group>
           </div>
         </div>
       </div>
 
-      <div class="check" @click="check()">查看结果</div>
+      <div class="check" @click="check()">Check the Result</div>
     </div>
   </div>
 </template>
@@ -301,63 +324,84 @@ export default {
       this.selectList15[0].state = val;
     },
     check() {
-      let res = 0;
-      this.selectList1.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList2.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList3.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList4.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList5.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList6.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList7.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList8.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList9.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList10.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList11.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList12.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList13.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList14.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      this.selectList15.forEach((item) => {
-        res = res + 0.07 * parseInt(item.state);
-      });
-      if (res * 100 > 100) {
-        this.resultMessage = "您當前風險值為： 99.00%，請盡快前往正規醫院就醫";
-      } else if (res * 100 == 0) {
-        this.resultMessage = "您當前風險值為： 1%";
+      if (
+        this.selectList1[0].state == "" ||
+        this.selectList2[0].state == "" ||
+        this.selectList3[0].state == "" ||
+        this.selectList4[0].state == "" ||
+        this.selectList5[0].state == "" ||
+        this.selectList6[0].state == "" ||
+        this.selectList7[0].state == "" ||
+        this.selectList8[0].state == "" ||
+        this.selectList9[0].state == "" ||
+        this.selectList10[0].state == "" ||
+        this.selectList11[0].state == "" ||
+        this.selectList12[0].state == "" ||
+        this.selectList13[0].state == "" ||
+        this.selectList14[0].state == "" ||
+        this.selectList15[0].state == ""
+      ) {
+        alert("The test is not finished");
       } else {
-        this.resultMessage =
-          "您當前風險值為： " +
-          (res * 100).toFixed(2) +
-          "%，請繼續保持良好的生活作息和飲食規律";
+        let res = 0;
+        this.selectList1.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList2.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList3.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList4.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList5.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList6.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList7.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList8.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList9.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList10.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList11.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList12.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList13.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList14.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        this.selectList15.forEach((item) => {
+          res = res + 0.07 * parseInt(item.state);
+        });
+        if (res * 100 > 100) {
+          this.resultMessage =
+            "Your current risk is: 99.00%, please go to the formal hospital for medical treatment as soon as possible";
+        } else if (res * 100 == 0) {
+          this.resultMessage = "Your current risk is: 1%";
+        } else {
+          this.resultMessage =
+            "Your current risk is: " +
+            (res * 100).toFixed(2) +
+            "%. Please continue to maintain a good lifestyle and diet!";
+        }
+        this.result = true;
       }
-      this.result = true;
     },
     reCheck() {
       location.reload();
@@ -378,8 +422,9 @@ export default {
   margin-right: 70%;
 }
 .eczematestBody {
-  width: 700px;
+  width: 1000px;
   margin: 0 auto;
+  margin-top: 5%;
 }
 .title {
   font-size: 25px;
