@@ -5,29 +5,34 @@
       :model="ruleForm"
       :rules="rules"
       ref="ruleForm"
-      label-width="150px"
+      label-width="250px"
       class="ruleForm"
     >
       <el-form-item label="Self Report" prop="selfReport">
-        <el-input type="textarea" v-model.trim="ruleForm.selfReport"></el-input>
+        <el-input type="textarea" v-model.trim="ruleForm.selfReport" disabled></el-input>
       </el-form-item>
       <el-form-item label="Allergy Medicine" prop="allergyMedicine">
-        <el-input type="textarea" v-model.trim="ruleForm.allergyMedicine"></el-input>
+        <el-input
+          type="textarea"
+          v-model.trim="ruleForm.allergyMedicine"
+          disabled
+        ></el-input>
       </el-form-item>
-      <el-form-item label="Please choose the date and time">
+      <el-form-item label="Please choose the date and time" prop="appointmentDate">
         <div class="timeCheck">
           <el-date-picker
             v-model.trim="ruleForm.appointmentDate"
             type="date"
             @change="dateChange"
             :picker-options="datePickerOption"
-            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+            placeholder="please choose the date"
           >
           </el-date-picker>
 
           <el-select
             v-model.trim="ruleForm.appointmentTime"
-            placeholder="选择时间范围"
+            placeholder="please choose the time"
             @focus="timeFocus"
             ref="timeSelect"
             @change="timeChange"
@@ -36,7 +41,6 @@
               v-for="(item, index) in timeList"
               :key="index"
               :value="item.value1 + '-' + item.value2"
-              :disabled="item.disabled || index === 2 || index === 6"
             >
               <div
                 style="display: flex; justify-content: space-between; align-items: center"
@@ -58,8 +62,8 @@
         </div>
       </el-form-item>
       <el-form-item>
-        <el-button type="submit" @click="submitForm()">Update</el-button>
-        <el-button type="success" plain @click="resetForm('ruleForm')">Reset</el-button>
+        <el-button type="submit" @click="submitForm('ruleForm')">Submit</el-button>
+        <el-button type="success" plain @click="cancelForm()">Cancel</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -140,19 +144,29 @@ export default {
         appointmentDate: "",
         doctorId: "",
       },
-      rules: {},
+      rules: {
+        selfReport: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        allergyMedicine: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        appointmentTime: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        appointmentDate: [{ required: true, message: "cannot be null", trigger: "blur" }],
+      },
       options: [],
       availableTime: [{ startTime: "", endTime: "" }],
       dayjs,
       timeList: [],
       datePickerOption: {
-        disabledDate(appointmentDate) {
+        disabledDate: function (appointmentDate) {
           // 设置日期禁用
           return (
-            dayjs(appointmentDate).format("d") === "2" ||
-            dayjs(appointmentDate).format("d") === "4"
+            dayjs(appointmentDate).format("d") === this.availableDate.Mon ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Tues ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Wed ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Thurs ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Fri ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Sat ||
+            dayjs(appointmentDate).format("d") === this.availableDate.Sun
           );
-        },
+        }.bind(this),
       },
     };
   },
@@ -178,33 +192,49 @@ export default {
     },
   },
   methods: {
-    async submitForm() {
-      console.log("test update method: " + this.ruleForm.inqueryId);
-      adminService
-        .updataPushInfo(this.ruleForm)
-        .then((res) => {
-          console.log(JSON.stringify(res.data));
-          if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
-            location.assign("/appointmentorderrecord");
-            alert(res.data.info);
-          } else {
-            alert(res.data.info);
-          }
-        })
-        .catch((err) => {
-          alert(err);
-        });
+    async submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        //开启校验
+        if (valid) {
+          Service.judgeDoctorIsFree({
+            doctorId: this.ruleForm.doctorId,
+            date: this.ruleForm.appointmentDate,
+            time: this.ruleForm.appointmentTime,
+          }).then((res) => {
+            if (res.data.info) {
+              console.log("test update method: " + this.ruleForm.inqueryId);
+              adminService
+                .updataPushInfo(this.ruleForm)
+                .then((res) => {
+                  console.log(JSON.stringify(res.data));
+                  if (res.data.code === 1) {
+                    location.assign("/appointmentorderrecord");
+                    alert(res.data.info);
+                  } else {
+                    alert(res.data.info);
+                  }
+                })
+                .catch((err) => {
+                  alert(err);
+                });
+            } else {
+              alert("This time has been booked by the patient, please choose again!");
+            }
+          });
+        } else {
+          //校验不通过
+          alert("please check required item(s)");
+          return false;
+        }
+      });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    cancelForm() {
+      this.$router.replace("/appointmentorderrecord");
     },
     getTimeList() {
-      //传实际的值，得改
-      const start = "00:00";
-      const end = "23:30";
+      const start = this.availableTime.startTime;
+      const end = this.availableTime.endTime;
       const step = this.step;
-
       const result = [];
 
       if (start && end && step) {
@@ -227,7 +257,7 @@ export default {
         this.$refs.timeSelect.blur();
         this.$message({
           duration: 1000,
-          message: "请先选择日期",
+          message: "please choose the date first",
           type: "error",
         });
       }
@@ -247,10 +277,10 @@ export default {
       }
     },
     timeChange(newVal) {
-      //要拿到所有已经预约的时间段，或许把他们放在数组里面进行遍历
-      //写循环
-      if (newVal === "08:00-08:30") {
-        this.$message.error("该时间段已经被患者预约，请重新选择");
+      if (newVal === "24:00-24:00") {
+        this.$message.error(
+          "This time has been booked by the patient, please choose again"
+        );
         this.ruleForm.appointmentTime = "";
       }
       this.$emit("change", {
@@ -278,7 +308,7 @@ export default {
             if (res.data.info[i]._id == this.ruleForm.inqueryId) {
               this.ruleForm = res.data.info[i];
               this.ruleForm.inqueryId = this.$route.params.id;
-              alert(this.ruleForm.inqueryId);
+              // alert(this.ruleForm.inqueryId);
               break;
             }
           }

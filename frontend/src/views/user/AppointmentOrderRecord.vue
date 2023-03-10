@@ -3,18 +3,19 @@
     <el-table
       :data="
         tableData.filter(
-          (data) => !search || data.item.toLowerCase().includes(search.toLowerCase())
+          (data) =>
+            !search || data.doctorName.toLowerCase().includes(search.toLowerCase())
         )
       "
-      style="width: 100%"
-      :default-sort="{ prop: 'consultDate', order: 'descending' }"
+      style="width: 1200px"
+      :default-sort="{ prop: 'appointmentDate', order: 'ascending' }"
     >
-      <el-table-column
+      <!-- <el-table-column
         label="Doctor ID"
         prop="doctorId"
         :width="flexColumnWidth('Doctor ID', 'doctorId')"
       >
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         label="Doctor Name"
         prop="doctorName"
@@ -61,14 +62,28 @@
         <template slot="header" slot-scope="scope" class="searching">
           <el-input v-model="search" size="mini" placeholder="search your order..." />
         </template>
-        <template slot-scope="scope" class="btns">
-          <!-- 如果状态显示已经是结束的话，不允许做进一步的编辑了 -->
+      </el-table-column>
 
-          <el-button type="warning" plain class="button" @click="goRoute2(scope.$index)">
+      <el-table-column>
+        <template slot-scope="scope" class="btns">
+          <el-button
+            type="warning"
+            class="button"
+            @click="goRoute2(scope.$index)"
+            :disabled="
+              scope.row.status != 'finished' && !getCurrentDate(scope.row.appointmentDate)
+            "
+          >
             Edit Appointment
           </el-button>
-          <!-- <el-button size="mini" @click="open">Start</el-button> -->
-          <el-button type="primary" plain class="button">
+          <el-button
+            type="primary"
+            class="button"
+            :disabled="
+              getCurrentDate(scope.row.appointmentDate) ||
+              scope.row.status != 'Not yet start'
+            "
+          >
             <a
               :href="alldoctordetails.zoomlink"
               target="_blank"
@@ -78,13 +93,22 @@
             </a>
           </el-button>
 
-          <el-button type="success" plain class="button" @click="goRoute(scope.$index)">
+          <el-button
+            type="success"
+            class="button"
+            @click="goRoute(scope.$index)"
+            :disabled="scope.row.status != 'finished'"
+          >
             Deliver Medicine
           </el-button>
-          <el-button type="info" plain class="button" @click="goRoute3(scope.$index)">
+          <el-button
+            type="info"
+            class="button"
+            @click="goRoute3(scope.$index)"
+            :disabled="scope.row.status != 'finished'"
+          >
             View Result
           </el-button>
-          <!-- 该按钮在审核完成后才能进行点击，在此之前应该是unclickable的状态 -->
         </template>
       </el-table-column>
     </el-table>
@@ -132,9 +156,20 @@ export default {
     };
   },
   methods: {
+    switchPage(str) {
+      this.$router.push({ name: str });
+    },
+    getCurrentDate(appointmentDate) {
+      var myDate = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
+      var time = myDate.toJSON().split("T").join(" ").substr(0, 19); //将1970/08/08转化成1970-08-08
+      if (appointmentDate > time) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     goRoute2(e) {
       let data = this.tableData;
-      // this.$router.push({ name: "MakeAppointment", params: { id: data[e].doctorId } }); //inquiryId: "",
       console.log(data[e]._id);
       this.$router.push({
         name: "UpdateAppointmentTest",
@@ -151,7 +186,6 @@ export default {
     },
     logisticDescData(row) {
       return row.appointmentDate.split("T")[0];
-      // return row.appointmentDate;
     },
     handleEdit(index, row) {
       console.log(index, row);
@@ -212,7 +246,6 @@ export default {
     },
     goRoute(e) {
       let data = this.tableData;
-      // 这里写
       this.$router.push({ name: "Drugdeliver", params: { id: data[e]._id } });
     },
   },

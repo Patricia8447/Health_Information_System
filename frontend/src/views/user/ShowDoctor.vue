@@ -4,14 +4,14 @@
       :data="
         tableData.filter(
           (data) =>
-            /*(!search || data.name.toLowerCase().includes(search.toLowerCase())) &&*/ data.status ==
-            'Approved'
+            (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
+            data.status == 'Approved'
         )
       "
       :row-class-name="tableRowClassName"
       style="width: 100%"
     >
-      <el-table-column label="ID" prop="_id" width="150px"></el-table-column>
+      <!-- <el-table-column label="ID" prop="_id" width="150px"></el-table-column> -->
       <el-table-column label="Name" prop="name" :width="flexColumnWidth('Name', 'name')">
       </el-table-column>
       <el-table-column
@@ -67,8 +67,6 @@
           >
             View More Detail
           </el-button>
-
-          <!-- 该按钮在审核完成后才能进行点击，在此之前应该是unclickable的状态 -->
         </template>
       </el-table-column>
     </el-table>

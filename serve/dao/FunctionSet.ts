@@ -416,8 +416,8 @@ function getAllDoctor({ status }: Record<string, string>, res: Response) {
  */
 function getApprovedDoctor({ status }: Record<string, string>, res: Response) {
   DoctorModel.find({ status: AUDITSTATUS.Approved }).then((result: Array<any>) => {
-    console.log("this is res " + res);
-    console.log("this is result " + result);
+    // console.log("this is res " + res);
+    // console.log("this is result " + result);
     res.send(responseInfo.success(result))
   }).catch((err: Error) => { res.send(responseInfo.getException(err)) })
 }
@@ -469,14 +469,21 @@ function personAskDoctor({ id, userName, doctorName, doctorId, selfReport, aller
 function judgeDoctorIsFree({ doctorId, date, time }: judgeDoctorIsFreeType, res: Response) {
   InquiryModel.find({ doctorId, status: APPOINTMENT.Not }).then((result: Array<any>) => {
     result.map((element: any) => {
-      let arrStr: Array<string> = element.appointmentTime.split('~')
-      if (date == element.appointmentDate && time.startTime == arrStr[0] && time.endTime == arrStr[1]) {
+      // let arrStr: Array<string> = element.appointmentTime.split('-')
+      if (date == element.appointmentDate && time == element.appointmentTime) {
         throw new Error()
       }
     })
     res.send(responseInfo.success(true))
   }).catch(() => res.send(responseInfo.success(false)))
 }
+
+// function judgeDoctorIsFree({ doctorId, appointmentTime, appointmentDate}: Record<string, string>, res: Response) {
+//   InquiryModel.find({ doctorId, status: APPOINTMENT.Not,  appointmentDate, appointmentTime}).then((result: Array<any>) => {
+//     console.log(result);
+//     res.send(responseInfo.success(result))
+//   }).catch((err: Error) => { res.send(responseInfo.getException(err)) })
+// }
 
 /**
  * 医生获取他们对应的患者

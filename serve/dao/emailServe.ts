@@ -20,8 +20,8 @@ function signUpEmail(email: string) {
   let options = {
     from: sendEmailData[sendEmailType].user,
     to: email,
-    subject: '欢迎来到我的系统',
-    html: '<span>欢迎您的加入</span>',
+    subject: 'Welcome to My System',
+    html: '<span>Welcome to join us</span>',
   }
   // 发送邮件
   transporter.sendMail(options, (err: any, msg: string) => {
@@ -44,7 +44,7 @@ function checkCodeEmail(email: string, code: string) {
   let options = {
     from: sendEmailData[sendEmailType].user,
     to: email,
-    subject: '我的系统找回密码验证邮箱',
+    subject: 'My System - Retrieve password verification email',
     html: '<span>' + code + '</span>',
   }
   // 发送邮件
@@ -63,8 +63,8 @@ function checkStatusEmail(email: string) {
   let options = {
     from: sendEmailData[sendEmailType].user,
     to: email,
-    subject: '预约状态提醒',
-    html: '<span>检测到您的预约有变化，请登入您的账户查看当前预约状态</span>',
+    subject: 'Appointment Status Reminder',
+    html: '<span>A change has been detected in your appointment. Please log in to your account to check the current appointment status.</span>',
   }
   // 发送邮件
   transporter.sendMail(options, (err: any, msg: string) => {
@@ -82,8 +82,8 @@ function allertDoctorStatusEmail(email: string) {
   let options = {
     from: sendEmailData[sendEmailType].user,
     to: email,
-    subject: '账户状态改变',
-    html: '<span>检测到您的账户有变化，请登入您的账户查看当前状态。请及时查看所有受影响的病人预约。如有任何疑问，请联络管理者 admin@admin.com</span>',
+    subject: 'Change of Account Status',
+    html: '<span>A change has been detected in your account. Please log in to your account to check the current status. Please check all affected patient appointments promptly. If you have any questions, please contact the manager at admin@admin.com</span>',
   }
   // 发送邮件
   transporter.sendMail(options, (err: any, msg: string) => {

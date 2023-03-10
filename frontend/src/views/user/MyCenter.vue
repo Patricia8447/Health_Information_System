@@ -8,8 +8,8 @@
       :contentStyle="CS"
     >
       <template slot="extra">
-        <el-button type="primary" size="small" plain
-          ><router-link to="/editmycenter">Edit</router-link></el-button
+        <el-button type="primary" size="small" plain @click="switchPage('EditMyCenter')"
+          >Edit</el-button
         >
       </template>
 
@@ -118,6 +118,9 @@ export default {
       this.isAuth = "false"; //修改登录状态
       localStorage.setItem("s", this.isAuth);
       this.$router.replace("/healthinformation"); //页面跳转至健康資訊页面
+    },
+    switchPage(str) {
+      this.$router.push({ name: str });
     },
   },
   async mounted() {

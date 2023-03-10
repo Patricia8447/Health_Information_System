@@ -37,4 +37,8 @@ export default {
   getPushInfoList: (data) => {
     return request.post('/common/info/list', data)
   },
+
+  judgeDoctorIsFree: (data) => {
+    return request.post('/common/doctor/judge', data)
+  },
 }

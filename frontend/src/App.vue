@@ -5,7 +5,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  watch: {
+    // $route: {
+    //   // 判断用户在进行路由跳转的时候 本地缓存中是否存在token信息
+    //   // 如果存在则next() 否则强制用户跳转到login页面
+    // },
+  },
+};
 </script>
 
 <style>

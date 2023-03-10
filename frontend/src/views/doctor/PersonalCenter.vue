@@ -2,8 +2,12 @@
   <div class="container">
     <el-descriptions title="Personal Center" direction="vertical" :column="2" border>
       <template slot="extra">
-        <el-button type="primary" size="small" plain
-          ><router-link to="/editdpersonalinfo">Edit</router-link></el-button
+        <el-button
+          type="primary"
+          size="small"
+          plain
+          @click="switchPage('EditDoctorPersonalInfo')"
+          >Edit</el-button
         >
       </template>
       <el-descriptions-item>
@@ -216,6 +220,11 @@ export default {
         "word-break": "break-all", //过长时自动换行
       },
     };
+  },
+  methods: {
+    switchPage(str) {
+      this.$router.push({ name: str });
+    },
   },
   mounted() {
     console.log("发送获取医生列表接口");
