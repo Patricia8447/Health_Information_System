@@ -30,14 +30,17 @@
         </el-form-item>
 
         <div class="sub has-text-right">
-          <a @click.prevent="handleregister()">Register</a>
+          <!-- <a @click.prevent="handleregister()">Register</a> -->
           &nbsp <a @click.prevent="handleForgetPass()">Forget Password</a>
         </div>
         &nbsp
         <el-form-item>
-          <el-button type="submit" @click="loginUser('json')">Login</el-button>
-          <el-button type="success" plain @click.prevent="handlecancel()"
+          <el-button type="submit" plain @click="loginUser('json')">Login</el-button>
+          <!-- <el-button type="success" plain @click.prevent="handlecancel()"
             >Cancel</el-button
+          > -->
+          <el-button type="success" plain @click.prevent="handleregister()"
+            >Register</el-button
           >
         </el-form-item>
       </el-form>
@@ -46,7 +49,7 @@
 </template>
 
 <script>
-import bg from "@/assets/image/bg.jpg";
+import bg from "@/assets/image/bg1.jpg";
 import jwt_decode from "jwt-decode";
 import userService from "@/service/user.service.js";
 export default {
@@ -153,7 +156,7 @@ export default {
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #00000030;
+  background: #00000020;
   text-align: center;
   border-radius: 20px;
   margin-top: 10px;

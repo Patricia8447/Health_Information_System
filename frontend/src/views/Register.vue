@@ -1,6 +1,6 @@
 <template>
   <div id="background">
-    <!-- <img :src="bgurl" /> -->
+    <img :src="bgurl" />
     <div class="container has-text-center">
       <h1>Welcome New User</h1>
       <el-form :model="json" :rules="rules" ref="json" label-width="150px" class="json">
@@ -33,11 +33,10 @@
         <el-form-item>
           <strong>
             <a href="http://localhost:8080/policy" target="_blank"
-              >Private Policy</a
+              >Privacy Policy</a
             ></strong
           >
         </el-form-item>
-
         <el-form-item>
           <el-button type="submit" @click="createUser('json')">Submit</el-button>&nbsp
           <el-button type="success" plain @click.prevent="handleup">Cancel</el-button>
@@ -48,7 +47,7 @@
 </template>
 
 <script>
-import bg from "@/assets/image/bg.jpg";
+import bg from "@/assets/image/regbg.jpg";
 import Service from "@/service/user.service.js";
 export default {
   name: "register",
@@ -188,30 +187,45 @@ img {
   pointer-events: none;
 }
 
+.sub {
+  height: 5px;
+  margin-left: 18%;
+}
+
 .json {
-  width: 800px;
+  width: 400px;
   margin-top: 7%;
   margin-left: 17%;
 }
 
-#contain {
+.container {
   width: 550px;
   height: 550px;
-  position: absolute;
-  top: 50%;
+  position: fixed;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #00000030;
+  background: #fff8dc;
   text-align: center;
   border-radius: 20px;
+  margin-top: 10px;
+  margin-left: 400px;
+  background: rgb(160, 204, 245, 0.5);
 }
-#contain h1 {
-  margin: 25px;
-  color: aliceblue;
-  margin-left: 20px;
+
+.container h1 {
+  margin: 55px;
+  color: #f8f8ff;
+  margin-left: 80px;
   font-size: 25px;
-  height: 22px;
 }
+
+.el-form-item__content {
+  /* line-height: 0px; */
+  position: relative;
+  font-size: 14px;
+}
+
 .form {
   color: white;
   margin-left: 10%;
@@ -220,11 +234,12 @@ img {
   text-align: left;
   height: 3px;
 }
-label {
+.form label {
   float: left;
   width: 5em;
   margin-right: 1em;
-  text-align: right;
+  text-align: center;
+  color: black;
 }
 
 input,
@@ -250,19 +265,13 @@ textarea:focus {
 button {
   position: relative;
   height: 33px;
-  width: 150px;
+  width: 85px;
   background: rgb(73, 158, 243);
   border-radius: 10px;
   margin-top: 38px;
   box-shadow: none;
   color: white;
   /* margin-left: 40px; */
-}
-
-.btns {
-  margin: 40px;
-  width: 450px;
-  margin-left: 5%;
 }
 
 strong {

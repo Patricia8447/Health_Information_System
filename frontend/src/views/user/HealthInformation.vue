@@ -45,6 +45,7 @@ export default {
       images: [
         { url: require("@/assets/image/2.jpg") },
         { url: require("@/assets/image/1.png") },
+        { url: require("@/assets/image/slide3.png") },
       ],
       infos: [
         {
@@ -112,7 +113,7 @@ export default {
 
 .carousel2 {
   width: 100%;
-  height: 170px;
+  height: 200px;
   background: white;
 }
 

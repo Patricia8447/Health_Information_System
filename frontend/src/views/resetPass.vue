@@ -1,17 +1,17 @@
 <template>
   <div id="background">
-    <!-- <img :src="bgurl" /> -->
+    <img :src="bgurl" />
     <div class="container has-text-center">
       <h1>Reset Password</h1>
       <el-form :model="json" :rules="rules" ref="json" label-width="150px" class="json">
         <el-form-item label="Email" prop="email">
           <el-input type="email" v-model.trim="json.email" required></el-input>
         </el-form-item>
-        <el-form-item label="New Password" prop="password">
+        <el-form-item label="New Password" prop="pass">
           <el-input
             type="password"
             v-model.trim="json.pass"
-            title="Need to contain character, number and special character, between 6 and 10"
+            title="Should contain character, number and special character, between 6-10"
           ></el-input>
         </el-form-item>
         <el-form-item label="Comfirm Password" prop="againPass">
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import bg from "@/assets/image/bg.jpg";
+import bg from "@/assets/image/forgetbg.jpg";
 import Service from "@/service/user.service.js";
 
 export default {
@@ -44,7 +44,6 @@ export default {
   },
   data() {
     var validatePass2 = (rule, value, callback) => {
-      console.log("i am in!!");
       if (value === "") {
         callback(new Error("please enter the password"));
       } else if (value !== this.json.pass) {
@@ -70,10 +69,9 @@ export default {
           {
             required: true,
             trigger: "blur",
-            // pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,10}$/,
             pattern: /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]{6,10}$/,
             message:
-              "密码为数字，小写字母，大写字母，特殊符号 至少包含三种，长度为 6 - 10位，密码不能包含 用户名，公司名称(lidian), 公司域名(rekoon) （判断的时候不区分大小写)",
+              "The password contains 6 to 10 digits, letters, and special symbols (case insensitive)",
           },
         ],
         againPass: [
@@ -132,7 +130,6 @@ export default {
     handlefinish() {
       var checkEmail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
       var checkTel = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
-      //var checkPass = /^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,10}$/;
 
       if (localStorage["name"] === this.json.name) {
         alert("username already exit"); //如果用户名已存在则无法注册
@@ -175,6 +172,7 @@ export default {
   left: 0;
   background: rgb(160, 204, 245);
 }
+
 img {
   position: absolute;
   top: 0;
@@ -185,24 +183,29 @@ img {
   /* 属性定义元素是否对指针事件做出反应 */
   pointer-events: none;
 }
-#contain {
-  width: 550px;
-  height: 450px;
+
+.container {
+  width: 660px;
+  height: 550px;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 40%;
+  left: 40%;
   transform: translate(-50%, -50%);
-  background: #00000030;
-  text-align: center;
+  background: #00000010;
+  text-align: left;
   border-radius: 20px;
+  margin-top: 40px;
+  margin-left: 200px;
 }
-#contain h1 {
-  margin: 25px;
+
+.container h1 {
+  margin: 55px;
   color: aliceblue;
-  margin-left: 20px;
+  margin-left: 25px;
   font-size: 25px;
-  height: 22px;
+  text-align: center;
 }
+
 .form {
   color: white;
   margin-left: 10%;
@@ -211,6 +214,7 @@ img {
   text-align: left;
   height: 3px;
 }
+
 label {
   float: left;
   width: 5em;
@@ -218,17 +222,11 @@ label {
   text-align: right;
 }
 
-input,
-textarea {
-  margin-left: 10px;
-  padding: 4px;
-  border: solid 1px #4e5ef3;
-  outline: 0;
-  font: normal 13px/100% Verdana, Tahoma, sans-serif;
-  width: 310px;
-  height: 25px;
-  background: #f1f1f190;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+.el-input {
+  position: relative;
+  font-size: 14px;
+  display: inline-block;
+  width: 400px;
 }
 
 input:hover,

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import bg from "@/assets/image/bg.jpg";
+import bg from "@/assets/image/forgetbg.jpg";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 // import { auth } from "firebase/app";
@@ -98,16 +98,17 @@ export default {
 }
 
 .container {
-  width: 600px;
-  height: 400px;
+  width: 550px;
+  height: 300px;
   position: absolute;
   top: 40%;
   left: 40%;
   transform: translate(-50%, -50%);
-  background: #00000030;
-  text-align: center;
+  background: #00000010;
+  text-align: left;
   border-radius: 20px;
   margin-top: 10px;
+  margin-left: 200px;
 }
 
 img {
@@ -126,7 +127,9 @@ img {
   color: aliceblue;
   margin-left: 20px;
   font-size: 25px;
+  text-align: center;
 }
+
 .item {
   color: white;
   margin-left: 15%;
@@ -139,8 +142,16 @@ img {
   float: left;
   width: 5em;
   margin-right: 1em;
-  text-align: right;
+  text-align: center;
 }
+
+.el-input {
+  position: relative;
+  font-size: 14px;
+  display: inline-block;
+  width: 280px;
+}
+
 input {
   margin-left: -5px;
   padding: 4px;
