@@ -71,7 +71,9 @@
             class="button"
             @click="goRoute2(scope.$index)"
             :disabled="
-              scope.row.status != 'finished' && !getCurrentDate(scope.row.appointmentDate)
+              scope.row.status == 'void' ||
+              (scope.row.status == 'finished' &&
+                !getCurrentDate(scope.row.appointmentDate))
             "
           >
             Edit Appointment

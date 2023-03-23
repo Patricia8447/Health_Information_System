@@ -11,27 +11,29 @@
       </el-carousel-item>
     </el-carousel>
 
-    <el-row :gutter="12">
-      <el-col :span="8">
-        <div class="testCard">
-          <h1>Health Knowledge</h1>
-          <el-card
-            :body-style="{ padding: '10px' }"
-            v-for="info in infos"
-            :key="infos._id"
-          >
-            <template slot-scope="scope">
-              <div><img :src="info.coverLink" class="image" /></div>
-              <div style="padding: 14px">
-                <a :href="info.link" target="_blank"
-                  ><h4>{{ info.title }}</h4></a
-                >
-              </div>
-            </template>
-          </el-card>
-        </div>
-      </el-col>
-    </el-row>
+    <div class="container">
+      <el-row :gutter="12">
+        <el-col :span="8">
+          <div class="testCard">
+            <h1>Health Knowledge</h1>
+            <el-card
+              :body-style="{ padding: '10px' }"
+              v-for="info in infos"
+              :key="infos._id"
+            >
+              <template slot-scope="scope">
+                <div><img :src="info.coverLink" class="image" /></div>
+                <div style="padding: 14px">
+                  <a :href="info.link" target="_blank"
+                    ><h4>{{ info.title }}</h4></a
+                  >
+                </div>
+              </template>
+            </el-card>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -77,6 +79,10 @@ export default {
 </script>
 
 <style>
+.container {
+  margin-left: 500px;
+}
+
 .time {
   font-size: 23px;
   color: #999;
@@ -107,13 +113,13 @@ export default {
 
 .carousel {
   width: 100%;
-  height: 150px;
+  height: 200px;
   position: relative;
 }
 
 .carousel2 {
   width: 100%;
-  height: 200px;
+  height: 150px;
   background: white;
 }
 

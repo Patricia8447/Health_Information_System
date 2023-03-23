@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <el-row :gutter="12">
       <el-col :span="8">
         <div class="testCard">
@@ -147,6 +147,10 @@ export default {
 </script>
 
 <style>
+.container {
+  margin-left: 400px;
+}
+
 .time {
   font-size: 23px;
   color: #999;

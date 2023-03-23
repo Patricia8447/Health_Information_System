@@ -8,45 +8,6 @@
         border
         :contentStyle="CS"
       >
-        <template slot="extra">
-          <el-button type="primary" size="small" plain
-            ><router-link to="/editmycenter">Edit</router-link></el-button
-          >
-        </template>
-
-        <!-- <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              doctor name
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.name }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Email
-            </div>
-          </template>
-          <div class="my-content">
-            {{ basicInfo.email }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Hospital Name
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.hospitalName }}
-          </div>
-        </el-descriptions-item> -->
         <el-descriptions-item>
           <template slot="label">
             <div class="my-label">
@@ -157,27 +118,6 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-
-    // Common.getAllDoctor(this.tableData.doctorId)
-    //   .then((res) => {
-    //     if (res.data.code === 1) {
-    //       alert(this.tableData.doctorId);
-    //       for (let i = 0; i < res.data.info.length; i++) {
-    //         if (res.data.info[i]._id == this.tableData.doctorId) {
-    //           console.log("11111: " + JSON.stringify(res.data.info[i]));
-    //           this.alldoctordetails = res.data.info[i];
-    //           this.basicInfo = res.data.info[i].userInfo[0];
-    //           break;
-    //           // console.log("11111: " + JSON.stringify(res.data.info[0].name));
-    //         }
-    //       }
-    //     } else {
-    //       alert(res.data.info);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   },
 };
 </script>

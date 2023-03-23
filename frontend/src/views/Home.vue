@@ -60,9 +60,9 @@
         ></el-menu-item
       >
       <div>
-        <el-button type="primary" plain
+        <!-- <el-button type="primary" plain
           ><router-link :to="'/login'">Login</router-link></el-button
-        >
+        > -->
         <el-button type="danger" @click="logout()">Logout</el-button>
       </div>
     </el-menu>
