@@ -1,60 +1,32 @@
 <template>
   <div class="container">
-    <el-row :gutter="12">
-      <el-col :span="8">
-        <div class="testCard">
-          <h1>
-            Health Knowledge
-            <el-button><router-link to="/infoadd"> ADD</router-link></el-button>
-          </h1>
-          <el-card
-            :body-style="{ padding: '10px' }"
-            v-for="info in infos"
-            :key="infos.coverLink"
-          >
-            <template slot-scope="scope">
-              <div><img :src="info.coverLink" class="image" /></div>
-              <div style="padding: 14px">
-                <a :href="info.link" target="_blank"
-                  ><h4>{{ info.title }}</h4></a
-                >
-              </div>
-              <el-button @click.native="deleteInfo(info._id)">DELETE</el-button>
-              <!-- <el-button @click="goRoute2(scope.$index)">UPDATE</el-button> -->
-            </template>
-          </el-card>
-        </div>
-      </el-col>
-
-      <!-- <el-col :span="12">
-        <div class="grid-content bg-purple">
-          <div class="eating">
-            <h1>
-              Disease disambiguation
-              <el-button><router-link to="/infoadd"> ADD</router-link></el-button>
-            </h1>
-            <el-row>
-              <el-card
-                :body-style="{ padding: '0px' }"
-                v-for="info in infos"
-                :key="infos.coverLink"
-              >
-                <div class="text item">
-                  <div><img :src="info.coverLink" class="image" /></div>
-                  <div style="padding: 14px">
-                    <a :href="info.link" target="_blank"
-                      ><h4>{{ info.title }}</h4></a
-                    >
-                    <div>
-                      <el-button @click="deleteInfo(2)">DELETE</el-button>
-                    </div>
-                  </div>
-                </div>
-              </el-card>
-            </el-row>
+    <h1>
+      Health Knowledge
+      <el-button type="success" pain
+        ><router-link to="/infoadd"> ADD</router-link></el-button
+      >
+    </h1>
+    <el-row :gutter="20" class="el-row" type="flex">
+      <el-col
+        :span="8"
+        v-for="(info, index) in infos"
+        :key="infos.coverLink"
+        class="el-col"
+      >
+        <el-card class="el-card" :key="index" onclick="">
+          <div slot="header" class="clearfix">
+            <img :src="info.coverLink" class="image" />
+            <a :href="info.link" target="_blank"
+              ><h4>{{ info.title }}</h4></a
+            >
           </div>
-        </div>
-      </el-col> -->
+          <div>
+            <div class="text item">
+              <el-button @click.native="deleteInfo(info._id)">DELETE</el-button>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -91,7 +63,6 @@ export default {
         .then((res) => {
           console.log(JSON.stringify(res.data));
           if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
             alert(res.data.info);
           } else {
             alert(res.data.info);
@@ -101,29 +72,8 @@ export default {
           console.log(err);
         });
     },
-    // updateInfo(_id) {
-    //   console.log("test update method: " + _id);
-    //   let datas = {
-    //     infoId: _id,
-    //   };
-    //   adminService
-    //     .updataPushInfo(datas)
-    //     .then((res) => {
-    //       console.log(JSON.stringify(res.data));
-    //       if (res.data.code === 1) {
-    //         // 根据原本的校验逻辑进行添加
-    //         alert(res.data.info);
-    //       } else {
-    //         alert(res.data.info);
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
     goRoute2(e) {
       let data = this.infos;
-      // 这里写
       this.$router.push({ name: "InfoUpdate", params: { id: data[e]._id } });
     },
   },
@@ -146,56 +96,73 @@ export default {
 };
 </script>
 
-<style>
-.container {
-  margin-left: 400px;
-}
-
-.time {
-  font-size: 23px;
-  color: #999;
-}
-
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
-}
-
+<style scoped>
 .image {
-  width: 25%;
-  display: cover;
-  float: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
+.container {
+  margin-left: 300px;
+}
+.all {
+  margin-top: -30px;
+  word-break: break-all;
+  height: 100%;
+}
+.mid {
+  margin-top: 25%;
+  height: 50%;
+}
+.mid_item {
+  justify-content: center;
+  align-items: center;
+}
+.item {
+  margin-bottom: 10px;
+}
+.item_tag {
+  float: left;
+  text-align: left;
+}
+.item_desr {
+  margin-left: 40%;
+  min-height: 30px;
+  text-align: left;
+}
+.text {
+  width: 100%;
+  font-size: 12px;
+  font-family: "Microsoft YaHei";
+  color: #909399;
+}
 .clearfix:before,
 .clearfix:after {
   display: table;
   content: "";
 }
-
 .clearfix:after {
   clear: both;
 }
 
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 150px;
-  margin: 0;
+.el-card {
+  min-width: 100%;
+  height: 100%;
+  margin-right: 20px;
+  /*transition: all .5s;*/
 }
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+.el-card:hover {
+  margin-top: -5px;
 }
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+.el-row {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
 }
-
-.testCard {
-  margin-left: 22%;
-  width: 600px;
-  height: 250px;
+.el-col {
+  border-radius: 4px;
+  align-items: stretch;
+  margin-bottom: 40px;
 }
 </style>

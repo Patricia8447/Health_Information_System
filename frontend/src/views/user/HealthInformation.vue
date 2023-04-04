@@ -1,36 +1,34 @@
 <template>
   <div>
-    <el-carousel
-      class="carousel2"
-      indicator-position="none"
-      :autoplay="true"
-      trigger="click"
-    >
-      <el-carousel-item v-for="item in images" :key="item.id">
-        <img class="carousel" :src="item.url" alt="无图片" />
-      </el-carousel-item>
-    </el-carousel>
-
+    <div class="block">
+      <el-carousel
+        class="carousel2"
+        indicator-position="none"
+        :autoplay="true"
+        trigger="click"
+      >
+        <el-carousel-item v-for="item in images" :key="item.id">
+          <img class="carouselImage" :src="item.url" alt="无图片" />
+        </el-carousel-item>
+      </el-carousel>
+    </div>
     <div class="container">
-      <el-row :gutter="12">
-        <el-col :span="8">
-          <div class="testCard">
-            <h1>Health Knowledge</h1>
-            <el-card
-              :body-style="{ padding: '10px' }"
-              v-for="info in infos"
-              :key="infos._id"
-            >
-              <template slot-scope="scope">
-                <div><img :src="info.coverLink" class="image" /></div>
-                <div style="padding: 14px">
-                  <a :href="info.link" target="_blank"
-                    ><h4>{{ info.title }}</h4></a
-                  >
-                </div>
-              </template>
-            </el-card>
-          </div>
+      <h1></h1>
+      <el-row :gutter="20" class="el-row" type="flex">
+        <el-col
+          :span="8"
+          v-for="(info, index) in infos"
+          :key="infos.coverLink"
+          class="el-col"
+        >
+          <el-card class="el-card" :key="index" onclick="">
+            <div slot="header" class="clearfix">
+              <img :src="info.coverLink" class="image" />
+              <a :href="info.link" target="_blank"
+                ><h4>{{ info.title }}</h4></a
+              >
+            </div>
+          </el-card>
         </el-col>
       </el-row>
     </div>
@@ -61,7 +59,7 @@ export default {
   },
   mounted() {
     console.log("发送获取资讯列表接口");
-    // TODO 资讯列表接口
+    // 资讯列表接口
     Service.getPushInfoList()
       .then((res) => {
         console.log("test1" + JSON.stringify(res.data));
@@ -78,149 +76,94 @@ export default {
 };
 </script>
 
-<style>
-.container {
-  margin-left: 500px;
+<style scoped>
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
 }
 
-.time {
-  font-size: 23px;
-  color: #999;
-}
-
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
 }
 
 .image {
-  width: 25%;
-  /* display: cover; */
-  float: center;
-  display: flex;
-  justify-content: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
+.container {
+  margin-left: 300px;
+}
+.all {
+  margin-top: -30px;
+  word-break: break-all;
+  height: 100%;
+}
+.mid {
+  margin-top: 25%;
+  height: 50%;
+}
+.mid_item {
+  justify-content: center;
+  align-items: center;
+}
+.item {
+  margin-bottom: 10px;
+}
+.item_tag {
+  float: left;
+  text-align: left;
+}
+.item_desr {
+  margin-left: 40%;
+  min-height: 30px;
+  text-align: left;
+}
+.text {
+  width: 100%;
+  font-size: 12px;
+  font-family: "Microsoft YaHei";
+  color: #909399;
+}
 .clearfix:before,
 .clearfix:after {
   display: table;
   content: "";
 }
-
 .clearfix:after {
   clear: both;
 }
 
-.carousel {
+.el-card {
+  min-width: 100%;
+  height: 100%;
+  margin-right: 20px;
+  /*transition: all .5s;*/
+}
+.el-card:hover {
+  margin-top: -5px;
+}
+.el-row {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.el-col {
+  border-radius: 4px;
+  align-items: stretch;
+  margin-bottom: 40px;
+}
+.carouselImage {
   width: 100%;
-  height: 200px;
-  position: relative;
+  height: 100%;
+  object-fit: cover;
 }
 
 .carousel2 {
   width: 100%;
-  height: 150px;
+  /* height: 150px; */
   background: white;
 }
-
-/* .left {
-  float: left;
-  width: 700px;
-  height: 100%;
- }
-
-.right {
-  width: 400px;
-  float: right;
-  height: 100%;
-  text-align: left;
-  }
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-.carousel {
-  width: 660px;
-  height: 400px;
-  border: 1px solid rgba(0, 0, 0, 0);
-  margin: 10px auto;
-  margin-left: 0px;
-  position: relative;
- }
-
-.carousel img {
-  width: 660px;
-  height: 375px;
-  position: absolute;
-  top: 0;
-  left: 26px;
-  opacity: 0;
-  transition: all 0.6s;
-}
-
-.carousel img.current {
-  opacity: 1;
-}
-
-#circles {
-  position: absolute;
-  top: 90%;
-  width: 300px;
-  height: 30px;
-  bottom: 10px;
-  left: 50%;
-  display: flex;
-  justify-content: space-between;
-  transform: translateX(-50%);
-}
-
-p {
-  width: 15px;
-  height: 15px;
-  background-color: rgba(234, 226, 165, 0.73);
-  border-radius: 50%;
-}
-
-p.current {
-  width: 15px;
-  height: 15px;
-  background-color: rgba(241, 77, 227, 0.584);
-}
-
-.eating {
-  width: 600px;
-  text-align: left;
-  margin: 15px auto;
-  margin-left: 26px;
-}
-.eating h1 {
-  font-size: 2.5em;
-  color: #000;
-  font-weight: 700;
-}
-
-.answering {
-  text-align: left;
-  height: 400px;
-}
-
-.answering h1 {
-  font-size: 2.5em;
-  color: #000;
-  font-weight: 700;
-}
-
-.keep {
-  text-align: left;
-}
-
-.keep h1 {
-  font-size: 2.5em;
-  color: #000;
-  font-weight: 700;
-} */
 
 .el-carousel__item h3 {
   color: #475669;
