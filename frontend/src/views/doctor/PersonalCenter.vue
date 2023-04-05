@@ -1,184 +1,159 @@
 <template>
   <div class="container">
-    <el-descriptions title="Personal Center" direction="vertical" :column="2" border>
-      <template slot="extra">
-        <el-button
-          type="primary"
-          size="small"
-          plain
-          @click="switchPage('EditDoctorPersonalInfo')"
-          >Edit</el-button
-        >
-      </template>
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-user"></i>
-            username
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.name }}
-        </div>
-      </el-descriptions-item>
+    <h3 class="titleFormat">Personal Center</h3>
+    <el-row>
+      <el-col :span="6"
+        ><div class="picture">
+          <img
+            class="carouselImage"
+            alt="无图片"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFN3fUaWdcoipehnhpOb5buxN_URfOp84yvQ&usqp=CAU"
+          /></div
+      ></el-col>
+      <el-col :span="18"
+        ><div class="content">
+          <el-descriptions title="" direction="vertical" :column="2" border>
+            <template slot="extra">
+              <el-button
+                type="primary"
+                size="small"
+                plain
+                @click="switchPage('EditDoctorPersonalInfo')"
+                >Edit</el-button
+              >
+            </template>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Username: {{ personalInfos.name }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-s-custom"></i>
-            gender
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.gender }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-s-custom"></i>
+                  Gender: {{ personalInfos.gender }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-message"></i>
-            email
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.email }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-message"></i>
+                  Email: {{ personalInfos.email }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-star-on"></i>
-            current status
-          </div>
-        </template>
-        <div class="my-content">
-          {{ doctorPart.status }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-star-on"></i>
+                  Current Status: {{ doctorPart.status }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-office-building"></i>
-            hospital name
-          </div>
-        </template>
-        <div class="my-content">
-          {{ doctorPart.hospitalName }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-office-building"></i>
+                  Hospital Name: {{ doctorPart.hospitalName }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-s-data"></i>
-            hospital level
-          </div>
-        </template>
-        <div class="my-content">
-          {{ doctorPart.hospitalLevel }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-s-data"></i>
+                  Hospital Level: {{ doctorPart.hospitalLevel }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-add-location"></i>
-            hospital address
-          </div>
-        </template>
-        <div class="my-content">
-          {{ doctorPart.hospitalAddress }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-add-location"></i>
+                  Hospital Address: {{ doctorPart.hospitalAddress }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-coin"></i>
-            department
-          </div>
-        </template>
-        <div class="my-content">
-          {{ doctorPart.departmentId }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-coin"></i>
+                  Department: {{ doctorPart.departmentId }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-ship"></i>
-            job
-          </div>
-        </template>
-        <div class="my-content">
-          {{ doctorPart.job }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-ship"></i>
+                  Job: {{ doctorPart.job }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-user"></i>
-            Available Time
-          </div>
-        </template>
-        <div class="my-content">
-          {{ availableTime.startTime }} - {{ availableTime.endTime }}
-        </div>
-      </el-descriptions-item>
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-user"></i>
-            Available Date
-          </div>
-        </template>
-        <div class="my-content">
-          {{ availableDate.Mon }} {{ availableDate.Tues }} {{ availableDate.Wed }}
-          {{ availableDate.Thurs }} {{ availableDate.Fri }} {{ availableDate.Sat }}
-          {{ availableDate.Sun }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Available Time: {{ availableTime.startTime }} -
+                  {{ availableTime.endTime }}
+                </div>
+              </template>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Available Date: {{ availableDate.Mon }} {{ availableDate.Tues }}
+                  {{ availableDate.Wed }} {{ availableDate.Thurs }}
+                  {{ availableDate.Fri }} {{ availableDate.Sat }}
+                  {{ availableDate.Sun }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-user"></i>
-            Zoom Link Test
-          </div>
-        </template>
-        <div class="my-content">
-          {{ doctorPart.zoomlink }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Zoom Link: {{ doctorPart.zoomlink }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-aim"></i>
-            strength
-          </div>
-        </template>
-        <div class="my-content">
-          {{ doctorPart.strength }}
-        </div>
-      </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-aim"></i>
+                  Strength: {{ doctorPart.strength }}
+                </div>
+              </template>
+            </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-thumb"></i>
-            self introduction
-          </div>
-        </template>
-        <div class="my-content">
-          {{ doctorPart.selfIntro }}
-        </div>
-      </el-descriptions-item>
-    </el-descriptions>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-thumb"></i>
+                  Self Introduction: {{ doctorPart.selfIntro }}
+                </div>
+              </template>
+            </el-descriptions-item>
+          </el-descriptions>
+        </div></el-col
+      >
+    </el-row>
   </div>
 </template>
 
@@ -327,17 +302,21 @@ export default {
 <style>
 .container {
   margin-top: 3%;
-  margin-left: 5%;
+  margin-left: 10%;
 }
 
 .my-label {
-  background: #add8e6;
-  font-size: 1.3em;
-  color: #444444;
-}
-
-.my-content {
   font-size: 1.5em;
   color: black;
+  font-weight: bold;
+}
+
+.picture {
+  float: left;
+  margin: 10px;
+}
+
+.titleFormat {
+  font-weight: bold;
 }
 </style>

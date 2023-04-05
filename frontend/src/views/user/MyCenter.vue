@@ -1,89 +1,82 @@
 <template>
   <div class="container">
-    <el-descriptions
-      title="Personal Center"
-      direction="vertical"
-      :column="2"
-      border
-      :contentStyle="CS"
-    >
-      <template slot="extra">
-        <el-button type="primary" size="small" plain @click="switchPage('EditMyCenter')"
-          >Edit</el-button
-        >
-      </template>
+    <h3 class="titleFormat">Personal Center</h3>
+    <el-row>
+      <el-col :span="6"
+        ><div class="picture">
+          <img
+            class="carouselImage"
+            alt="无图片"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFN3fUaWdcoipehnhpOb5buxN_URfOp84yvQ&usqp=CAU"
+          /></div
+      ></el-col>
+      <el-col :span="18"
+        ><div class="content">
+          <el-descriptions
+            title=""
+            direction="vertical"
+            :column="2"
+            :size="size"
+            :contentStyle="CS"
+          >
+            <template slot="extra">
+              <el-button type="primary" plain @click="switchPage('EditMyCenter')"
+                >Edit</el-button
+              >
+            </template>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-user"></i>
-            username
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.name }}
-        </div>
-      </el-descriptions-item>
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-s-custom"></i>
-            gender
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.gender }}
-        </div>
-      </el-descriptions-item>
-
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-magic-stick"></i>
-            birth
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.birth.split("T")[0] }}
-        </div>
-      </el-descriptions-item>
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-message"></i>
-            email
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.email }}
-        </div>
-      </el-descriptions-item>
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-location-outline"></i>
-            address
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.address }}
-        </div>
-      </el-descriptions-item>
-      <el-descriptions-item>
-        <template slot="label">
-          <div class="my-label">
-            <i class="el-icon-first-aid-kit"></i>
-            allergy medicine
-          </div>
-        </template>
-        <div class="my-content">
-          {{ personalInfos.allergy }}
-        </div>
-      </el-descriptions-item>
-      <!-- <el-descriptions-item label="testing" prop="testing">{{
-        personalInfos
-      }}</el-descriptions-item> -->
-    </el-descriptions>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Username: {{ personalInfos.name }}
+                </div>
+              </template>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-s-custom"></i>
+                  Gender: {{ personalInfos.gender }}
+                </div>
+              </template>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-magic-stick"></i>
+                  Birth: {{ personalInfos.birth.split("T")[0] }}
+                </div>
+              </template>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-message"></i>
+                  Email: {{ personalInfos.email }}
+                </div>
+              </template>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-location-outline"></i>
+                  Address: {{ personalInfos.address }}
+                </div>
+              </template>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-first-aid-kit"></i>
+                  Allergy Medicine: {{ personalInfos.allergy }}
+                </div>
+              </template>
+            </el-descriptions-item>
+          </el-descriptions>
+        </div></el-col
+      >
+    </el-row>
   </div>
 </template>
 
@@ -114,11 +107,6 @@ export default {
   },
   methods: {
     //当点击退出按钮，将不保存登录状态
-    logout: function () {
-      this.isAuth = "false"; //修改登录状态
-      localStorage.setItem("s", this.isAuth);
-      this.$router.replace("/healthinformation"); //页面跳转至健康資訊页面
-    },
     switchPage(str) {
       this.$router.push({ name: str });
     },
@@ -151,13 +139,17 @@ export default {
 }
 
 .my-label {
-  background: #add8e6;
-  font-size: 1.3em;
-  color: #444444;
-}
-
-.my-content {
   font-size: 1.5em;
   color: black;
+  font-weight: bold;
+}
+
+.picture {
+  float: left;
+  margin: 10px;
+}
+
+.titleFormat {
+  font-weight: bold;
 }
 </style>

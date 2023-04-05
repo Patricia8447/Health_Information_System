@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <h3 class="titleFormat">Appointment Order Records</h3>
+
     <el-table
       :data="
         tableData.filter(
@@ -7,7 +9,7 @@
             !search || data.doctorName.toLowerCase().includes(search.toLowerCase())
         )
       "
-      style="width: 1200px"
+      style="width: 100%"
       :default-sort="{ prop: 'appointmentDate', order: 'ascending' }"
     >
       <!-- <el-table-column
@@ -22,12 +24,12 @@
         :width="flexColumnWidth('Doctor Name', 'doctorName')"
       >
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="Allergy Medicine"
         prop="allergyMedicine"
         :width="flexColumnWidth('Allergy Medicine', 'allergyMedicine')"
       >
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column
         label="Appointment Date"
@@ -57,17 +59,11 @@
         :width="flexColumnWidth('Status', 'status')"
       >
       </el-table-column>
-
-      <el-table-column align="right">
-        <template slot="header" slot-scope="scope" class="searching">
-          <el-input v-model="search" size="mini" placeholder="search your order..." />
-        </template>
-      </el-table-column>
-
       <el-table-column>
-        <template slot-scope="scope" class="btns">
+        <template slot-scope="scope" class="el-table_1_column_8 el-table__cell">
           <el-button
             type="warning"
+            plain
             class="button"
             @click="goRoute2(scope.$index)"
             :disabled="
@@ -80,6 +76,7 @@
           </el-button>
           <el-button
             type="primary"
+            plain
             class="button"
             :disabled="
               getCurrentDate(scope.row.appointmentDate) ||
@@ -97,6 +94,7 @@
 
           <el-button
             type="success"
+            plain
             class="button"
             @click="goRoute(scope.$index)"
             :disabled="scope.row.status != 'finished'"
@@ -113,6 +111,11 @@
           </el-button>
         </template>
       </el-table-column>
+      <!-- <el-table-column align="right">
+        <template slot="header" slot-scope="scope" class="searching">
+          <el-input v-model="search" size="mini" placeholder="search your order..." />
+        </template>
+      </el-table-column> -->
     </el-table>
   </div>
 </template>
@@ -235,7 +238,7 @@ export default {
       const arr = this.tableData.map((x) => x[prop]);
       arr.push(label); // 把每列的表头也加进去算
       // 2.计算每列内容最大的宽度 + 表格的内间距（依据实际情况而定）
-      return this.getMaxLength(arr) + 25 + "px";
+      return this.getMaxLength(arr) + 45 + "px";
     },
     open() {
       this.$alert(
@@ -265,30 +268,6 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-
-    // Common.getAllDoctor()
-    //   .then((res) => {
-    //     if (res.data.code === 1) {
-    //       console.log("11111: " + JSON.stringify(res.data.info));
-    //       for (let i = 0; i < res.data.info.length; i++) {
-    //         for (let j = 0; j < this.tableData.length; j++) {
-    //           if (res.data.info[i]._id == this.tableData[j].doctorId) {
-    //             // console.log("11111: " + JSON.stringify(res.data.info[i]));
-    //             this.alldoctordetails = res.data.info[i];
-    //             alert("2345: " + this.alldoctordetails.name);
-    //             this.tableData.doctorName = this.alldoctordetails.name;
-    //             console.log("check: " + this.tableData.doctorName);
-    //             break;
-    //           }
-    //         }
-    //       }
-    //     } else {
-    //       alert(res.data.info);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   },
 };
 </script>
@@ -296,29 +275,15 @@ export default {
 <style>
 .container {
   margin-top: 3%;
-  margin-left: 3%;
+  margin-left: 8%;
   width: 100%;
 }
 
-.el-table /deep/ th {
-  padding: 0;
-  white-space: nowrap;
-  min-width: fit-content;
+.searching {
+  width: 50px;
 }
 
-.el-table /deep/ td {
-  padding: 1px;
-  white-space: nowrap;
-  width: fit-content;
-}
-
-/** 修改el-card默认paddingL:20px-内边距 **/
->>> .el-card__body {
-  padding: 10px;
-}
-
-.el-table /deep/ .cell {
-  white-space: nowrap;
-  width: fit-content;
+.titleFormat {
+  font-weight: bold;
 }
 </style>
