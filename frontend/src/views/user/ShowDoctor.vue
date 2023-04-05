@@ -1,75 +1,65 @@
 <template>
   <div class="container">
-    <el-table
-      :data="
-        tableData.filter(
-          (data) =>
-            (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
-            data.status == 'Approved'
-        )
-      "
-      :row-class-name="tableRowClassName"
-      style="width: 100%"
-    >
-      <!-- <el-table-column label="ID" prop="_id" width="150px"></el-table-column> -->
-      <el-table-column label="Name" prop="name" :width="flexColumnWidth('Name', 'name')">
-      </el-table-column>
-      <el-table-column
-        label="Gender"
-        prop="gender"
-        :width="flexColumnWidth('Gender', 'gender')"
+    <el-row :gutter="20" class="el-row" type="flex">
+      <el-col
+        :span="8"
+        v-for="(info, index) in tableData"
+        :key="tableData._id"
+        class="el-col"
       >
-      </el-table-column>
-      <el-table-column
-        label="Working Place"
-        prop="hospitalName"
-        :width="flexColumnWidth('Working Place', 'hospitalName')"
-      >
-      </el-table-column>
-      <el-table-column
-        label="Hospital Level"
-        prop="hospitalLevel"
-        :width="flexColumnWidth('Hospital Level', 'hospitalLevel')"
-      >
-      </el-table-column>
-      <el-table-column
-        label="Job Position"
-        prop="job"
-        :width="flexColumnWidth('Job Position', 'job')"
-      >
-      </el-table-column>
-      <!-- <el-table-column
-        label="Strength"
-        prop="strength"
-        :width="flexColumnWidth('Strength', 'strength')"
-      >
-      </el-table-column>
-      <el-table-column
-        label="Self Introduction"
-        prop="selfIntro"
-        :width="flexColumnWidth('Self Introduction', 'selfIntro')"
-      >
-      </el-table-column> -->
+        <el-card class="el-card" :key="index" onclick="">
+          <div slot="header" class="clearfix">
+            <h3>{{ info.name }}</h3>
+          </div>
 
-      <el-table-column align="right">
-        <template slot="header" slot-scope="scope">
-          <el-input v-model="search" size="mini" placeholder="search a doctor" />
-        </template>
-        <template slot-scope="scope" class="btns">
-          <el-button type="success" plain class="button" @click="goRoute(scope.$index)">
-            Make Appointment
-          </el-button>
-          <el-button
-            type="primary"
-            plain
-            class="button"
-            @click="viewDetail(scope.$index)"
-          >
-            View More Detail
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+          <div class="text item">
+            <div class="item_tag">
+              <span>Gender: </span>
+            </div>
+            <div class="item_desr">
+              <span> {{ info.gender }}</span>
+            </div>
+
+            <div class="item_tag">
+              <span>Hospital Name: </span>
+            </div>
+            <div class="item_desr">
+              <span> {{ info.hospitalName }}</span>
+            </div>
+
+            <div class="item_tag">
+              <span>Hospital Level: </span>
+            </div>
+            <div class="item_desr">
+              <span> {{ info.hospitalLevel }}</span>
+            </div>
+
+            <div class="item_tag">
+              <span>Job: </span>
+            </div>
+            <div class="item_desr">
+              <span> {{ info.job }}</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="text item">
+              <el-button type="success" plain class="button" @click="goRoute(info._id)">
+                Make Appointment
+              </el-button>
+              <el-button
+                type="primary"
+                plain
+                class="button"
+                @click="viewDetail(info._id)"
+              >
+                View More Detail
+              </el-button>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -108,15 +98,14 @@ export default {
       return "";
     },
     goRoute(e) {
-      let data = this.tableData;
-      // 这里写
-      console.log("make-appointment: " + data[e]._id);
-      this.$router.push({ name: "MakeAppointment", params: { id: data[e]._id } });
+      // let data = this.tableData;
+      console.log("make-appointment: " + e);
+      this.$router.push({ name: "MakeAppointment", params: { id: e } });
     },
     viewDetail(e) {
-      let data = this.tableData;
-      console.log("view-detail: " + data[e]._id);
-      this.$router.push({ name: "ViewDoctorDetail", params: { id: data[e]._id } });
+      // let data = this.tableData;
+      console.log("view-detail: " + e);
+      this.$router.push({ name: "ViewDoctorDetail", params: { id: e } });
     },
     handleEdit(index, row) {
       console.log(index, row);
@@ -211,6 +200,22 @@ export default {
 </script>
 
 <style>
+.item_tag {
+  float: left;
+  text-align: left;
+}
+.item_desr {
+  margin-left: 40%;
+  min-height: 30px;
+  text-align: left;
+}
+.text {
+  width: 100%;
+  font-size: 12px;
+  font-family: "Microsoft YaHei";
+  color: #909399;
+}
+
 .el-table .warning-row {
   display: none;
 }

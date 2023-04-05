@@ -9,11 +9,7 @@
       class="ruleForm"
     >
       <el-form-item label="Drugsage" prop="drugsage">
-        <el-input
-          type="input"
-          v-model.trim="alldoctordetails.drugsage"
-          disabled
-        ></el-input>
+        <el-input type="input" v-model.trim="ruleForm.drugsage" disabled></el-input>
       </el-form-item>
       <el-form-item label="Receiver Name" prop="name">
         <el-input type="input" v-model.trim="ruleForm.name"></el-input>
@@ -41,11 +37,14 @@
         >
         </el-time-select>
       </el-form-item>
+      <el-form-item label="Delivery Address" prop="address">
+        <el-input type="input" v-model.trim="ruleForm.address"></el-input>
+      </el-form-item>
       <el-form-item label="Remark" prop="other">
         <el-input type="textarea" v-model.trim="ruleForm.other"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="submit" @click="alertResults()">Submit</el-button>
+        <el-button type="submit" @click="alertResults('ruleForm')">Submit</el-button>
         <el-button type="success" plain @click="resetForm('ruleForm')">Reset</el-button>
       </el-form-item>
     </el-form>
@@ -56,19 +55,44 @@
 import "survey-vue/modern.min.css";
 import { Survey, StylesManager, Model } from "survey-vue";
 import Service from "@/service/common.service.js";
+import User from "@/service/user.service.js";
 
 export default {
   data() {
     return {
+      personalInfos: {
+        name: "",
+        gender: "",
+        birth: "",
+        email: "",
+        address: "",
+        allergy: "",
+      },
       ruleForm: {
         name: "",
         phone: "",
         period: "",
         deliverDate: "",
         other: "",
+        drugsage: "",
+        address: "",
       },
       value1: "",
-      rules: {},
+      rules: {
+        drugsage: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        name: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        phone: [
+          {
+            required: true,
+            message: "wrong format",
+            trigger: "blur",
+            pattern: /^([5|6|9])\\d{7}$/,
+          },
+        ],
+        address: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        deliverDate: [{ required: true, message: "cannot be null", trigger: "blur" }],
+        period: [{ required: true, message: "cannot be null", trigger: "blur" }],
+      },
       tableData: [{ doctorId: "" }],
       alldoctordetails: [
         {
@@ -89,23 +113,32 @@ export default {
     };
   },
   methods: {
-    async alertResults() {
-      console.log("发送送药接口");
-      console.log(JSON.stringify(this.ruleForm));
-      Service.createDistribution(this.ruleForm)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.code === 1) {
-            alert("submitted successfully");
-            console.log(res.data.info);
-            location.assign("/appointmentorderrecord");
-          } else {
-            alert(res.data.info);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    async alertResults(formName) {
+      this.$refs[formName].validate((valid) => {
+        //开启校验
+        if (valid) {
+          console.log("发送送药接口");
+          console.log(JSON.stringify(this.ruleForm));
+          Service.createDistribution(this.ruleForm)
+            .then((res) => {
+              console.log(res.data);
+              if (res.data.code === 1) {
+                alert("submitted successfully");
+                console.log(res.data.info);
+                location.assign("/appointmentorderrecord");
+              } else {
+                alert(res.data.info);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          //校验不通过
+          alert("please check the required format");
+          return false;
+        }
+      });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -139,6 +172,26 @@ export default {
       .then((res) => {
         if (res.data.code === 1) {
           this.alldoctordetails = res.data.info; //拿到了doctor id
+          this.ruleForm.drugsage = this.alldoctordetails.drugsage;
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    let datas1 = {
+      userId: JSON.parse(localStorage.getItem("user")).id,
+    };
+    console.log(datas1);
+
+    User.getUserInfo(datas1)
+      .then((res) => {
+        if (res.data.code === 1) {
+          this.personalInfos = res.data.info;
+          this.ruleForm.name = this.personalInfos.name;
+          this.ruleForm.address = this.personalInfos.address;
         } else {
           alert(res.data.info);
         }

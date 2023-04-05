@@ -115,14 +115,16 @@ const VisitRecordSchema = new Schema({
 // 送药表
 const DrugDeliverySchema = new Schema({
   userId: { type: String, require: true },                                       // 用户ID
+  drugsage: { type: String, require: true },
   name: { type: String, require: true },                                         // 收件人名字
   phone: { type: String, require: true },                                        // 收件人电话
   period: { type: String, require: true },                                         // 送件时间
   deliverDate: { type: String, require: true },                                      // 药品数量
-  subject: { type: String, require: true },                                      // 药品名称
   status: { type: String, enum: DELIVERY, default: DELIVERY.Undelivered },       // 配送状态
   other: { type: String, default: '' },                                          // 备注
   time: { type: Date, default: new Date() },                                     // 创建时间
+  address: { type: String, require: true },
+
 })
 
 // 推送信息
