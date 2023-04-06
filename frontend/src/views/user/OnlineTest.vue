@@ -2,17 +2,17 @@
   <div class="container">
     <h3 class="titleFormat">The Four Tests</h3>
     <el-row class="marginBetween">
-      <el-button
+      <el-button class="btns"
         ><router-link to="/onlinetest/covid19">COVID19 Self Test</router-link></el-button
       >
 
-      <el-button
+      <el-button class="btns"
         ><router-link to="/onlinetest/eczema">Eczema Test</router-link></el-button
       >
-      <el-button
+      <el-button class="btns"
         ><router-link to="/onlinetest/diabetes">Diabetes Test</router-link></el-button
       >
-      <el-button
+      <el-button class="btns"
         ><router-link to="/onlinetest/sleep">Sleeping Test</router-link></el-button
       >
     </el-row>
@@ -37,5 +37,10 @@
 
 .marginBetween {
   margin-top: 5%;
+}
+
+.btns {
+  font-weight: bold;
+  font-size: 1.5em;
 }
 </style>

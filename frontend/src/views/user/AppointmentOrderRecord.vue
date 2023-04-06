@@ -295,6 +295,7 @@ export default {
 
 .titleFormat {
   font-weight: bold;
+  background-color: white;
   /* margin-top: 5px; */
 }
 </style>

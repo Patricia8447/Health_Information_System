@@ -1,6 +1,6 @@
 <template>
   <div class="container has-text-left">
-    <h1>Appointment Form</h1>
+    <h3 class="titleFormat">Appointment Form</h3>
     <el-form
       :model="ruleForm"
       :rules="rules"
@@ -8,14 +8,33 @@
       label-width="250px"
       class="ruleForm"
     >
-      <el-form-item label="Self Report" prop="selfReport">
+      <el-form-item prop="selfReport">
+        <span slot="label">
+          <span style="color: black; font-size: 1.2em"
+            ><strong>Self Report</strong>
+          </span>
+        </span>
         <el-input type="textarea" v-model.trim="ruleForm.selfReport"></el-input>
       </el-form-item>
-      <el-form-item label="Allergy Medicine" prop="allergyMedicine">
-        <el-input type="textarea" v-model.trim="ruleForm.allergyMedicine"></el-input>
+      <el-form-item prop="allergyMedicine">
+        <span slot="label">
+          <span style="color: black; font-size: 1.2em"
+            ><strong>Allergy Medicine</strong>
+          </span>
+        </span>
+        <el-input
+          type="text"
+          v-model.trim="ruleForm.allergyMedicine"
+          placeholder="the system will automatically update if it is different from the personal center"
+        ></el-input>
       </el-form-item>
 
-      <el-form-item label="Please choose the date and time" prop="appointmentDate">
+      <el-form-item prop="appointmentDate">
+        <span slot="label">
+          <span style="color: black; font-size: 1.2em"
+            ><strong>Choose the date and time</strong>
+          </span>
+        </span>
         <div class="timeCheck">
           <el-date-picker
             v-model.trim="ruleForm.appointmentDate"
@@ -417,6 +436,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.labelClass {
+  font-size: 1.5em;
+}
+.titleFormat {
+  font-weight: bold;
+  background-color: #ccddff;
+  width: 450px;
+  text-align: center;
+  margin-left: 31%;
+}
 .ruleForm {
   margin-top: 5%;
   margin-left: 12%;
