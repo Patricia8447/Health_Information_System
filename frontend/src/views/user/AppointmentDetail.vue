@@ -1,48 +1,53 @@
 <template>
   <div class="container">
-    <div class="container">
-      <el-descriptions
-        title="view result page"
-        direction="vertical"
-        :column="1"
-        border
-        :contentStyle="CS"
+    <h3 class="title">Dianosis Detail</h3>
+    <el-row>
+      <el-col :span="18"
+        ><div class="content">
+          <el-descriptions
+            title=""
+            direction="vertical"
+            :column="1"
+            border
+            :contentStyle="CS"
+          >
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Symptoms
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.symptoms }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Result
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.remark }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Drugsage
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.drugsage }}
+              </div>
+            </el-descriptions-item>
+          </el-descriptions>
+        </div></el-col
       >
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Symptoms
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.symptoms }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Result
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.remark }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Drugsage
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.drugsage }}
-          </div>
-        </el-descriptions-item>
-      </el-descriptions>
-    </div>
+    </el-row>
   </div>
 </template>
 
@@ -92,7 +97,6 @@ export default {
       .then((res) => {
         if (res.data.code === 1) {
           this.tableData = res.data.info; //拿到了doctor id
-          // alert("test? " + JSON.stringify(res.data.info));
         } else {
           alert(res.data.info);
         }
@@ -110,7 +114,6 @@ export default {
       .then((res) => {
         if (res.data.code === 1) {
           this.alldoctordetails = res.data.info; //拿到了doctor id
-          // alert("test?2: " + JSON.stringify(res.data.info));
         } else {
           alert(res.data.info);
         }

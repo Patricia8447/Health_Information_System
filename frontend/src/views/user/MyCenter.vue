@@ -142,6 +142,7 @@ export default {
   font-size: 1.5em;
   color: black;
   font-weight: bold;
+  background-color: white;
 }
 
 .picture {
