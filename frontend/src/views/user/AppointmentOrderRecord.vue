@@ -78,8 +78,8 @@
             @click="goRoute2(scope.$index)"
             :disabled="
               scope.row.status == 'void' ||
-              (scope.row.status == 'finished' &&
-                !getCurrentDate(scope.row.appointmentDate))
+              scope.row.status == 'finished' ||
+              !getCurrentDate(scope.row.appointmentDate)
             "
           >
             Edit Appointment
@@ -89,8 +89,8 @@
             plain
             class="button"
             :disabled="
-              getCurrentDate(scope.row.appointmentDate) ||
-              scope.row.status != 'Not yet start'
+              scope.row.status != 'Not yet start' ||
+              !getCurrentDate(scope.row.appointmentDate)
             "
           >
             <a

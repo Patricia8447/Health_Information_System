@@ -1,160 +1,154 @@
 <template>
   <div class="container">
-    <div class="container">
-      <el-descriptions
-        title="testing view detail page"
-        direction="vertical"
-        :column="1"
-        border
-        :contentStyle="CS"
+    <h3 class="title">Doctor Detail</h3>
+    <el-row>
+      <el-col :span="18"
+        ><div class="content">
+          <el-descriptions
+            title=""
+            direction="vertical"
+            :column="2"
+            border
+            :contentStyle="CS"
+          >
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Doctor Name
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.name }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-message"></i>
+                  Email
+                </div>
+              </template>
+              <div class="my-content">
+                {{ basicInfo.email }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-s-home"></i>
+                  Hospital Name
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.hospitalName }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-menu"></i>
+                  Hospital Level
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.hospitalLevel }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-location-information"></i>
+                  Hospital Address
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.hospitalAddress }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-collection-tag"></i>
+                  Department
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.departmentId }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-price-tag"></i>
+                  Position
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.job }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-time"></i>
+                  Available Time
+                </div>
+              </template>
+              <div class="my-content">
+                {{ availableTime.startTime }} - {{ availableTime.endTime }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-date"></i>
+                  Available Date
+                </div>
+              </template>
+              <div class="my-content">
+                {{ availableDate.Mon }} {{ availableDate.Tues }} {{ availableDate.Wed }}
+                {{ availableDate.Thurs }} {{ availableDate.Fri }} {{ availableDate.Sat }}
+                {{ availableDate.Sun }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-magic-stick"></i>
+                  Strength
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.strength }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-coordinate"></i>
+                  Self Introduction
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.selfIntro }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-link"></i>
+                  Zoom Link Test
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.zoomlink }}
+              </div>
+            </el-descriptions-item>
+          </el-descriptions>
+        </div></el-col
       >
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Doctor Name
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.name }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Phone Number
-            </div>
-          </template>
-          <div class="my-content">
-            {{ basicInfo.phone }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Email
-            </div>
-          </template>
-          <div class="my-content">
-            {{ basicInfo.email }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Hospital Name
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.hospitalName }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Hospital Level
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.hospitalLevel }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Hospital Address
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.hospitalAddress }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Department
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.departmentId }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Position
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.job }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Available Time
-            </div>
-          </template>
-          <div class="my-content">
-            {{ availableTime.startTime }} - {{ availableTime.endTime }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Available Date
-            </div>
-          </template>
-          <div class="my-content">
-            {{ availableDate.Mon }} {{ availableDate.Tues }} {{ availableDate.Wed }}
-            {{ availableDate.Thurs }} {{ availableDate.Fri }} {{ availableDate.Sat }}
-            {{ availableDate.Sun }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Strength
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.strength }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Self Introduction
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.selfIntro }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Zoom Link Test
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.zoomlink }}
-          </div>
-        </el-descriptions-item>
-      </el-descriptions>
-    </div>
+    </el-row>
   </div>
 </template>
 
@@ -313,24 +307,31 @@ export default {
 
 <style>
 .container {
-  margin-top: 5%;
-  margin-left: 10%;
-  width: 100%;
-}
-
-.container {
   margin-top: 3%;
   margin-left: 10%;
 }
 
+.title {
+  font-weight: bold;
+  text-align: left;
+  font-size: 1.5em;
+}
+
 .my-label {
+  font-size: 1.3em;
+  color: #444444;
+  font-weight: bold;
+  background: #add8e6;
+}
+
+/* .my-label {
   background: #add8e6;
   font-size: 1.3em;
   color: #444444;
-}
+} */
 
 .my-content {
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: black;
 }
 

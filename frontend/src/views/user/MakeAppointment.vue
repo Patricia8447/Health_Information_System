@@ -36,7 +36,7 @@
           </span>
         </span>
         <div class="timeCheck">
-          <el-date-picker
+          <!-- <el-date-picker
             v-model.trim="ruleForm.appointmentDate"
             type="date"
             @change="dateChange"
@@ -44,7 +44,15 @@
             value-format="yyyy-MM-dd"
             placeholder="please choose the date"
           >
-          </el-date-picker>
+          </el-date-picker> -->
+          <date-picker
+            v-model.trim="ruleForm.appointmentDate"
+            @change="dateChange"
+            :disabledDate="disabledDate"
+            value-format="yyyy-MM-dd"
+            placeholder="please choose the date"
+            valueType="format"
+          ></date-picker>
 
           <el-select
             v-model.trim="ruleForm.appointmentTime"
@@ -89,12 +97,13 @@
 <script>
 import "survey-vue/modern.min.css";
 import dayjs from "dayjs";
-import { Survey, StylesManager, Model } from "survey-vue";
 import Service from "@/service/common.service.js";
 import Service2 from "@/service/upload.service.js";
 import doctorService from "@/service/doctor.service.js";
 import userService from "@/service/user.service.js";
 import adminService from "@/service/admin.service.js";
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
 
 const parseTime = function (time) {
   const values = (time || "").split(":");
@@ -152,6 +161,7 @@ const nextTime = function (time, step) {
 };
 
 export default {
+  components: { DatePicker },
   data() {
     return {
       ruleForm: {
@@ -172,20 +182,18 @@ export default {
       ],
       dayjs,
       timeList: [],
-      datePickerOption: {
-        disabledDate: function (appointmentDate) {
-          // 设置日期禁用
-          return (
-            dayjs(appointmentDate).format("d") === this.availableDate.Mon ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Tues ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Wed ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Thurs ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Fri ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Sat ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Sun
-          );
-        }.bind(this),
+      disabledDate: (appointmentDate) => {
+        return (
+          dayjs(appointmentDate).format("d") === this.availableDate.Mon ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Tues ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Wed ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Thurs ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Fri ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Sat ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Sun
+        );
       },
+      
       rules: {
         selfReport: [{ required: true, message: "cannot be null", trigger: "blur" }],
         allergyMedicine: [{ required: true, message: "cannot be null", trigger: "blur" }],
@@ -399,7 +407,7 @@ export default {
               if (res.data.info[i].Sun == true) {
                 this.availableDate.Sun = "";
               } else {
-                this.availableDate.Sun = "7";
+                this.availableDate.Sun = "0";
               }
               break;
             }

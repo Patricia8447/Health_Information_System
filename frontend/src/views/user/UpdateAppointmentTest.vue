@@ -1,6 +1,6 @@
 <template>
   <div class="container has-text-left">
-    <h1>Appointment Form</h1>
+    <h3 class="titleFormat1">Update the Appointment</h3>
     <el-form
       :model="ruleForm"
       :rules="rules"
@@ -8,31 +8,41 @@
       label-width="250px"
       class="ruleForm"
     >
-      <el-form-item label="Self Report" prop="selfReport">
+      <el-form-item prop="selfReport">
+        <span slot="label">
+          <span style="color: black; font-size: 1.2em"
+            ><strong>Self Report</strong>
+          </span>
+        </span>
         <el-input type="textarea" v-model.trim="ruleForm.selfReport" disabled></el-input>
       </el-form-item>
-      <el-form-item label="Allergy Medicine" prop="allergyMedicine">
-        <el-input
-          type="textarea"
-          v-model.trim="ruleForm.allergyMedicine"
-          disabled
-        ></el-input>
+      <el-form-item prop="allergyMedicine">
+        <span slot="label">
+          <span style="color: black; font-size: 1.2em"
+            ><strong>Allergy Medicine</strong>
+          </span>
+        </span>
+        <el-input type="text" v-model.trim="ruleForm.allergyMedicine" disabled></el-input>
       </el-form-item>
-      <el-form-item label="Please choose the date and time" prop="appointmentDate">
+      <el-form-item prop="appointmentDate">
+        <span slot="label">
+          <span style="color: black; font-size: 1.2em"
+            ><strong>Choose the date and time</strong>
+          </span>
+        </span>
         <div class="timeCheck">
-          <el-date-picker
+          <date-picker
             v-model.trim="ruleForm.appointmentDate"
-            type="date"
             @change="dateChange"
-            :picker-options="datePickerOption"
+            :disabledDate="disabledDate"
             value-format="yyyy-MM-dd"
-            placeholder="please choose the date"
-          >
-          </el-date-picker>
+            placeholder="please choose another date"
+            valueType="format"
+          ></date-picker>
 
           <el-select
             v-model.trim="ruleForm.appointmentTime"
-            placeholder="please choose the time"
+            placeholder="please choose another time"
             @focus="timeFocus"
             ref="timeSelect"
             @change="timeChange"
@@ -41,6 +51,7 @@
               v-for="(item, index) in timeList"
               :key="index"
               :value="item.value1 + '-' + item.value2"
+              style="text-align: left"
             >
               <div
                 style="display: flex; justify-content: space-between; align-items: center"
@@ -72,11 +83,13 @@
 <script>
 import "survey-vue/modern.min.css";
 import dayjs from "dayjs";
-import { Survey, StylesManager, Model } from "survey-vue";
 import Service from "@/service/common.service.js";
 import Service2 from "@/service/upload.service.js";
 import adminService from "@/service/admin.service.js";
 import userService from "@/service/user.service.js";
+import doctorService from "@/service/doctor.service.js";
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
 
 const parseTime = function (time) {
   const values = (time || "").split(":");
@@ -134,6 +147,7 @@ const nextTime = function (time, step) {
 };
 
 export default {
+  components: { DatePicker },
   data() {
     return {
       ruleForm: {
@@ -150,23 +164,21 @@ export default {
         appointmentTime: [{ required: true, message: "cannot be null", trigger: "blur" }],
         appointmentDate: [{ required: true, message: "cannot be null", trigger: "blur" }],
       },
-      options: [],
-      availableTime: [{ startTime: "", endTime: "" }],
+      availableDate: [
+        { Mon: "", Tues: "", Wed: "", Thurs: "", Fri: "", Sat: "", Sun: "" },
+      ],
       dayjs,
       timeList: [],
-      datePickerOption: {
-        disabledDate: function (appointmentDate) {
-          // 设置日期禁用
-          return (
-            dayjs(appointmentDate).format("d") === this.availableDate.Mon ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Tues ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Wed ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Thurs ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Fri ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Sat ||
-            dayjs(appointmentDate).format("d") === this.availableDate.Sun
-          );
-        }.bind(this),
+      disabledDate: (appointmentDate) => {
+        return (
+          dayjs(appointmentDate).format("d") === this.availableDate.Mon ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Tues ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Wed ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Thurs ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Fri ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Sat ||
+          dayjs(appointmentDate).format("d") === this.availableDate.Sun
+        );
       },
     };
   },
@@ -298,17 +310,87 @@ export default {
 
     Service.getVisitRecordList()
       .then((res) => {
-        // console.log("test" + res.data);
-        // console.log("test1" + JSON.stringify(res.data));
         if (res.data.code === 1) {
           console.log(this.ruleForm.inqueryId);
           console.log("New: " + JSON.stringify(res.data.info));
-          //   console.log(this.ruleForm.inqueryId == res.data.info[0]._id);
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i]._id == this.ruleForm.inqueryId) {
               this.ruleForm = res.data.info[i];
               this.ruleForm.inqueryId = this.$route.params.id;
-              // alert(this.ruleForm.inqueryId);
+              break;
+            }
+          }
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    //拿到医生的出诊日期
+    doctorService
+      .getDateList()
+      .then((res) => {
+        if (res.data.code === 1) {
+          for (let i = 0; i < res.data.info.length; i++) {
+            if (res.data.info[i].doctorId == this.ruleForm.doctorId) {
+              this.availableDate = res.data.info[i];
+              if (res.data.info[i].Mon == true) {
+                this.availableDate.Mon = "";
+              } else {
+                this.availableDate.Mon = "1";
+              }
+              if (res.data.info[i].Tues == true) {
+                this.availableDate.Tues = "";
+              } else {
+                this.availableDate.Tues = "2";
+              }
+              if (res.data.info[i].Wed == true) {
+                this.availableDate.Wed = "";
+              } else {
+                this.availableDate.Wed = "3";
+              }
+              if (res.data.info[i].Thurs == true) {
+                this.availableDate.Thurs = "";
+              } else {
+                this.availableDate.Thurs = "4";
+              }
+              if (res.data.info[i].Fri == true) {
+                this.availableDate.Fri = "";
+              } else {
+                this.availableDate.Fri = "5";
+              }
+              if (res.data.info[i].Sat == true) {
+                this.availableDate.Sat = "";
+              } else {
+                this.availableDate.Sat = "6";
+              }
+              if (res.data.info[i].Sun == true) {
+                this.availableDate.Sun = "";
+              } else {
+                this.availableDate.Sun = "0";
+              }
+              break;
+            }
+          }
+        } else {
+          alert(res.data.info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    //拿到该医生的出诊时间
+    doctorService
+      .getTimeList()
+      .then((res) => {
+        if (res.data.code === 1) {
+          for (let i = 0; i < res.data.info.length; i++) {
+            if (res.data.info[i].doctorId == this.ruleForm.doctorId) {
+              // console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
+              this.availableTime = res.data.info[i];
               break;
             }
           }
@@ -329,8 +411,16 @@ export default {
   width: 800px;
 }
 
-.container h1 {
+.titleFormat1 {
+  font-weight: bold;
+  background-color: #ccddff;
+  width: 450px;
   text-align: center;
-  margin-left: 8%;
+  margin-left: 37%;
+}
+
+.container {
+  margin-top: 3%;
+  margin-left: 10%;
 }
 </style>

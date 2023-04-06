@@ -21,7 +21,7 @@
           >
             <template slot="extra">
               <el-button type="primary" plain @click="switchPage('EditMyCenter')"
-                >Edit</el-button
+                ><i class="el-icon-edit"></i>Edit</el-button
               >
             </template>
 
