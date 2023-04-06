@@ -1,16 +1,19 @@
 <template>
   <div class="container">
     <h3 class="titleFormat">Appointment Order Records</h3>
-
     <el-table
       :data="
         tableData.filter(
           (data) =>
-            !search || data.doctorName.toLowerCase().includes(search.toLowerCase())
+            !search ||
+            data.doctorName.toLowerCase().includes(search.toLowerCase()) ||
+            data.status.toLowerCase().includes(search.toLowerCase())
         )
       "
       style="width: 100%"
+      height="2500"
       :default-sort="{ prop: 'appointmentDate', order: 'ascending' }"
+      :header-cell-style="tableHeaderColor"
     >
       <!-- <el-table-column
         label="Doctor ID"
@@ -59,8 +62,15 @@
         :width="flexColumnWidth('Status', 'status')"
       >
       </el-table-column>
-      <el-table-column>
-        <template slot-scope="scope" class="el-table_1_column_8 el-table__cell">
+      <el-table-column align="right">
+        <template slot="header" slot-scope="scope" class="searching">
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="search your order by doctor name or by status..."
+          />
+        </template>
+        <template slot-scope="scope">
           <el-button
             type="warning"
             plain
@@ -111,11 +121,6 @@
           </el-button>
         </template>
       </el-table-column>
-      <!-- <el-table-column align="right">
-        <template slot="header" slot-scope="scope" class="searching">
-          <el-input v-model="search" size="mini" placeholder="search your order..." />
-        </template>
-      </el-table-column> -->
     </el-table>
   </div>
 </template>
@@ -161,6 +166,11 @@ export default {
     };
   },
   methods: {
+    tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex === 0) {
+        return "background-color: #CCDDFF;color:black;font-size:13px;font-weight: 700;";
+      }
+    },
     switchPage(str) {
       this.$router.push({ name: str });
     },
@@ -238,7 +248,7 @@ export default {
       const arr = this.tableData.map((x) => x[prop]);
       arr.push(label); // 把每列的表头也加进去算
       // 2.计算每列内容最大的宽度 + 表格的内间距（依据实际情况而定）
-      return this.getMaxLength(arr) + 45 + "px";
+      return this.getMaxLength(arr) + 48 + "px";
     },
     open() {
       this.$alert(
@@ -285,5 +295,6 @@ export default {
 
 .titleFormat {
   font-weight: bold;
+  /* margin-top: 5px; */
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3 class="titleFormat">Personal Center</h3>
+    <h3 class="titleFormat1">Personal Center</h3>
     <el-row>
       <el-col :span="6"
         ><div class="picture">
@@ -149,7 +149,11 @@ export default {
   margin: 10px;
 }
 
-.titleFormat {
+.titleFormat1 {
   font-weight: bold;
+  background-color: #ccddff;
+  width: 450px;
+  text-align: center;
+  margin-left: 37%;
 }
 </style>

@@ -203,11 +203,14 @@ export default {
 .item_tag {
   float: left;
   text-align: left;
+  font-size: 15px;
+  font-weight: bold;
 }
 .item_desr {
   margin-left: 40%;
   min-height: 30px;
   text-align: left;
+  font-size: 15px;
 }
 .text {
   width: 100%;

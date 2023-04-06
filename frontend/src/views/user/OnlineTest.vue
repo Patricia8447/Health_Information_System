@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <el-row>
+    <h3 class="titleFormat">The Four Tests</h3>
+    <el-row class="marginBetween">
       <el-button
         ><router-link to="/onlinetest/covid19">COVID19 Self Test</router-link></el-button
       >
@@ -22,6 +23,19 @@
 
 <style>
 .container {
-  margin-top: 10%;
+  margin-top: 3%;
+  margin-left: 10%;
+}
+
+.titleFormat {
+  font-weight: bold;
+  background-color: #ccddff;
+  width: 450px;
+  text-align: center;
+  margin-left: 31%;
+}
+
+.marginBetween {
+  margin-top: 5%;
 }
 </style>
