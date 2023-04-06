@@ -190,7 +190,8 @@ export default {
           dayjs(appointmentDate).format("d") === this.availableDate.Thurs ||
           dayjs(appointmentDate).format("d") === this.availableDate.Fri ||
           dayjs(appointmentDate).format("d") === this.availableDate.Sat ||
-          dayjs(appointmentDate).format("d") === this.availableDate.Sun
+          dayjs(appointmentDate).format("d") === this.availableDate.Sun ||
+          Date.parse(appointmentDate) < new Date().getTime()
         );
       },
       

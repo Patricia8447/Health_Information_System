@@ -126,15 +126,15 @@ export default {
 </script>
 
 <style>
-.container {
-  margin-top: 5%;
-  margin-left: 10%;
-  width: 100%;
+.title {
+  font-weight: bold;
+  text-align: left;
+  font-size: 1.5em;
 }
-
 .container {
   margin-top: 3%;
   margin-left: 10%;
+  width: 100%;
 }
 
 .my-label {

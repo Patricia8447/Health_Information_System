@@ -27,13 +27,6 @@
         :width="flexColumnWidth('Doctor Name', 'doctorName')"
       >
       </el-table-column>
-      <!-- <el-table-column
-        label="Allergy Medicine"
-        prop="allergyMedicine"
-        :width="flexColumnWidth('Allergy Medicine', 'allergyMedicine')"
-      >
-      </el-table-column> -->
-
       <el-table-column
         label="Appointment Date"
         prop="appointmentDate"
@@ -49,7 +42,6 @@
         :width="flexColumnWidth('Appointment Time', 'appointmentTime')"
       >
       </el-table-column>
-
       <el-table-column
         label="Self Report"
         prop="selfReport"
@@ -79,7 +71,7 @@
             :disabled="
               scope.row.status == 'void' ||
               scope.row.status == 'finished' ||
-              !getCurrentDate(scope.row.appointmentDate)
+              getThreeDateBefore(scope.row.appointmentDate)
             "
           >
             Edit Appointment
@@ -94,7 +86,7 @@
             "
           >
             <a
-              :href="alldoctordetails.zoomlink"
+              href="https://hkbu.zoom.us/j/6183055551?pwd=ZVpEa1lUWnJBc2hwV2orRWhBbjlqQT09"
               target="_blank"
               style="text-decoration: none"
             >
@@ -183,6 +175,20 @@ export default {
         return false;
       }
     },
+    getThreeDateBefore(appointmentDate) {
+      var curTime = new Date().getTime(); //获取当前时间
+      var convertAppointmentDate = Date.parse(appointmentDate); //将预约时间从string转化为date类型
+      var ThreeDateBefore = convertAppointmentDate - 3 * 3600 * 24 * 1000; //把预约时间提前三天
+      // console.log("curTime: " + curTime);
+      // console.log("convertAppointmentDate: " + convertAppointmentDate);
+      // console.log("ThreeDateBefore: " + ThreeDateBefore);
+      // console.log("compare: " + ThreeDateBefore - curTime);
+      if (ThreeDateBefore - curTime < 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     goRoute2(e) {
       let data = this.tableData;
       console.log(data[e]._id);
@@ -249,15 +255,6 @@ export default {
       arr.push(label); // 把每列的表头也加进去算
       // 2.计算每列内容最大的宽度 + 表格的内间距（依据实际情况而定）
       return this.getMaxLength(arr) + 48 + "px";
-    },
-    open() {
-      this.$alert(
-        '<a href="https://hkbu.zoom.us/j/6183055551?pwd=ZVpEa1lUWnJBc2hwV2orRWhBbjlqQT09">Link</a>',
-        "Jump to Zoom",
-        {
-          dangerouslyUseHTMLString: true,
-        }
-      );
     },
     goRoute(e) {
       let data = this.tableData;
