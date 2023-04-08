@@ -1,6 +1,6 @@
 <template>
   <div class="container has-text-left">
-    <h1>Adding Health Information</h1>
+    <h3 class="titleFormat">Adding Health Information</h3>
     <el-form
       :model="ruleForm"
       :rules="rules"
@@ -95,10 +95,19 @@ export default {
   color: #2c3e50;
 }
 
-.container h1 {
-  font-size: 2em;
+.titleFormat {
+  font-weight: bold;
+  background-color:#90EE90;
+  width: 450px;
   text-align: center;
-  margin-top: 5%;
+  margin-left: 31%;
+}
+
+.container {
+  margin-left: 20%;
+  margin-top: 3%;
+  width: 900px;
+  text-align: center
 }
 
 .ruleForm {

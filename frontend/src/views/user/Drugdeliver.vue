@@ -1,6 +1,6 @@
 <template>
   <div class="container has-text-left">
-    <h1>Drug Delivery Form</h1>
+    <h3 class="titleFormat">Drug Delivery Form</h3>
     <el-form
       :model="ruleForm"
       :rules="rules"
@@ -211,9 +211,16 @@ export default {
   color: #2c3e50;
 }
 
-.container h1 {
-  font-size: 2em;
+.container {
+  margin-top: 3%;
+  margin-left: 10%;
+}
+
+.titleFormat {
+  font-weight: bold;
+  background-color: #ccddff;
+  width: 450px;
   text-align: center;
-  margin-top: 5%;
+  margin-left: 31%;
 }
 </style>

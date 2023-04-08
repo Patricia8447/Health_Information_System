@@ -1,209 +1,203 @@
 <template>
   <div class="container">
-    <div class="container">
-      <el-descriptions
-        title="testing admin view doctor detail page"
-        direction="vertical"
-        :column="1"
-        border
-        :contentStyle="CS"
-      >
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Doctor Name
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.name }}
-          </div>
-        </el-descriptions-item>
-        <!-- <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Phone Number
-            </div>
-          </template>
-          <div class="my-content">
-            {{ basicInfo.phone }}
-          </div>
-        </el-descriptions-item> -->
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Email
-            </div>
-          </template>
-          <div class="my-content">
-            {{ basicInfo.email }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Hospital Name
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.hospitalName }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Hospital Level
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.hospitalLevel }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Hospital Address
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.hospitalAddress }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Department
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.departmentId }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Position
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.job }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Available Time
-            </div>
-          </template>
-          <div class="my-content">
-            {{ availableTime.startTime }} - {{ availableTime.endTime }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Available Date
-            </div>
-          </template>
-          <div class="my-content">
-            {{ availableDate.Mon }} {{ availableDate.Tues }} {{ availableDate.Wed }}
-            {{ availableDate.Thurs }} {{ availableDate.Fri }} {{ availableDate.Sat }}
-            {{ availableDate.Sun }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Strength
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.strength }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Self Introduction
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.selfIntro }}
-          </div>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Zoom Link Test
-            </div>
-          </template>
-          <div class="my-content">
-            {{ alldoctordetails.zoomlink }}
-          </div>
-        </el-descriptions-item>
+   <h3 class="title">Admin view doctor detail</h3>
+    <el-row>
+      <el-col :span="18"
+        ><div class="content">
+          <el-descriptions
+            title=""
+            direction="vertical"
+            :column="2"
+            border
+            :contentStyle="CS"
+          >
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Doctor Name
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.name }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Email
+                </div>
+              </template>
+              <div class="my-content">
+                {{ basicInfo.email }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Hospital Name
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.hospitalName }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Hospital Level
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.hospitalLevel }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Hospital Address
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.hospitalAddress }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Department
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.departmentId }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Position
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.job }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Available Time
+                </div>
+              </template>
+              <div class="my-content">
+                {{ availableTime.startTime }} - {{ availableTime.endTime }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Available Date
+                </div>
+              </template>
+              <div class="my-content">
+                {{ availableDate.Mon }} {{ availableDate.Tues }} {{ availableDate.Wed }}
+                {{ availableDate.Thurs }} {{ availableDate.Fri }} {{ availableDate.Sat }}
+                {{ availableDate.Sun }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Strength
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.strength }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Self Introduction
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.selfIntro }}
+              </div>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Zoom Link Test
+                </div>
+              </template>
+              <div class="my-content">
+                {{ alldoctordetails.zoomlink }}
+              </div>
+            </el-descriptions-item>
 
-        <el-descriptions-item>
-          <template slot="label">
-            <div class="my-label">
-              <i class="el-icon-user"></i>
-              Document Display
-            </div>
-          </template>
-          <div class="my-content">
-            <a
-              :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc5}`"
-              target="_blank"
-            >
-              Photo</a
-            >
-          </div>
-          <div class="my-content">
-            <a
-              :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc1}`"
-              target="_blank"
-            >
-              Identity Front</a
-            >
-          </div>
-          <div class="my-content">
-            <a
-              :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc2}`"
-              target="_blank"
-            >
-              Identity Back</a
-            >
-          </div>
-          <div class="my-content">
-            <a
-              :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc3}`"
-              target="_blank"
-            >
-              Certification</a
-            >
-          </div>
-          <div class="my-content">
-            <a
-              :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc4}`"
-              target="_blank"
-            >
-              Work Certificate</a
-            >
-          </div>
-        </el-descriptions-item>
-      </el-descriptions>
-    </div>
+            <el-descriptions-item>
+              <template slot="label">
+                <div class="my-label">
+                  <i class="el-icon-user"></i>
+                  Document Display
+                </div>
+              </template>
+              <div class="my-content">
+                <a
+                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc5}`"
+                  target="_blank"
+                >
+                  Photo</a
+                >
+              </div>
+              <div class="my-content">
+                <a
+                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc1}`"
+                  target="_blank"
+                >
+                  Identity Front</a
+                >
+              </div>
+              <div class="my-content">
+                <a
+                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc2}`"
+                  target="_blank"
+                >
+                  Identity Back</a
+                >
+              </div>
+              <div class="my-content">
+                <a
+                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc3}`"
+                  target="_blank"
+                >
+                  Certification</a
+                >
+              </div>
+              <div class="my-content">
+                <a
+                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc4}`"
+                  target="_blank"
+                >
+                  Work Certificate</a
+                >
+              </div>
+            </el-descriptions-item>
+          </el-descriptions>
+        </div></el-col
+      >
+    </el-row>
   </div>
 </template>
 
@@ -297,8 +291,7 @@ export default {
     //拿到该医生的出诊时间
     Service.getTimeList()
       .then((res) => {
-        //  alert("test-1-time " + JSON.stringify(res.data));
-        if (res.data.code === 1) {
+       if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i].doctorId == this.tableData.doctorId) {
               console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
@@ -372,10 +365,10 @@ export default {
 </script>
 
 <style>
-.container {
-  margin-top: 5%;
-  margin-left: 10%;
-  width: 100%;
+.title {
+  font-weight: bold;
+  text-align: left;
+  font-size: 1.5em;
 }
 
 .container {
@@ -384,13 +377,14 @@ export default {
 }
 
 .my-label {
-  background: #add8e6;
+  background: #66CDAA;
   font-size: 1.3em;
   color: #444444;
+  font-weight: bold
 }
 
 .my-content {
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: black;
 }
 

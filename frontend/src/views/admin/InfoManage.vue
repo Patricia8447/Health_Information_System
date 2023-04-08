@@ -1,11 +1,10 @@
 <template>
   <div class="container">
-    <h1>
-      Health Knowledge
-      <el-button type="success" pain
-        ><router-link to="/infoadd"> ADD</router-link></el-button
+    <h3 class="titleFormat">
+      <el-button style="height: 100px; weight: 150px; font-weight: bold; font-size:1.25em; text-align: center" @click="toinfoadd()"
+        >ADD Health Infomation Management</el-button
       >
-    </h1>
+    </h3>
     <el-row :gutter="20" class="el-row" type="flex">
       <el-col
         :span="8"
@@ -53,6 +52,9 @@ export default {
     };
   },
   methods: {
+    toinfoadd() {
+      this.$router.push("/infoadd");
+    },
     deleteInfo(_id) {
       console.log("test delete method: " + _id);
       let datas = {
@@ -79,7 +81,7 @@ export default {
   },
   mounted() {
     console.log("发送获取资讯列表接口");
-    // TODO 资讯列表接口
+    //资讯列表接口
     Service.getPushInfoList()
       .then((res) => {
         console.log("test1" + JSON.stringify(res.data));
@@ -103,8 +105,16 @@ export default {
   object-fit: cover;
 }
 
+.titleFormat {
+  font-weight: bold;
+  width: 450px;
+  text-align: center;
+  margin-left: 31%;
+}
+
 .container {
-  margin-left: 300px;
+  margin-top: 3%;
+  margin-left: 10%;
 }
 .all {
   margin-top: -30px;

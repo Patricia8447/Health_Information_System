@@ -3,12 +3,18 @@
     <el-table
       :data="
         tableData.filter(
-          (data) => !search || data.name.toLowerCase().includes(search.toLowerCase())
+          (data) =>
+            !search ||
+            data.name.toLowerCase().includes(search.toLowerCase()) ||
+            data.job.toLowerCase().includes(search.toLowerCase()) ||
+            data.status.toLowerCase().includes(search.toLowerCase())
         )
       "
       style="width: 100%"
+      height="2500"
+      :header-cell-style="tableHeaderColor"
     >
-      <el-table-column label="ID" prop="_id" width="150px"></el-table-column>
+      <el-table-column label="ID" prop="_id" width="220px"></el-table-column>
       <el-table-column
         label="Name"
         prop="userInfo[0].name"
@@ -27,31 +33,14 @@
         :width="flexColumnWidth('Working Place', 'hospitalName')"
       >
       </el-table-column>
-      <!-- <el-table-column
-        label="Category"
-        prop="category"
-        :width="flexColumnWidth('Category', 'category')"
-      >
-      </el-table-column> -->
+
       <el-table-column
         label="Job Position"
         prop="job"
         :width="flexColumnWidth('Job Position', 'job')"
       >
       </el-table-column>
-      <!-- <el-table-column
-        label="Available slots"
-        prop="slots"
-        :width="flexColumnWidth('Available slots', 'slots')"
-      >
-      </el-table-column> -->
-      <!-- <el-table-column
-        label="Submit Time"
-        prop="submittime"
-        :width="flexColumnWidth('Submit Time', 'submittime')"
-        sortable
-      >
-      </el-table-column> -->
+
       <el-table-column
         label="Current Status"
         prop="status"
@@ -61,40 +50,37 @@
 
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
-          <el-input v-model="search" size="mini" placeholder="search a doctor" />
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="search a doctor by name, status or job position..."
+          />
         </template>
         <template slot-scope="scope" class="btns">
-          <!-- 同意或者拒绝没有页面的跳转，会有popoup再次确认操作 -->
-          <el-button
-            size="mini"
-            type="success"
-            class="button"
-            @click="viewDetail(scope.$index)"
-          >
+          <el-button type="success" plain class="button" @click="viewDetail(scope.$index)">
             View Doctor Detail
           </el-button>
           <el-button
-            size="mini"
             type="primary"
+            plain
             :disabled="scope.row.status != 'Reviewing'"
             @click="openAgree(scope.row.userId, scope.row.status)"
             >Agree</el-button
           >
           <el-button
-            size="mini"
             type="danger"
+            plain
             :disabled="scope.row.status != 'Reviewing'"
             @click="openReject(scope.row.userId, scope.row.status)"
             >Reject</el-button
           >
           <el-button
-            size="mini"
             type="danger"
+            plain
             :disabled="scope.row.status != 'Approved'"
             @click="openInactive(scope.$index, scope.row.userId, scope.row.status)"
             >Inactive</el-button
           >
-          <!-- 该按钮在审核完成后才能进行点击，在此之前应该是unclickable的状态 -->
         </template>
       </el-table-column>
     </el-table>
@@ -146,6 +132,11 @@ export default {
     };
   },
   methods: {
+    tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex === 0) {
+        return "background-color: #CCDDFF;color:black;font-size:13px;font-weight: 700;";
+      }
+    },
     viewDetail(e) {
       let data = this.tableData;
       this.$router.push({ name: "AdminDoctorDetail", params: { id: data[e]._id } });
@@ -189,7 +180,7 @@ export default {
       const arr = this.tableData.map((x) => x[prop]);
       arr.push(label); // 把每列的表头也加进去算
       // 2.计算每列内容最大的宽度 + 表格的内间距（依据实际情况而定）
-      return this.getMaxLength(arr) + 28 + "px";
+      return this.getMaxLength(arr) + 30 + "px";
     },
     openAgree(_id, status) {
       console.log(_id);
@@ -216,27 +207,6 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      // this.$confirm(
-      //   "you are going to approve the doctor, make sure you do the right action?",
-      //   "warning",
-      //   {
-      //     confirmButtonText: "agree",
-      //     cancelButtonText: "cancel",
-      //     type: "warning",
-      //   }
-      // )
-      //   .then(() => {
-      //     this.$message({
-      //       type: "success",
-      //       message: "successfully approve!",
-      //     });
-      //   })
-      //   .catch(() => {
-      //     this.$message({
-      //       type: "info",
-      //       message: "cancel the process",
-      //     });
-      //   });
     },
     openReject(_id, status) {
       console.log(_id);
@@ -247,13 +217,12 @@ export default {
         status: "NoPass",
       };
 
-      // TODO 审批医生接口
+      // 审批医生接口
       adminService
         .RejectDoctorStatus(datas)
         .then((res) => {
           console.log("test1" + JSON.stringify(res.data));
           if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
             alert(res.data.info);
           } else {
             alert(res.data.info);
@@ -262,28 +231,6 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-
-      // this.$confirm(
-      //   "you are going to reject the doctor, make sure you do the right action?",
-      //   "warning",
-      //   {
-      //     confirmButtonText: "reject",
-      //     cancelButtonText: "cancel",
-      //     type: "warning",
-      //   }
-      // )
-      //   .then(() => {
-      //     this.$message({
-      //       type: "success",
-      //       message: "successfully reject!",
-      //     });
-      //   })
-      //   .catch(() => {
-      //     this.$message({
-      //       type: "info",
-      //       message: "cancel the process",
-      //     });
-      //   });
     },
     openInactive(e, _id, status) {
       console.log("admin inactive 医生申请接口");
@@ -324,7 +271,6 @@ export default {
                 let datas4 = {
                   userId: this.affectedTableData[i].userId,
                 };
-                // alert("datas4: " + this.affectedTableData[i].userId);
                 adminService
                   .changeInquiryStatus(datas3)
                   .then((res) => {
@@ -371,6 +317,7 @@ export default {
 .container {
   margin-top: 3%;
   margin-left: 3%;
+  width: 1500px;
 }
 
 .el-table /deep/ th {
