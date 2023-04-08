@@ -16,8 +16,8 @@
             <div style="background-color: #0d6efd" class="btn" @click="reCheck()">
               Re-take the test
             </div>
-            <div style="background-color: #f4c807" class="btn">
-              <router-link to="/showdoctor">Make an Appointment</router-link>
+            <div style="background-color: #f4c807" class="btn" @click="makeAppointment()">
+              Make an Appointment
             </div>
           </div>
         </div>
@@ -63,138 +63,145 @@
         >Eczema Test
       </div>
 
-      <div>
+      <div class="intro">
         Eczema is also known as ectopic dermatitis. Many eczema patients have been
         suffering for many years with itchiness, redness, desquamation, long blisters and
         even water. In addition to the physical discomfort, work, school and sleep are
         affected, and at the same time, the patient's self-confidence and social
-        difficulties. The following control tools for atopic dermatitis (ADCT) The test
-        assesses how well the patient is under control based on visible skin signs,
-        symptoms such as itching and pain, as well as overall quality of life. It helps
-        the patient and his/her doctor to have a more complete picture of his/her
-        condition and help the doctor to make more effective treatment plans for him/her.
+        difficulties. The test assesses how well the patient is under control based on
+        visible skin signs, symptoms such as itching and pain, as well as overall quality
+        of life. It helps the patient and his/her doctor to have a more complete picture
+        of his/her condition and help the doctor to make more effective treatment plans
+        for him/her.
       </div>
 
       <div class="body">
         <div class="item">
           <div style="display: inline-block">* What's your age?</div>
-          <div>
-            <el-radio-group v-model="radio" @change="ageSelect">
-              <el-radio label="18">Age 18 or above</el-radio>
-              <el-radio label="12">12 to 17 years old</el-radio>
-              <el-radio label="11">Age 11 or younger</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio" @change="ageSelect">
+            <el-radio label="18">Age 18 or above</el-radio>
+            <el-radio label="12">12 to 17 years old</el-radio>
+            <el-radio label="11">Age 11 or younger</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * Have you completed the atopic dermatitis Control Tool (ADCT) before being
             exposed to this test?
           </div>
-          <div>
-            <el-radio-group v-model="radio1" @change="selected6">
-              <el-radio label="7">
-                Yes -- My last score was
-                <el-input
-                  min="0"
-                  max="24"
-                  minlength="1"
-                  maxlength="2"
-                  type="number"
-                  v-model="input"
-                  @change="checkInput"
-                ></el-input>
-              </el-radio>
-              <el-radio label="0">No -- I was tested for the first time</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio1" @change="selected6">
+            <el-radio label="7">
+              Yes -- My last score was
+              <el-input
+                min="0"
+                max="24"
+                minlength="1"
+                maxlength="2"
+                type="number"
+                v-model="input"
+                @change="checkInput"
+              ></el-input>
+            </el-radio>
+            <el-radio label="0">No -- I was tested for the first time</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * In the past week, how would you rate your eczema related symptoms (e.g.
             itching, dry skin, rash)?
           </div>
-          <div>
-            <el-radio-group v-model="radio2" @change="selected">
-              <el-radio label="0">Asymptomatic</el-radio>
-              <el-radio label="1">Slight</el-radio>
-              <el-radio label="2">Moderate</el-radio>
-              <el-radio label="3">Serious</el-radio>
-              <el-radio label="4">Very Serious</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio2" @change="selected">
+            <el-radio label="0">Asymptomatic</el-radio>
+            <el-radio label="1">Slight</el-radio>
+            <el-radio label="2">Moderate</el-radio>
+            <el-radio label="3">Serious</el-radio>
+            <el-radio label="4">Very Serious</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * On how many days in the past week have you had intense itching episodes due
             to eczema?
           </div>
-          <div>
-            <el-radio-group v-model="radio3" @change="selected1">
-              <el-radio label="0">Not at all</el-radio>
-              <el-radio label="1">1-2 days</el-radio>
-              <el-radio label="2">3-4 days</el-radio>
-              <el-radio label="3">5-6 days</el-radio>
-              <el-radio label="4">Everyday</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio3" @change="selected1">
+            <el-radio label="0">Not at all</el-radio>
+            <el-radio label="1">1-2 days</el-radio>
+            <el-radio label="2">3-4 days</el-radio>
+            <el-radio label="3">5-6 days</el-radio>
+            <el-radio label="4">Everyday</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * How much has your eczema been bothering you in the past week?
           </div>
-          <div>
-            <el-radio-group v-model="radio4" @change="selected2">
-              <el-radio label="0">Asymptomatic</el-radio>
-              <el-radio label="1">Slight</el-radio>
-              <el-radio label="2">Moderate</el-radio>
-              <el-radio label="3">Serious</el-radio>
-              <el-radio label="4">Very Serious</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio4" @change="selected2">
+            <el-radio label="0">Asymptomatic</el-radio>
+            <el-radio label="1">Slight</el-radio>
+            <el-radio label="2">Moderate</el-radio>
+            <el-radio label="3">Serious</el-radio>
+            <el-radio label="4">Very Serious</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * How many nights in the past week have you had difficulty falling asleep or
-            sleeping well because of eczema?
-          </div>
-          <div>
-            <el-radio-group v-model="radio5" @change="selected3">
-              <el-radio label="0">Not at all</el-radio>
-              <el-radio label="1">1-2 nights</el-radio>
-              <el-radio label="2">3-4 danightsys</el-radio>
-              <el-radio label="3">5-6 nights</el-radio>
-              <el-radio label="4">Everynight</el-radio>
-            </el-radio-group>
+            sleeping well due to eczema?
           </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio5" @change="selected3">
+            <el-radio label="0">Not at all</el-radio>
+            <el-radio label="1">1-2 nights</el-radio>
+            <el-radio label="2">3-4 danightsys</el-radio>
+            <el-radio label="3">5-6 nights</el-radio>
+            <el-radio label="4">Everynight</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * How much has your eczema affected your daily activities in the past week?
           </div>
-          <div>
-            <el-radio-group v-model="radio6" @change="selected4">
-              <el-radio label="0">Asymptomatic</el-radio>
-              <el-radio label="1">Slight</el-radio>
-              <el-radio label="2">Moderate</el-radio>
-              <el-radio label="3">Serious</el-radio>
-              <el-radio label="4">Very Serious</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio6" @change="selected4">
+            <el-radio label="0">Asymptomatic</el-radio>
+            <el-radio label="1">Slight</el-radio>
+            <el-radio label="2">Moderate</el-radio>
+            <el-radio label="3">Serious</el-radio>
+            <el-radio label="4">Very Serious</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * How much has your eczema affected your mood or mood in the past week?
           </div>
-          <div>
-            <el-radio-group v-model="radio7" @change="selected5">
-              <el-radio label="0">Asymptomatic</el-radio>
-              <el-radio label="1">Slight</el-radio>
-              <el-radio label="2">Moderate</el-radio>
-              <el-radio label="3">Serious</el-radio>
-              <el-radio label="4">Very Serious</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div class="ans">
+          <el-radio-group v-model="radio7" @change="selected5">
+            <el-radio label="0">Asymptomatic</el-radio>
+            <el-radio label="1">Slight</el-radio>
+            <el-radio label="2">Moderate</el-radio>
+            <el-radio label="3">Serious</el-radio>
+            <el-radio label="4">Very Serious</el-radio>
+          </el-radio-group>
         </div>
       </div>
 
@@ -325,6 +332,9 @@ export default {
     reCheck() {
       location.reload();
     },
+    makeAppointment() {
+      this.$router.push("/showdoctor");
+    },
   },
 };
 </script>
@@ -335,13 +345,21 @@ export default {
   user-select: none;
 }
 
+.intro {
+  font-size: 1.3em;
+}
+
+.ans {
+  font-size: 1.5em;
+}
+
 .el-input__inner {
   width: 65px;
   height: 30px;
   margin-right: 70%;
 }
 .eczematestBody {
-  width: 1500px;
+  width: 1000px;
   margin: 0 auto;
   margin-top: 5%;
 }
@@ -364,6 +382,7 @@ export default {
   box-shadow: 0 4px 8px 0 #ededed, 0 6px 20px 0 #ededed;
   border-radius: 5px;
   padding: 10px 10px;
+  text-align: left;
 }
 .select {
   display: inline-block;
@@ -373,6 +392,7 @@ export default {
   display: flex;
   justify-items: center;
   border-left: 10px solid #0d6efd;
+  font-size: 1em;
 }
 .item svg {
   margin: 0px 10px;
@@ -390,6 +410,8 @@ export default {
   background-color: #0d6efd;
   color: white;
   text-align: center;
+  font-weight: bold;
+  font-size: 1.2em;
 }
 .model {
   position: absolute;

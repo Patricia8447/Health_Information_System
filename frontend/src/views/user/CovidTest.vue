@@ -16,8 +16,8 @@
             <div style="background-color: #0d6efd" class="btn" @click="reCheck()">
               Re-take the test
             </div>
-            <div style="background-color: #f4c807" class="btn">
-              <router-link to="/showdoctor">Make an Appointment</router-link>
+            <div style="background-color: #f4c807" class="btn" @click="makeAppointment()">
+              Make an Appointment
             </div>
           </div>
         </div>
@@ -316,6 +316,9 @@ export default {
     };
   },
   methods: {
+    makeAppointment() {
+      this.$router.push("/showdoctor");
+    },
     selected(target, state) {
       this.selectList[target].state = state;
     },
@@ -336,7 +339,7 @@ export default {
         }
       });
 
-      alert(count);
+      // alert(count);
       if (
         this.selectList[0].state === "none" ||
         this.selectList[1].state === "none" ||
@@ -393,15 +396,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   cursor: default;
   user-select: none;
 }
 .covid19investigationBody {
-  width: 1100px;
+  width: 1000px;
   margin: 0 auto;
   margin-top: 5%;
+  color: black
 }
 .title {
   font-size: 25px;
@@ -448,6 +452,7 @@ export default {
   background-color: #0d6efd;
   color: white;
   text-align: center;
+  font-weight: bold
 }
 .model {
   position: absolute;

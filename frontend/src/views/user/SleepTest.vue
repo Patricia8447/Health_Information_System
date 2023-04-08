@@ -16,8 +16,8 @@
             <div style="background-color: #0d6efd" class="btn" @click="reCheck()">
               Re-take the test
             </div>
-            <div style="background-color: #f4c807" class="btn">
-              <router-link to="/showdoctor">Make an Appointment</router-link>
+            <div style="background-color: #f4c807" class="btn" @click="makeAppointment()">
+              Make an Appointment
             </div>
           </div>
         </div>
@@ -63,15 +63,8 @@
         >Sleeping Test
       </div>
 
-      <div>
-        Recently affected by the epidemic, everyone's life has encountered big and small
-        changes. Many people's work style has suddenly changed to work from home. The
-        space originally used for rest and relaxation has become the working place
-        overnight. Among them, insomnia is the most common, which has become a serious
-        health problem of modern people. We can use the Pittsburgh Sleep Quality Index
-        (PSQI) to evaluate our sleep quality. This scale is proposed by the American
-        scholar Buysse,D.J. et al., which has a total of seven aspects. When the PSQI
-        score is higher, the sleep quality is worse.
+      <div class="intro">
+        Everyone's life has recently seen both significant and little adjustments as a result of the epidemic. Workstyles of many people have abruptly shifted to include working from home. The area that was formerly reserved for leisure and relaxation has overnight changed to a workspace. The most prevalent of these is sleeplessness, which has emerged as a major health issue for contemporary individuals. The Pittsburgh Sleep Quality Index (PSQI) can be used to assess how well we sleep. The American academic Buysse, D.J. et al. proposed this measure, which contains a total of seven elements. The quality of sleep suffers when the PSQI score is higher.
       </div>
 
       <div class="body">
@@ -79,231 +72,242 @@
           <div style="display: inline-block">
             * At what time you usually go to bed at night (number from 0-24)
           </div>
-          <el-input
-            min="0"
-            max="24"
-            minlength="1"
-            maxlength="2"
-            type="number"
-            v-model="input1"
-          ></el-input>
         </div>
+        <el-input
+          min="0"
+          max="24"
+          minlength="1"
+          maxlength="2"
+          type="number"
+          v-model="input1"
+          style="width:200px"
+        ></el-input>
+
         <div class="item">
           <div style="display: inline-block">
             * It usually takes how many minutes from going to bed to fall asleep (number
             from 0-60)
           </div>
-          <el-input
-            min="0"
-            max="60"
-            minlength="1"
-            maxlength="2"
-            type="number"
-            v-model="input2"
-            @change="checkInput2"
-          ></el-input>
         </div>
+        <el-input
+          min="0"
+          max="60"
+          minlength="1"
+          maxlength="2"
+          type="number"
+          v-model="input2"
+          @change="checkInput2"
+          style="width:200px"
+        ></el-input>
+
         <div class="item">
           <div style="display: inline-block">
             * What time do you usually get up in the morning (number from 0-24)
           </div>
-          <el-input
-            min="0"
-            max="24"
-            minlength="1"
-            maxlength="2"
-            type="number"
-            v-model="input3"
-          ></el-input>
         </div>
+        <el-input
+          min="0"
+          max="24"
+          minlength="1"
+          maxlength="2"
+          type="number"
+          v-model="input3"
+          style="width:200px"
+        ></el-input>
+
         <div class="item">
           <div style="display: inline-block">
             * Actual sleeping hours per night (not equivalent to bed time) in the past one
             month
           </div>
-          <el-input
-            min="0"
-            max="24"
-            minlength="1"
-            maxlength="2"
-            type="number"
-            v-model="input4"
-            @change="checkInput4"
-          ></el-input>
         </div>
+        <el-input
+          min="0"
+          max="24"
+          minlength="1"
+          maxlength="2"
+          type="number"
+          v-model="input4"
+          @change="checkInput4"
+          style="width:200px"
+        ></el-input>
 
         <div class="item">
           <div style="display: inline-block">
             * Difficulty falling asleep (unable to fall asleep within 30 minutes)
           </div>
-          <div>
-            <el-radio-group v-model="radio5a" @change="selected5a">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div>
+          <el-radio-group v-model="radio5a" @change="selected5a">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">* Easy to wake up at night or early</div>
-          <div>
-            <el-radio-group v-model="radio5b" @change="selected5b">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio5b" @change="selected5b">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
         </div>
 
         <div class="item">
           <div style="display: inline-block">* Go to the toilet often at night</div>
-          <div>
-            <el-radio-group v-model="radio5c" @change="selected5c">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio5c" @change="selected5c">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
         </div>
 
         <div class="item">
           <div style="display: inline-block">* Poor breathing</div>
-          <div>
-            <el-radio-group v-model="radio5d" @change="selected5d">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio5d" @change="selected5d">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
         </div>
 
         <div class="item">
           <div style="display: inline-block">* Coughing or snoring loudly</div>
-          <div>
-            <el-radio-group v-model="radio5e" @change="selected5e">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio5e" @change="selected5e">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
         </div>
 
         <div class="item">
           <div style="display: inline-block">* Feeling cold</div>
-          <div>
-            <el-radio-group v-model="radio5f" @change="selected5f">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio5f" @change="selected5f">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
         </div>
 
         <div class="item">
           <div style="display: inline-block">* Feeling hot</div>
-          <div>
-            <el-radio-group v-model="radio5g" @change="selected5g">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio5g" @change="selected5g">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
         </div>
 
         <div class="item">
           <div style="display: inline-block">* Having bad dreams</div>
-          <div>
-            <el-radio-group v-model="radio5h" @change="selected5h">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio5h" @change="selected5h">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
         </div>
 
         <div class="item">
           <div style="display: inline-block">* Pain and discomfort</div>
-          <div>
-            <el-radio-group v-model="radio5i" @change="selected5i">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio5i" @change="selected5i">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
         </div>
 
         <div class="item">
           <div style="display: inline-block">* Other things that affect sleep</div>
-          <div>
-            <el-radio-group v-model="radio5j" @change="selected5j">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio5j" @change="selected5j">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
         </div>
 
         <div class="item">
           <div style="display: inline-block">
             * In the past month, how do you think of your sleeping quality
           </div>
-          <div>
-            <el-radio-group v-model="radio6" @change="selected6">
-              <el-radio label="0">Very good </el-radio>
-              <el-radio label="1">good</el-radio>
-              <el-radio label="2">bad</el-radio>
-              <el-radio label="3">vert bad</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div>
+          <el-radio-group v-model="radio6" @change="selected6">
+            <el-radio label="0">Very good </el-radio>
+            <el-radio label="1">good</el-radio>
+            <el-radio label="2">bad</el-radio>
+            <el-radio label="3">vert bad</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * In the past month, have you used drugs to hypnotize
           </div>
-          <div>
-            <el-radio-group v-model="radio7" @change="selected7">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div>
+          <el-radio-group v-model="radio7" @change="selected7">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * In the past month, do you often feel sleepy
           </div>
-          <div>
-            <el-radio-group v-model="radio8" @change="selected8">
-              <el-radio label="0">No </el-radio>
-              <el-radio label="1">Less than 1 time/week</el-radio>
-              <el-radio label="2"> 1-2 times/week</el-radio>
-              <el-radio label="3">Equal or more than 3 times/week</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div>
+          <el-radio-group v-model="radio8" @change="selected8">
+            <el-radio label="0">No </el-radio>
+            <el-radio label="1">Less than 1 time/week</el-radio>
+            <el-radio label="2"> 1-2 times/week</el-radio>
+            <el-radio label="3">Equal or more than 3 times/week</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * In the past month, do you have insufficient energy to do things
           </div>
-          <div>
-            <el-radio-group v-model="radio9" @change="selected9">
-              <el-radio label="0">No</el-radio>
-              <el-radio label="1">Occasionally</el-radio>
-              <el-radio label="2">Sometimes</el-radio>
-              <el-radio label="3">Often</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div>
+          <el-radio-group v-model="radio9" @change="selected9">
+            <el-radio label="0">No</el-radio>
+            <el-radio label="1">Occasionally</el-radio>
+            <el-radio label="2">Sometimes</el-radio>
+            <el-radio label="3">Often</el-radio>
+          </el-radio-group>
         </div>
       </div>
 
@@ -427,7 +431,6 @@ export default {
 
     check() {
       if (
-        this.input == "" ||
         this.input1 == "" ||
         this.input2 == "" ||
         this.input3 == "" ||
@@ -441,11 +444,13 @@ export default {
         this.selectList5g[0].state == "" ||
         this.selectList5h[0].state == "" ||
         this.selectList5i[0].state == "" ||
+        this.selectList5j[0].state == "" ||
         this.selectList6[0].state == "" ||
         this.selectList7[0].state == "" ||
         this.selectList8[0].state == "" ||
         this.selectList9[0].state == ""
       ) {
+
         alert("The test is not finished");
       } else {
         let res = 0;
@@ -567,13 +572,6 @@ export default {
           resE = 3;
         }
 
-        //   alert("resA" + resA);
-        //   alert("resB" + resB);
-        //   alert("resC" + resC);
-        //   alert("resD" + resD);
-        //   alert("resE" + resE);
-        //   alert("resF" + resF);
-        //   alert("resG" + resG);
         res = resA + resB + resC + resD + resE + resF + resG;
         //   alert(res);
 
@@ -594,6 +592,9 @@ export default {
     reCheck() {
       location.reload();
     },
+    makeAppointment() {
+      this.$router.push("/showdoctor");
+    },
   },
 };
 </script>
@@ -609,11 +610,17 @@ export default {
   height: 30px;
   margin-right: 70%;
 }
+
+.intro {
+  font-size: 1.3em;
+}
+
 .sleepBody {
-  width: 1200px;
+  width: 800px;
   margin: 0 auto;
   margin-top: 5%;
 }
+
 .title {
   font-size: 25px;
   width: 100%;
@@ -643,6 +650,7 @@ export default {
   justify-items: center;
   border-left: 10px solid #0d6efd;
   width: 1200px;
+  font-size: 1em;
 }
 .item svg {
   margin: 0px 10px;
@@ -660,6 +668,7 @@ export default {
   background-color: #0d6efd;
   color: white;
   text-align: center;
+  font-weight:bold
 }
 .model {
   position: absolute;

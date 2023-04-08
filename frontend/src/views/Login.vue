@@ -31,7 +31,7 @@
 
         <div class="sub has-text-right">
           <!-- <a @click.prevent="handleregister()">Register</a> -->
-          &nbsp <a @click.prevent="handleForgetPass()">Forget Password</a>
+          &nbsp <a @click.prevent="handleForgetPass()">Forget Password?</a>
         </div>
         &nbsp
         <el-form-item>

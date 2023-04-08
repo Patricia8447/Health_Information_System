@@ -92,7 +92,7 @@ export default {
     logout() {
       var storage = window.localStorage;
       storage.clear();
-      this.$router.push(`/login`); //跳回登录地址
+      this.$router.push("/login"); //跳回登录地址
     },
   },
   created() {

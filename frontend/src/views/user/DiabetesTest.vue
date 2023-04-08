@@ -16,8 +16,8 @@
             <div style="background-color: #0d6efd" class="btn" @click="reCheck()">
               Re-take the test
             </div>
-            <div style="background-color: #f4c807" class="btn">
-              <router-link to="/showdoctor">Make an Appointment</router-link>
+            <div style="background-color: #f4c807" class="btn" @click="makeAppointment()">
+              Make an Appointment
             </div>
           </div>
         </div>
@@ -60,10 +60,10 @@
             fill="#087E6A"
             p-id="1096"
           ></path></svg
-        >Diabetes Test Self-testing Scale of Diabetes Risk
+        >Self-testing Scale of Diabetes Risk
       </div>
 
-      <div>
+      <div class="intro">
         The number of diabetic patients in China is up to 130 million, and diabetes has
         become the primary factor of chronic kidney disease (CKD) in China. About 20%-40%
         of diabetic patients are complicated by CKD, and the risk of cardiac and renal
@@ -78,157 +78,171 @@
           <div style="display: inline-block">
             * A family relative had a genetic history of diabetes
           </div>
-          <div>
-            <el-radio-group v-model="radio1" @change="selected1">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio1" @change="selected1">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * Often prone to dry mouth and need constantly drink water
           </div>
-          <div>
-            <el-radio-group v-model="radio2" @change="selected2">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio2" @change="selected2">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * The appetite becomes very good and eats more
           </div>
-          <div>
-            <el-radio-group v-model="radio3" @change="selected3">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio3" @change="selected3">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * Frequent urination and increased urine output
           </div>
-          <div>
-            <el-radio-group v-model="radio4" @change="selected4">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio4" @change="selected4">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * No habit of exercise, (male) waist circumference > 90cm, (female) waist
             circumference > 80cm
           </div>
-          <div>
-            <el-radio-group v-model="radio5" @change="selected5">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio5" @change="selected5">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * I used to be obese and then suddenly lose weight for no reason
           </div>
-          <div>
-            <el-radio-group v-model="radio6" @change="selected6">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio6" @change="selected6">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">* Feel tired and tired easily</div>
-          <div>
-            <el-radio-group v-model="radio7" @change="selected7">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio7" @change="selected7">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">* Eye fatigue and blurred vision worsen</div>
-          <div>
-            <el-radio-group v-model="radio8" @change="selected8">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio8" @change="selected8">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * Abnormally increased earwax or frequent inflammation of the second canal
           </div>
-          <div>
-            <el-radio-group v-model="radio9" @change="selected9">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio9" @change="selected9">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">* The skin feels dull and itchy</div>
-          <div>
-            <el-radio-group v-model="radio10" @change="selected10">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio10" @change="selected10">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * Limb terminal paralysis, often have insect crawling or pinprick sensation
           </div>
-          <div>
-            <el-radio-group v-model="radio11" @change="selected11">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio11" @change="selected11">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * Once the skin has a wound, it is not easy to heal for a long time
           </div>
-          <div>
-            <el-radio-group v-model="radio12" @change="selected12">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio12" @change="selected12">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">* Life and work are stressful</div>
-          <div>
-            <el-radio-group v-model="radio13" @change="selected13">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio13" @change="selected13">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">
             * Sexual function is reduced and daily routines become abnormal
           </div>
-          <div>
-            <el-radio-group v-model="radio14" @change="selected14">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
         </div>
+        <div class="ans">
+          <el-radio-group v-model="radio14" @change="selected14">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
+        </div>
+
         <div class="item">
           <div style="display: inline-block">* Sugar was detected in the urine</div>
-          <div>
-            <el-radio-group v-model="radio15" @change="selected15">
-              <el-radio label="1">Yes</el-radio>
-              <el-radio label="0">NO</el-radio>
-            </el-radio-group>
-          </div>
+        </div>
+        <div class="ans">
+          <el-radio-group v-model="radio15" @change="selected15">
+            <el-radio label="1">YES</el-radio>
+            <el-radio label="0">NO</el-radio>
+          </el-radio-group>
         </div>
       </div>
 
@@ -406,6 +420,9 @@ export default {
     reCheck() {
       location.reload();
     },
+    makeAppointment() {
+      this.$router.push("/showdoctor");
+    },
   },
 };
 </script>
@@ -422,10 +439,19 @@ export default {
   margin-right: 70%;
 }
 .eczematestBody {
-  width: 1000px;
+  width: 800px;
   margin: 0 auto;
   margin-top: 5%;
 }
+
+.intro {
+  font-size: 1.3em;
+}
+
+.ans {
+  font-size: 1.5em;
+}
+
 .title {
   font-size: 25px;
   width: 100%;
@@ -455,6 +481,7 @@ export default {
   display: flex;
   justify-items: center;
   border-left: 10px solid #0d6efd;
+  font-size: 1em;
 }
 .item svg {
   margin: 0px 10px;
