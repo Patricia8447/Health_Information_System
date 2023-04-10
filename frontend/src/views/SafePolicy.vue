@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>Privacy Policy</h1>
-    <h3>Please read the Privacy policy below carefully.</h3>
+    <h1 style="background-color:#FFC0CB">Privacy Policy</h1>
+    <h3>Please read the privacy policy below carefully. Should you have any problem, please contact us at admin@admin.com directly.</h3>
     <p>
       <h4>1. Introduction</h4> We created this website privacy policy ("Privacy Policy") to give you confidence as you visit and use the sites, 
       and to demonstrate our commitment to fair information practices and the protection of privacy.  
@@ -210,7 +210,7 @@
     <br /> <br /> 
     <p>
       <h4>20. Contacts</h4> If you have any comments, concerns or questions about this Privacy
-      Policy, please contact us at admin@admin.com.
+      Policy, please contact us at <strong>admin@admin.com</strong>.
     </p>
     <br /> <br /> 
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h3 class="titleFormat">
-      <el-button style="height: 100px; weight: 150px; font-weight: bold; font-size:1.25em; text-align: center" @click="toinfoadd()"
+      <el-button style="height: 80px; weight: 150px; font-weight: bold; font-size:1.25em; text-align: center;background-color:#E0FFFF" @click="toinfoadd()"
         >ADD Health Infomation Management</el-button
       >
     </h3>
@@ -16,7 +16,7 @@
           <div slot="header" class="clearfix">
             <img :src="info.coverLink" class="image" />
             <a :href="info.link" target="_blank"
-              ><h4>{{ info.title }}</h4></a
+              ><h4 style="font-weight:bold">{{ info.title }}</h4></a
             >
           </div>
           <div>

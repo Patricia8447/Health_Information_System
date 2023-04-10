@@ -12,6 +12,13 @@ export default new Router({
     },
     //一级路由
     {
+      path: "/policy",
+      name: "SafePolicy",
+      meta: { requireAuth: false, visible: true, roles: ['admin', 'doctor', 'user'] },
+      component: () =>
+        import(/* webpackChunkName: "about" */ "../views/SafePolicy.vue"),
+    },
+    {
       path: "/login",
       name: "Login",
       meta: { requireAuth: false, visiable: true, roles: ['doctor', 'admin', 'user'] },
@@ -48,9 +55,9 @@ export default new Router({
           name: "Healthinformation",
           component: () =>
             import(/* webpackChunkName: "about" */ "../views/user/HealthInformation.vue"),
-          meta: { requireAuth: false, visiable: true, roles: ['user'] }
+          meta: { requireAuth: false, visiable: true, roles: ['doctor', 'admin', 'user'] }
         },
-       
+
         {
           path: "/searchdrug",
           name: "SearchDrug",
@@ -247,119 +254,7 @@ export default new Router({
           component: () =>
             import(/* webpackChunkName: "about" */ "../views/admin/AdminDoctorDetail.vue"),
         },
-        {
-          path: "/policy",
-          name: "SafePolicy",
-          meta: { requireAuth: true, visible: true, roles: ['admin,doctor,user'] },
-          component: () =>
-            import(/* webpackChunkName: "about" */ "../views/SafePolicy.vue"),
-        },
-
       ],
     }
   ]
 })
-
-// const routes = [
-//    {
-//     path: "/login",
-//     name: "login",
-//     meta: { requireAuth: false },
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () =>
-//       import(/* webpackChunkName: "about" */ "../views/Login.vue"),
-//   },
-//   {
-//     path: "/register",
-//     name: "register",
-//     meta: { requireAuth: false },
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () =>
-//       import(/* webpackChunkName: "about" */ "../views/Register.vue"),
-//   },
-//   {
-//     path: "/personalinfo",
-//     name: "personalinfo",
-//     meta: { requireAuth: true, visible: true, roles: ['user'] },
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () =>
-//       import(/* webpackChunkName: "about" */ "../views/PersonalInfo.vue"),
-//   },
-
-//   {
-//     path: "/chart/:id",
-//     name: "chart",
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () =>
-//       import(/* webpackChunkName: "about" */ "../views/chart.vue"),
-//   },
-//   {
-//     path: "/applicationform/:id",
-//     name: "applicationform",
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () =>
-//       import(/* webpackChunkName: "about" */ "../views/ApplicationForm.vue"),
-//   },
-// ];
-
-// // router.beforeEach((to, from, next) => {
-// //   //登录及注册页面可以直接进入,而主页面需要分情况
-// //   if (to.path == '/login') {
-// //     next();
-// //     console.log(localStorage.s);
-// //   }
-// //   else if (to.path == '/register') {
-// //     next();
-// //   }
-// //   else {
-// //     if (from.path == "/login")//从登录页面可以直接通过登录进入主页面
-// //     {
-// //       next();
-// //     }
-// //     else {
-// //       //从/进入,如果登录状态是true，则直接next进入主页面
-// //       if (localStorage.s === "true") {
-// //         next();
-// //         console.log(localStorage['s'])
-// //       }
-// //       else {//如果登录状态是false，那么跳转至登录页面,需要登录才能进入主页面
-// //         next('/login');
-// //         alert("請先登錄")
-// //       }
-// //     }
-// //   }
-// // });
-
-// router.beforeEach((to, from, next) => {
-//   let role = localStorage.getItem('role')
-//   if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-//     if (to.meta.roles.length !== 0) {
-//       for (let i = 0; i < to.meta.roles.length; i++) {
-//         if (role === to.meta.roles[i]) {
-//           next()
-//           break
-//         } else if (i === to.meta.roles.length - 1) {
-//           next({
-//             path: '/Error'
-//           })
-//         }
-//       }
-//     } else {
-//       next()
-//     }
-//   } else {
-//     next()
-//   }
-// })
-
-// export default router;
