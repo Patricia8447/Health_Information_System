@@ -1,6 +1,6 @@
 <template>
   <div class="container has-text-left">
-    <h1>Qualification Form</h1>
+    <h3 class="titleFormat">Qualification Form</h3>
     <el-form
       :model="ruleForm"
       :rules="rules"
@@ -9,8 +9,10 @@
       class="ruleForm"
     >
       <el-form-item class="remind has-text-left">
-        <label> *** Please complete your information carefully!! </label>
-        <label> After you submitted the form, you are not allow to modify.</label>
+        <label style="font-size: 1.2em">
+          *** Please complete the form carefully! After submitted, no modification is
+          allowed.
+        </label>
       </el-form-item>
 
       <el-form-item label="Email" prop="email">
@@ -194,8 +196,10 @@
       /></el-form-item>
 
       <el-form-item class="remind has-text-left">
-        <label> *** Please check your information carefully!! </label>
-        <label> After you submitted the form, you are not allow to modify.</label>
+        <label style="font-size: 1.2em">
+          *** Please complete the form carefully! After submitted, no modification is
+          allowed.
+        </label>
       </el-form-item>
 
       <el-form-item>
@@ -407,6 +411,14 @@ export default {
   margin-top: 5%;
   margin-left: 8%;
   width: 800px;
+}
+
+.titleFormat {
+  font-weight: bold;
+  background-color: #87cefa;
+  width: 650px;
+  text-align: center;
+  margin-left: 25%;
 }
 
 .container h1 {

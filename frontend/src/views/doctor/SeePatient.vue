@@ -4,11 +4,15 @@
       :data="
         tableData.filter(
           (data) =>
-            !search || data.patientname.toLowerCase().includes(search.toLowerCase())
+            !search ||
+            data.userName.toLowerCase().includes(search.toLowerCase()) ||
+            data.appointmentDate.toLowerCase().includes(search.toLowerCase())
         )
       "
       style="width: 100%"
-      :default-sort="{ prop: 'time', order: 'descending' }"
+      height="2500"
+      :default-sort="{ prop: 'appointmentDate', order: 'ascending' }"
+      :header-cell-style="tableHeaderColor"
     >
       <el-table-column
         label="Patient ID"
@@ -57,7 +61,12 @@
 
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
-          <el-input v-model="search" size="mini" placeholder="search your patient..." />
+          <el-input
+            style="width: 300px"
+            v-model="search"
+            size="mini"
+            placeholder="search your patient by name or by date..."
+          />
         </template>
         <template slot-scope="scope" class="btns">
           <el-button
@@ -111,15 +120,21 @@ export default {
     };
   },
   methods: {
-    //还要加一个时间判断
     getCurrentDate(appointmentDate) {
       var myDate = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
       var time = myDate.toJSON().split("T").join(" ").substr(0, 19); //将1970/08/08转化成1970-08-08
       console.log(time);
       if (appointmentDate > time) {
-        return true;
-      } else {
+        console.log(appointmentDate > time);
         return false;
+      } else {
+        console.log(appointmentDate > time);
+        return true;
+      }
+    },
+    tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex === 0) {
+        return "background-color:#87cefa;color:black;font-size:13px;font-weight: 700;";
       }
     },
     goRoute(e) {
@@ -173,7 +188,7 @@ export default {
       const arr = this.tableData.map((x) => x[prop]);
       arr.push(label); // 把每列的表头也加进去算
       // 2.计算每列内容最大的宽度 + 表格的内间距（依据实际情况而定）
-      return this.getMaxLength(arr) + 25 + "px";
+      return this.getMaxLength(arr) + 35 + "px";
     },
   },
   mounted() {
