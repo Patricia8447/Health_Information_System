@@ -1,10 +1,14 @@
 <template>
-  <el-form class="container" ref="form" :model="form" label-width="80px" :rules="rules">
+  <el-form class="container" ref="form" :model="form" label-width="200px" :rules="rules">
     <el-form-item label="Name" prop="name">
       <el-input v-model.trim="form.name" disabled></el-input>
     </el-form-item>
     <el-form-item label="Gender" prop="gender">
-      <el-select v-model.trim="form.gender" placeholder="please choose the gender">
+      <el-select
+        v-model.trim="form.gender"
+        placeholder="please choose the gender"
+        style="width: 670px"
+      >
         <el-option label="male" value="male"></el-option>
         <el-option label="female" value="female"></el-option>
       </el-select>
@@ -12,7 +16,7 @@
     <el-form-item label="Birth" prop="birth">
       <el-date-picker
         type="date"
-        placeholder="choose the date"
+        placeholder="please choose the date"
         v-model.trim="form.birth"
         style="width: 100%"
       ></el-date-picker>
@@ -23,7 +27,7 @@
     <el-form-item label="Address" prop="address">
       <el-input v-model.trim="form.address"></el-input>
     </el-form-item>
-    <el-form-item label="allergy" prop="allergy">
+    <el-form-item label="Allergy Medicine" prop="allergy">
       <el-input type="textarea" v-model.trim="form.allergy"></el-input>
     </el-form-item>
 
@@ -75,7 +79,6 @@ export default {
             .then((res) => {
               if (res.data.code === 1) {
                 alert(res.data.info);
-                // localStorage.setItem("user", JSON.stringify(this.json));
                 location.assign("/mycenter");
               } else {
                 alert(res.data.info);
@@ -125,8 +128,9 @@ export default {
 }
 
 .container {
-  margin-left: 18%;
+  margin-left: 20%;
   margin-top: 3%;
   width: 900px;
+  text-align: left;
 }
 </style>

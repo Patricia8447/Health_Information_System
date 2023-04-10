@@ -9,7 +9,7 @@
       class="ruleForm"
     >
       <el-form-item label="Drugsage" prop="drugsage">
-        <el-input type="input" v-model.trim="ruleForm.drugsage" disabled></el-input>
+        <el-input type="textarea" v-model.trim="ruleForm.drugsage" disabled></el-input>
       </el-form-item>
       <el-form-item label="Receiver Name" prop="name">
         <el-input type="input" v-model.trim="ruleForm.name"></el-input>
@@ -18,12 +18,14 @@
         <el-input type="phone" v-model.trim="ruleForm.phone"></el-input>
       </el-form-item>
       <el-form-item label="Delivery Date" prop="deliverDate">
-        <el-date-picker
+       <date-picker
           v-model.trim="ruleForm.deliverDate"
-          type="date"
+          :disabledDate="disabledDate"
+          value-format="yyyy-MM-dd"
           placeholder="please choose the deliver date"
-        >
-        </el-date-picker>
+          valueType="format"
+          style="width: 570px"
+        ></date-picker>
       </el-form-item>
       <el-form-item label="Delivery Time" prop="period">
         <el-time-select
@@ -34,6 +36,7 @@
             end: '23:30',
           }"
           placeholder="please choose the deliver time"
+          style="width: 570px"
         >
         </el-time-select>
       </el-form-item>
@@ -44,7 +47,12 @@
         <el-input type="textarea" v-model.trim="ruleForm.other"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="submit" @click="alertResults('ruleForm')">Submit</el-button>
+        <el-button
+          type="submit"
+          @click="alertResults('ruleForm')"
+          :disabled="ruleForm.drugsage == ''"
+          >Submit</el-button
+        >
         <el-button type="success" plain @click="resetForm('ruleForm')">Reset</el-button>
       </el-form-item>
     </el-form>
@@ -56,8 +64,12 @@ import "survey-vue/modern.min.css";
 import { Survey, StylesManager, Model } from "survey-vue";
 import Service from "@/service/common.service.js";
 import User from "@/service/user.service.js";
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
+import dayjs from "dayjs";
 
 export default {
+  components: { DatePicker },
   data() {
     return {
       personalInfos: {
@@ -86,7 +98,7 @@ export default {
             required: true,
             message: "wrong format",
             trigger: "blur",
-            pattern: /^([5|6|9])\\d{7}$/,
+            pattern: /^([5|6|9])\d{7}$/,
           },
         ],
         address: [{ required: true, message: "cannot be null", trigger: "blur" }],
@@ -110,6 +122,9 @@ export default {
           inquiryId: "",
         },
       ],
+      disabledDate: (deliverDate) => {
+        return Date.parse(deliverDate) < new Date().getTime();
+      },
     };
   },
   methods: {
@@ -135,7 +150,12 @@ export default {
             });
         } else {
           //校验不通过
-          alert("please check the required format");
+          if (this.ruleForm.drugsage == "") {
+            alert("you have no drug(s) to deliver");
+          } else {
+            alert("please check the required format");
+          }
+
           return false;
         }
       });
@@ -212,15 +232,17 @@ export default {
 }
 
 .container {
+  margin-left: 23%;
   margin-top: 3%;
-  margin-left: 10%;
+  text-align: left;
+  width: 750px;
 }
 
 .titleFormat {
   font-weight: bold;
   background-color: #ccddff;
-  width: 450px;
+  width: 650px;
   text-align: center;
-  margin-left: 31%;
+  margin-left: 10%;
 }
 </style>

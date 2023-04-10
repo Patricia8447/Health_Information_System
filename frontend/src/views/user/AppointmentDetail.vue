@@ -14,7 +14,7 @@
             <el-descriptions-item>
               <template slot="label">
                 <div class="my-label">
-                  <i class="el-icon-user"></i>
+                  <i class="el-icon-circle-check"></i>
                   Symptoms
                 </div>
               </template>
@@ -25,7 +25,7 @@
             <el-descriptions-item>
               <template slot="label">
                 <div class="my-label">
-                  <i class="el-icon-user"></i>
+                  <i class="el-icon-message-solid"></i>
                   Result
                 </div>
               </template>
@@ -36,7 +36,7 @@
             <el-descriptions-item>
               <template slot="label">
                 <div class="my-label">
-                  <i class="el-icon-user"></i>
+                  <i class="el-icon-s-cooperation"></i>
                   Drugsage
                 </div>
               </template>
@@ -125,7 +125,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .title {
   font-weight: bold;
   text-align: left;

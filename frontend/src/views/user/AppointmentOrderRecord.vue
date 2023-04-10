@@ -81,8 +81,9 @@
             plain
             class="button"
             :disabled="
-              scope.row.status != 'Not yet start' ||
-              !getCurrentDate(scope.row.appointmentDate)
+              scope.row.status == 'finished' ||
+              scope.row.status == 'void' ||
+              getCurrentDate(scope.row.appointmentDate)
             "
           >
             <a
@@ -170,9 +171,10 @@ export default {
       var myDate = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
       var time = myDate.toJSON().split("T").join(" ").substr(0, 19); //将1970/08/08转化成1970-08-08
       if (appointmentDate > time) {
-        return true;
-      } else {
         return false;
+      } else {
+        console.log(appointmentDate > time);
+        return true;
       }
     },
     getThreeDateBefore(appointmentDate) {
@@ -279,7 +281,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   margin-top: 3%;
   margin-left: 8%;
