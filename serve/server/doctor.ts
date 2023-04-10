@@ -20,6 +20,11 @@ function wirteVisitRecord(req: Request, res: Response) {
   FunctionSet.doctorWirteVisitRecord(data as doctorWirteVisitRecordType, res)
 }
 
+function clickStart(req: Request, res: Response) {
+  let data: Record<string, string> = ObjectSimpleShallowCopy(req.body)
+  FunctionSet.clickStart(data, res)
+}
+
 function getVisitRecordList(req: Request, res: Response) {
   let data: Record<string, string> = ObjectSimpleShallowCopy(req.body)
   data.doctorId = data.id
@@ -38,7 +43,9 @@ function getDateList(req: Request, res: Response) {
 }
 
 let doctorServe = {
-  cancelDoctorRole, getInquiryList, wirteVisitRecord, getVisitRecordList, getTimeList, getDateList
+  cancelDoctorRole, getInquiryList, wirteVisitRecord, 
+  getVisitRecordList, getTimeList, getDateList,
+  clickStart
 }
 
 export default doctorServe

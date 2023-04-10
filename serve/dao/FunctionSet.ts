@@ -528,6 +528,19 @@ function changeInquiryStatus({ inquiryId }: Record<string, string>, res: Respons
 }
 
 /**
+ * 医生点击开始按钮改变状态
+ * @param { Record<string, string> } data 请求数据
+ * @param { Response } res 响应
+ */
+ function clickStart({ inquiryId }: Record<string, string>, res: Response) {
+  InquiryModel.findOneAndUpdate({ _id: inquiryId }, { status: APPOINTMENT.Ongoing }).then((result: any) => {
+    if (!result) { throw new Error() }
+  }).then(() => {
+    console.log("ok");
+  }).catch((error: Error) => res.send(responseInfo.updataException(error)))
+}
+
+/**
  * 医生写就诊记录
  * @param { Record<string, string> } data 请求数据
  * @param { Response } res 响应
@@ -729,7 +742,7 @@ let FunctionSet = {
   getUserInfo, getTimeList, getDateList,
   findDoc, getVisitRecordList2, getApprovedDoctor,
   adminInactiveDoctorStatus, changeInquiryStatus,
-  getaDoctor, getaDoctorbyUserId
+  getaDoctor, getaDoctorbyUserId, clickStart
 }
 
 export default FunctionSet

@@ -7,19 +7,24 @@
           <img
             class="carouselImage"
             alt="无图片"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFN3fUaWdcoipehnhpOb5buxN_URfOp84yvQ&usqp=CAU"
+            src="https://image.haoning.org.cn/tuba/2022-07-25/45871252318.jpg"
           /></div
       ></el-col>
       <el-col :span="18"
         ><div class="content">
-          <el-descriptions title="" direction="vertical" :column="2" border>
+          <el-descriptions
+            title=""
+            direction="vertical"
+            :column="1"
+            :contentStyle="CS"
+            border
+          >
             <template slot="extra">
               <el-button
                 type="primary"
-                size="small"
                 plain
                 @click="switchPage('EditDoctorPersonalInfo')"
-                >Edit</el-button
+                ><i class="el-icon-edit"></i>Edit</el-button
               >
             </template>
             <el-descriptions-item>
@@ -318,5 +323,9 @@ export default {
 
 .titleFormat {
   font-weight: bold;
+  background-color: #87cefa;
+  width: 500px;
+  text-align: center;
+  margin-left: 37%;
 }
 </style>

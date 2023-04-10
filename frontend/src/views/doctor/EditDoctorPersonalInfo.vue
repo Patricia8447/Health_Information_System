@@ -1,17 +1,5 @@
 <template>
   <el-form class="container" ref="form" :model="form" label-width="160px" :rules="rules">
-    <!-- <el-form-item label="personal photo">
-      <el-upload
-        class="avatar-uploader"
-        action="/img/upload"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload"
-      >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-    </el-form-item> -->
     <el-form-item label="Hospital Name" prop="hospitalName">
       <el-input v-model.trim="form.hospitalName"></el-input>
     </el-form-item>
@@ -165,7 +153,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -174,8 +162,10 @@ export default {
 }
 
 .container {
-  margin-left: 10%;
+  margin-left: 20%;
   margin-top: 3%;
+  text-align: left;
+  width: 1000px;
 }
 
 .avatar-uploader .el-upload {

@@ -10,6 +10,10 @@ doctorWirteVisitRecord: (data) => {
   return request.post('/doctor/record/wirst',data)
 },
 
+clickStart: (data) => {
+  return request.post('/doctor/record/clickstart',data)
+},
+
 getInquiryList: (data) => {
   return request.post('/doctor/inquiry/list',data)
 },

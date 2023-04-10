@@ -11,7 +11,6 @@
       "
       style="width: 100%"
       height="2500"
-      :default-sort="{ prop: 'appointmentDate', order: 'ascending' }"
       :header-cell-style="tableHeaderColor"
     >
       <el-table-column
@@ -73,6 +72,7 @@
             type="primary"
             plain
             class="button"
+            @click="clickStart(scope.$index)"
             :disabled="
               getCurrentDate(scope.row.appointmentDate) ||
               scope.row.status != 'Not yet start'
@@ -85,7 +85,7 @@
             plain
             class="button"
             @click="goRoute(scope.$index)"
-            :disabled="scope.row.status != 'finished'"
+            :disabled="scope.row.status != 'on-going'"
           >
             Write Diagnosis Result
           </el-button>
@@ -120,6 +120,28 @@ export default {
     };
   },
   methods: {
+    clickStart(e) {
+      console.log("testing index: " + e);
+      let data = this.tableData;
+      let data1 = {
+        inquiryId: data[e]._id,
+      };
+      console.log("data: " + data[e]._id);
+      Service.clickStart(data1)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.code === 1) {
+            alert("status changed to on-going");
+            console.log(res.data.info);
+          } else {
+            alert(res.data.info);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log("it is right");
+    },
     getCurrentDate(appointmentDate) {
       var myDate = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
       var time = myDate.toJSON().split("T").join(" ").substr(0, 19); //将1970/08/08转化成1970-08-08

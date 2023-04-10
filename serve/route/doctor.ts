@@ -37,6 +37,11 @@ doctorRouter.post('/record/wirst', (req:Request, res:Response) => {
   doctorServe.wirteVisitRecord(req, res)
 })
 
+doctorRouter.post('/record/clickstart', (req:Request, res:Response) => {
+  doctorServe.clickStart(req, res)
+})
+
+
 doctorRouter.post('/record/list', (req:Request, res:Response) => {
   doctorServe.getVisitRecordList(req, res)
 })
