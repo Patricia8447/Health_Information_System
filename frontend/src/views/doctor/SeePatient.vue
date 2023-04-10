@@ -131,7 +131,7 @@ export default {
         .then((res) => {
           console.log(res.data);
           if (res.data.code === 1) {
-            alert("status changed to on-going");
+            alert("please remember to write the diagnosis result after the consultation!");
             console.log(res.data.info);
           } else {
             alert(res.data.info);
