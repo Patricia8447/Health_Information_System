@@ -65,6 +65,7 @@
             plain
             :disabled="scope.row.status != 'Reviewing'"
             @click="openAgree(scope.row.userId, scope.row.status)"
+            class="button"
             >Agree</el-button
           >
           <el-button
@@ -72,6 +73,7 @@
             plain
             :disabled="scope.row.status != 'Reviewing'"
             @click="openReject(scope.row.userId, scope.row.status)"
+            class="button"
             >Reject</el-button
           >
           <el-button
@@ -79,6 +81,7 @@
             plain
             :disabled="scope.row.status != 'Approved'"
             @click="openInactive(scope.$index, scope.row.userId, scope.row.status)"
+            class="button"
             >Inactive</el-button
           >
         </template>
@@ -134,7 +137,7 @@ export default {
   methods: {
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
-        return "background-color: #CCDDFF;color:black;font-size:13px;font-weight: 700;";
+        return "background-color: #CCDDFF;color:black;font-size:13px;font-weight: 700; height: 50px;";
       }
     },
     viewDetail(e) {

@@ -45,7 +45,9 @@ export default {
       images: [
         { url: require("@/assets/image/2.jpg") },
         { url: require("@/assets/image/1.png") },
-        { url: require("@/assets/image/slide3.png") },
+        { url: require("@/assets/image/6.png") },
+        { url: require("@/assets/image/3.jpg") },
+        { url: require("@/assets/image/5.png") },
       ],
       infos: [
         {
@@ -92,7 +94,8 @@ export default {
 }
 
 .container {
-  margin-left: 300px;
+    margin-top: 3%;
+  margin-left: 10%;
 }
 .all {
   margin-top: -30px;
