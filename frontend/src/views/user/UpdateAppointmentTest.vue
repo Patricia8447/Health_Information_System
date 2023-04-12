@@ -405,7 +405,8 @@ export default {
   },
 };
 </script>
-<style>
+
+<style scoped>
 .ruleForm {
   margin-top: 5%;
   margin-left: 12%;

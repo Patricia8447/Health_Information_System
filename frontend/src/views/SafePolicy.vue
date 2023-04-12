@@ -216,7 +216,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .container {
 text-align: left;
 }

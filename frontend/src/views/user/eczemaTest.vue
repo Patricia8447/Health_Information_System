@@ -339,7 +339,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   cursor: default;
   user-select: none;

@@ -70,7 +70,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import Service from "@/service/upload.service.js";
 export default {
   data() {

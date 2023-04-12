@@ -199,7 +199,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .item_tag {
   float: left;
   text-align: left;
