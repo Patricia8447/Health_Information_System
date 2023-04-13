@@ -225,7 +225,7 @@ export default {
 
 .container {
   margin-top: 3%;
-  margin-left: 3%;
+  margin-left: 10%;
 }
 
 .el-table /deep/ th {
@@ -248,5 +248,25 @@ export default {
 .el-table /deep/ .cell {
   white-space: nowrap;
   width: fit-content;
+}
+
+.el-card {
+  min-width: 100%;
+  height: 100%;
+  margin-right: 20px;
+  /*transition: all .5s;*/
+}
+.el-card:hover {
+  margin-top: -5px;
+}
+.el-row {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.el-col {
+  border-radius: 4px;
+  align-items: stretch;
+  margin-bottom: 40px;
 }
 </style>

@@ -23,7 +23,7 @@
       </el-table-column>
       <el-table-column
         label="Gender"
-        prop="userInfo[0].gender"
+        prop="gender"
         :width="flexColumnWidth('Gender', 'gender')"
       >
       </el-table-column>
@@ -314,6 +314,7 @@ export default {
       .then((res) => {
         if (res.data.code === 1) {
           this.tableData = res.data.info;
+          console.log(this.tableData)
         } else {
           alert(res.data.info);
         }

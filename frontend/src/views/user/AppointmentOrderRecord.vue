@@ -45,7 +45,7 @@
       <el-table-column
         label="Self Report"
         prop="selfReport"
-        :width="flexColumnWidth('Self Report', 'selfReport')"
+        width="260px"
       >
       </el-table-column>
       <el-table-column
@@ -82,7 +82,8 @@
             class="button"
             :disabled="
               scope.row.status == 'finished' ||
-              scope.row.status == 'void'
+              scope.row.status == 'void' ||
+              getCurrentDate(scope.row.appointmentDate)
             "
           >
             <a
@@ -168,11 +169,22 @@ export default {
     },
     getCurrentDate(appointmentDate) {
       var myDate = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
-      var time = myDate.toJSON().split("T").join(" ").substr(0, 19); //将1970/08/08转化成1970-08-08
-      if (appointmentDate > time) {
+      var time = myDate.toJSON().split("T")[0];
+      var timeCombine1 = time.split("-")[0];
+      var timeCombine2 = time.split("-")[1];
+      var timeCombine3 = time.split("-")[2];
+      var timeCombine = parseInt(timeCombine1 + timeCombine2 + timeCombine3);
+      
+      var appointmentDate1 = appointmentDate.split("-")[0];
+      var appointmentDate2 = appointmentDate.split("-")[1];
+      var appointmentDate3 = appointmentDate.split("-")[2];
+      var appointmentDateCombine = parseInt(
+        appointmentDate1 + appointmentDate2 + appointmentDate3
+      );
+      
+      if (appointmentDateCombine > timeCombine || appointmentDateCombine == timeCombine) {
         return false;
       } else {
-        console.log(appointmentDate > time);
         return true;
       }
     },
