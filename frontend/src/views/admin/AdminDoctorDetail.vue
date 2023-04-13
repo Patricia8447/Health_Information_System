@@ -155,7 +155,7 @@
               </template>
               <div class="my-content">
                 <a
-                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc5}`"
+                  :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc5}`"
                   target="_blank"
                 >
                   Photo</a
@@ -163,7 +163,7 @@
               </div>
               <div class="my-content">
                 <a
-                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc1}`"
+                  :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc1}`"
                   target="_blank"
                 >
                   Identity Front</a
@@ -171,7 +171,7 @@
               </div>
               <div class="my-content">
                 <a
-                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc2}`"
+                  :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc2}`"
                   target="_blank"
                 >
                   Identity Back</a
@@ -179,7 +179,7 @@
               </div>
               <div class="my-content">
                 <a
-                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc3}`"
+                  :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc3}`"
                   target="_blank"
                 >
                   Certification</a
@@ -187,7 +187,7 @@
               </div>
               <div class="my-content">
                 <a
-                  :href="`http://127.0.0.1:3006/img/${alldoctordetails.doc4}`"
+                  :href="`http://127.0.0.1:3005/img/${alldoctordetails.doc4}`"
                   target="_blank"
                 >
                   Work Certificate</a

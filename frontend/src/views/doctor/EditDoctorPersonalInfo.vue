@@ -28,10 +28,10 @@
       </el-select>
     </el-form-item>
     <el-form-item label="Strength" prop="strength">
-      <el-input v-model.trim="form.strength"></el-input>
+      <el-input type="textarea" v-model.trim="form.strength"></el-input>
     </el-form-item>
     <el-form-item label="Self Introduction" prop="selfIntro">
-      <el-input v-model.trim="form.selfIntro"></el-input>
+      <el-input type="textarea" v-model.trim="form.selfIntro"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="submit" @click="onSubmit('form')">UPDATE</el-button>

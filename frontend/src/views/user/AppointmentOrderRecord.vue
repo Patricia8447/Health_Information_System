@@ -82,8 +82,7 @@
             class="button"
             :disabled="
               scope.row.status == 'finished' ||
-              scope.row.status == 'void' ||
-              getCurrentDate(scope.row.appointmentDate)
+              scope.row.status == 'void'
             "
           >
             <a

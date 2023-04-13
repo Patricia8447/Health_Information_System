@@ -380,6 +380,7 @@ export default {
               "warning",
               {
                 dangerouslyUseHTMLString: true,
+                 confirmButtonText: 'OK',
               }
             );
           } else {

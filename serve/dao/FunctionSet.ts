@@ -522,8 +522,8 @@ function changeInquiryStatus({ inquiryId }: Record<string, string>, res: Respons
     if (!result) { throw new Error() }
     checkStatusEmail("testFYP@163.com") // for user
     allertDoctorStatusEmail("testFYP@163.com") // for doctor
-  }).then(() => {
     console.log("ok");
+    res.send(responseInfo.success(result))
   }).catch((error: Error) => res.send(responseInfo.getException(error)))
 }
 
@@ -535,8 +535,8 @@ function changeInquiryStatus({ inquiryId }: Record<string, string>, res: Respons
  function clickStart({ inquiryId }: Record<string, string>, res: Response) {
   InquiryModel.findOneAndUpdate({ _id: inquiryId }, { status: APPOINTMENT.Ongoing }).then((result: any) => {
     if (!result) { throw new Error() }
-  }).then(() => {
     console.log("ok");
+    res.send(responseInfo.success(result))
   }).catch((error: Error) => res.send(responseInfo.updataException(error)))
 }
 

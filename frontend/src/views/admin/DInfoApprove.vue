@@ -57,7 +57,12 @@
           />
         </template>
         <template slot-scope="scope" class="btns">
-          <el-button type="success" plain class="button" @click="viewDetail(scope.$index)">
+          <el-button
+            type="success"
+            plain
+            class="button"
+            @click="viewDetail(scope.$index)"
+          >
             View Doctor Detail
           </el-button>
           <el-button
@@ -263,11 +268,15 @@ export default {
         .InactiveDoctorStatus(datas)
         .then((res) => {
           console.log("test-inactive-function: " + JSON.stringify(res.data));
+          console.log(res.data.code);
           if (res.data.code === 1) {
             alert(res.data.info);
             //改变受影响但未进行的预约订单
             for (let i = 0; i < this.affectedTableData.length; i++) {
-              if (this.affectedTableData[i].status == "Not yet start") {
+              if (
+                this.affectedTableData[i].status == "Not yet start" ||
+                this.affectedTableData[i].status == "on-going"
+              ) {
                 let datas3 = {
                   inquiryId: this.affectedTableData[i]._id,
                 };

@@ -1,5 +1,5 @@
 // 端口号
-export let port = 3006
+export let port = 3005
 
 // 性别枚举
 export enum GENDER { Male = 'male', Female = 'female', Neutral = 'neutral' }

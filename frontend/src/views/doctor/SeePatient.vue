@@ -73,10 +73,7 @@
             plain
             class="button"
             @click="clickStart(scope.$index)"
-            :disabled="
-              getCurrentDate(scope.row.appointmentDate) ||
-              scope.row.status != 'Not yet start'
-            "
+            :disabled="scope.row.status == 'finished' || scope.row.status == 'void'"
           >
             <a :href="zoomlink" target="_blank" style="text-decoration: none"> Start </a>
           </el-button>
@@ -121,7 +118,6 @@ export default {
   },
   methods: {
     clickStart(e) {
-      console.log("testing index: " + e);
       let data = this.tableData;
       let data1 = {
         inquiryId: data[e]._id,
@@ -129,9 +125,10 @@ export default {
       console.log("data: " + data[e]._id);
       Service.clickStart(data1)
         .then((res) => {
-          console.log(res.data);
           if (res.data.code === 1) {
-            alert("please remember to write the diagnosis result after the consultation!");
+            alert(
+              "please remember to write the diagnosis result after the consultation!"
+            );
             console.log(res.data.info);
           } else {
             alert(res.data.info);
@@ -140,23 +137,20 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      console.log("it is right");
     },
     getCurrentDate(appointmentDate) {
       var myDate = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
       var time = myDate.toJSON().split("T").join(" ").substr(0, 19); //将1970/08/08转化成1970-08-08
-      console.log(time);
-      if (appointmentDate > time) {
-        console.log(appointmentDate > time);
-        return false;
+      if (appointmentDate < time) {
+        return true;
       } else {
         console.log(appointmentDate > time);
-        return true;
+        return false;
       }
     },
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
-        return "background-color:#87cefa;color:black;font-size:13px;font-weight: 700;";
+        return "background-color:#87cefa;color:black;font-size:13px;font-weight: 700; height: 50px;";
       }
     },
     goRoute(e) {

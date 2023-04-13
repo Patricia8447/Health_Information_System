@@ -40,7 +40,7 @@
               <template slot="label">
                 <div class="my-label">
                   <i class="el-icon-s-custom"></i>
-                  Gender: {{ personalInfos.gender }}
+                  Gender: {{ doctorPart.gender }}
                 </div>
               </template>
             </el-descriptions-item>
@@ -191,6 +191,7 @@ export default {
           departmentId: "",
           zoomlink: "",
           _id: "",
+          gender:"",
         },
       ],
       CS: {
