@@ -208,11 +208,11 @@ export default {
     },
   },
   mounted() {
-    console.log("发送获取医生列表接口");
+    //发送获取医生列表接口
     let data = {
       userId: JSON.parse(localStorage.getItem("user")).id,
     };
-    console.log(data);
+    
     adminService
       .getaDoctorbyUserId(data)
       .then((res) => {
@@ -234,7 +234,6 @@ export default {
         if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i].doctorId == this.doctorPart._id) {
-              console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
               this.availableTime = res.data.info[i];
               break;
             }
@@ -254,7 +253,6 @@ export default {
         if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i].doctorId == this.doctorPart._id) {
-              console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
               this.availableDate = res.data.info[i];
               if (res.data.info[i].Mon == true) {
                 this.availableDate.Mon = "Monday / ";

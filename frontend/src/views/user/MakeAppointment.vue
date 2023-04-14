@@ -237,7 +237,6 @@ export default {
             if (res.data.info) {
               Service.personAskDoctor(this.ruleForm)
                 .then((res) => {
-                  // console.log("test1" + JSON.stringify(res.data));
                   if (res.data.code === 1) {
                     if (this.personalInfos.allergy !== this.ruleForm.allergyMedicine) {
                       let datas = {
@@ -255,7 +254,6 @@ export default {
                         .then((res) => {
                           if (res.data.code === 1) {
                             alert(res.data.info);
-                            // localStorage.setItem("user", JSON.stringify(datas));
                             location.assign("/appointmentorderrecord");
                           } else {
                             alert(res.data.info);
@@ -339,7 +337,7 @@ export default {
     timeChange(newVal) {
       if (newVal === "24:00-24:00") {
         this.$message.error(
-          "This time has been booked by the patient, please choose again"
+          "This time has been booked by other patient, please choose again"
         );
         this.ruleForm.appointmentTime = "";
       }
@@ -428,7 +426,6 @@ export default {
         if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i].doctorId == this.ruleForm.doctorId) {
-              // console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
               this.availableTime = res.data.info[i];
               break;
             }

@@ -115,8 +115,7 @@ export default {
     let datas1 = {
       userId: JSON.parse(localStorage.getItem("user")).id,
     };
-    console.log(datas1);
-
+    
     User.getUserInfo(datas1)
       .then((res) => {
         if (res.data.code === 1) {

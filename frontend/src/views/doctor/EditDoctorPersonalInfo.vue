@@ -80,13 +80,11 @@ export default {
       this.$refs[formName].validate((valid) => {
         //开启校验
         if (valid) {
-          console.log("发送修改doctor个人信息接口");
+          //发送修改doctor个人信息接口
           Service.resaveDoctorInfo(this.form)
             .then((res) => {
-              console.log("test" + JSON.stringify(this.form));
               if (res.data.code === 1) {
                 alert(res.data.info);
-                // localStorage.setItem("user", JSON.stringify(this.json));
                 location.assign("/dpersonalcenter");
               } else {
                 alert(res.data.info);
@@ -105,37 +103,12 @@ export default {
     handleup: function () {
       this.$router.replace("/dpersonalcenter");
     },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
-    },
-    test(e, type) {
-      console.log(e, type, 123);
-      let formData = new FormData();
-      formData.append("file", e.target.files[0]);
-      Service2.uploadImg(formData, { files: e.target.files }).then((res) => {
-        console.log(res, "res");
-        this.ruleForm[type] = res.data.info;
-        console.log(this.ruleForm[type], type);
-      });
-    },
   },
   mounted() {
     let data = {
       userId: JSON.parse(localStorage.getItem("user")).id,
     };
-    console.log(data);
+
     adminService
       .getaDoctorbyUserId(data)
       .then((res) => {

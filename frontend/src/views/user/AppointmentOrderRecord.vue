@@ -192,10 +192,6 @@ export default {
       var curTime = new Date().getTime(); //获取当前时间
       var convertAppointmentDate = Date.parse(appointmentDate); //将预约时间从string转化为date类型
       var ThreeDateBefore = convertAppointmentDate - 3 * 3600 * 24 * 1000; //把预约时间提前三天
-      // console.log("curTime: " + curTime);
-      // console.log("convertAppointmentDate: " + convertAppointmentDate);
-      // console.log("ThreeDateBefore: " + ThreeDateBefore);
-      // console.log("compare: " + ThreeDateBefore - curTime);
       if (ThreeDateBefore - curTime < 0) {
         return true;
       } else {
@@ -204,7 +200,6 @@ export default {
     },
     goRoute2(e) {
       let data = this.tableData;
-      console.log(data[e]._id);
       this.$router.push({
         name: "UpdateAppointmentTest",
         params: { id: data[e]._id },
@@ -212,7 +207,6 @@ export default {
     },
     goRoute3(e) {
       let data = this.tableData;
-      console.log(data[e]._id);
       this.$router.push({
         name: "AppointmentDetail",
         params: { id: data[e]._id },
@@ -220,12 +214,6 @@ export default {
     },
     logisticDescData(row) {
       return row.appointmentDate.split("T")[0];
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
     },
 
     /**
@@ -275,10 +263,9 @@ export default {
     },
   },
   async mounted() {
-    console.log("发送获取就诊记录列表接口");
+    //发送获取就诊记录列表接口
     Common.getVisitRecordList()
       .then((res) => {
-        // console.log("test1" + JSON.stringify(res.data));
         if (res.data.code === 1) {
           this.tableData = res.data.info;
         } else {

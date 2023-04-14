@@ -96,8 +96,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         //开启校验
         if (valid) {
-          console.log("发送修改密码接口");
-          //修改密码接口
+         //修改密码接口
           Service.resetPass(this.json)
             .then((res) => {
               if (res.data.code === 1) {
@@ -123,7 +122,7 @@ export default {
     },
 
     async resetpass() {
-      alert("This is reset function.");
+      consol.log("This is reset function");
     },
 
     //点击完成按钮触发handlefinish

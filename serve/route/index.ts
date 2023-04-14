@@ -15,7 +15,7 @@ router.use((req:Request, res:Response, next:NextFunction) => {
   let token = req.headers.authorization?.split(' ')[1] as string
   if(!Token.unCheck.some((element:RegExp) => element.test(path))){
     TokenModel.findOne({ token }).then((result:any) => {
-      if(result === null){ throw new Error('请先登录') }
+      if(result === null){ throw new Error('please login first') }
       if(result.expirationTime - Date.now() < 0){ 
         // 登录超时则清空对应的token,并抛出异常告知登录过期
         TokenModel.deleteMany({ token })

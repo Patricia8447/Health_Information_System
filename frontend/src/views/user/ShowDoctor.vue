@@ -99,19 +99,11 @@ export default {
     },
     goRoute(e) {
       // let data = this.tableData;
-      console.log("make-appointment: " + e);
       this.$router.push({ name: "MakeAppointment", params: { id: e } });
     },
     viewDetail(e) {
       // let data = this.tableData;
-      console.log("view-detail: " + e);
       this.$router.push({ name: "ViewDoctorDetail", params: { id: e } });
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
     },
 
     /**
@@ -156,15 +148,10 @@ export default {
       return this.getMaxLength(arr) + 28 + "px";
     },
     makeAppointment(_id, status) {
-      console.log(_id);
-      console.log(status);
-      console.log(" 用户进行问诊预约接口");
-
+      //用户进行问诊预约接口
       adminService
         .personAskDoctor(datas)
         .then((res) => {
-          // console.log("test" + res.data);
-          console.log("test1" + JSON.stringify(res.data));
           if (res.data.code === 1) {
             alert(res.data.info);
           } else {
@@ -177,13 +164,12 @@ export default {
     },
   },
   async mounted() {
-    console.log("发送获取所有已获批准的医生列表接口");
+    //发送获取所有已获批准的医生列表接口
     Service.getApprovedDoctor()
       .then((res) => {
         if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i].status == "Approved") {
-              console.log("test-whos-doctor: " + JSON.stringify(res.data.info[i]));
               this.tableData = res.data.info;
               // break;
             }

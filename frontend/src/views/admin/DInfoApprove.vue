@@ -11,7 +11,7 @@
         )
       "
       style="width: 100%"
-      height="2500"
+      height="2700"
       :header-cell-style="tableHeaderColor"
     >
       <el-table-column label="ID" prop="_id" width="220px"></el-table-column>
@@ -142,7 +142,7 @@ export default {
   methods: {
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
-        return "background-color: #CCDDFF;color:black;font-size:13px;font-weight: 700; height: 50px;";
+        return "background-color: #CCDDFF;color:black;font-size:13px;font-weight: 700; height: 70px;";
       }
     },
     viewDetail(e) {
@@ -191,9 +191,6 @@ export default {
       return this.getMaxLength(arr) + 30 + "px";
     },
     openAgree(_id, status) {
-      console.log(_id);
-      console.log(status);
-      console.log("admin审批医生申请接口");
       let datas = {
         userId: _id,
         status: "Approved",
@@ -203,10 +200,7 @@ export default {
       adminService
         .ApprovalDoctorStatus(datas)
         .then((res) => {
-          // console.log("test" + res.data);
-          console.log("test1" + JSON.stringify(res.data));
           if (res.data.code === 1) {
-            // 根据原本的校验逻辑进行添加
             alert(res.data.info);
           } else {
             alert(res.data.info);
@@ -217,9 +211,6 @@ export default {
         });
     },
     openReject(_id, status) {
-      console.log(_id);
-      console.log(status);
-      console.log("admin审批医生申请接口");
       let datas = {
         userId: _id,
         status: "NoPass",
@@ -229,7 +220,6 @@ export default {
       adminService
         .RejectDoctorStatus(datas)
         .then((res) => {
-          console.log("test1" + JSON.stringify(res.data));
           if (res.data.code === 1) {
             alert(res.data.info);
           } else {
@@ -241,7 +231,6 @@ export default {
         });
     },
     openInactive(e, _id, status) {
-      console.log("admin inactive 医生申请接口");
       let datas = {
         userId: _id,
         status: "Reviewing",
@@ -267,8 +256,6 @@ export default {
       adminService
         .InactiveDoctorStatus(datas)
         .then((res) => {
-          console.log("test-inactive-function: " + JSON.stringify(res.data));
-          console.log(res.data.code);
           if (res.data.code === 1) {
             alert(res.data.info);
             //改变受影响但未进行的预约订单
@@ -309,12 +296,11 @@ export default {
     },
   },
   async mounted() {
-    console.log("发送获取医生列表接口");
+    //发送获取医生列表接口
     Service.getAllDoctor()
       .then((res) => {
         if (res.data.code === 1) {
           this.tableData = res.data.info;
-          console.log(this.tableData)
         } else {
           alert(res.data.info);
         }
@@ -333,25 +319,5 @@ export default {
   width: 1500px;
 }
 
-.el-table /deep/ th {
-  padding: 0;
-  white-space: nowrap;
-  min-width: fit-content;
-}
 
-.el-table /deep/ td {
-  padding: 1px;
-  white-space: nowrap;
-  width: fit-content;
-}
-
-/** 修改el-card默认paddingL:20px-内边距 **/
->>> .el-card__body {
-  padding: 10px;
-}
-
-.el-table /deep/ .cell {
-  white-space: nowrap;
-  width: fit-content;
-}
 </style>

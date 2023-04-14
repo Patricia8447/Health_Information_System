@@ -253,7 +253,6 @@ export default {
         if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i]._id == this.tableData.doctorId) {
-              console.log("11111: " + JSON.stringify(res.data.info[i]));
               this.alldoctordetails = res.data.info[i];
               this.basicInfo = res.data.info[i].userInfo[0];
               break;
@@ -273,7 +272,6 @@ export default {
 
     Admin.findDoc(datas)
       .then((res) => {
-        console.log("test_findDoc" + this.tableData.doctorId);
         if (res.data.code === 1) {
           this.alldoctordetails.doc1 = res.data.info.identityFront;
           this.alldoctordetails.doc2 = res.data.info.identityBack;
@@ -294,7 +292,6 @@ export default {
        if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i].doctorId == this.tableData.doctorId) {
-              console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
               this.availableTime = res.data.info[i];
               break;
             }
@@ -313,7 +310,6 @@ export default {
         if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i].doctorId == this.tableData.doctorId) {
-              console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
               this.availableDate = res.data.info[i];
               if (res.data.info[i].Mon == true) {
                 this.availableDate.Mon = "Monday / ";

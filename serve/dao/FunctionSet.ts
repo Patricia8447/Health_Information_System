@@ -67,7 +67,7 @@ function newUser({ name, password, email, phone, role }: User, res: Response) {
 function login({ username, password }: loginDataType, res: Response) {
   UserModel.findOne({ email: username }, { lastLogin: 0 }).then(async (result: any) => {
     if (!result) {      // 没有检索到数据
-      return res.send(responseInfo.loginException('wrong user name'))
+      return res.send(responseInfo.loginException('wrong username'))
     }
     if (result != 'null' && User.check(password, result.password)) {
       let back: Record<string, any> = ObjectSimpleShallowCopy(result._doc)
@@ -277,10 +277,8 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
     ]
     return Promise.all(promises)
   }).then((result: Array<any>) => {
-    res.send(responseInfo.success('The application is successful, please wait for the administrator further review'))
+    res.send(responseInfo.success('The application is successful, please wait for the administrator to do the further review'))
   }).catch((error: Error) => {
-    // console.log(error.toString().split(": ")[1]);
-    // console.log(error.toString().split(": ")[1] == "already qualified")
     if (error.toString().split(": ")[1] == "already qualified") {
       res.send(responseInfo.applyException('already qualified'))
     }
@@ -298,7 +296,6 @@ function applyToBeDoctor(applyToBeDoctorData: applyToBeDoctorType, res: Response
  * @param { Response } res 响应
  */
 function adminApprovalDoctorStatus({ userId, status }: changeDoctorStatusType, res: Response) {
-  // TODO 后续有兴趣可以通过id写审批日志
   if (!status) {
     res.send(responseInfo.requestException('Missing request parameter'))
     return;
@@ -310,7 +307,7 @@ function adminApprovalDoctorStatus({ userId, status }: changeDoctorStatusType, r
   DoctorModel.findOneAndUpdate({ userId }, { status: AUDITSTATUS[(status as keyof typeof AUDITSTATUS)] }).then(() => {
     return UserModel.findOneAndUpdate({ _id: userId }, { role: status === 'Approved' ? ROLE.Docotr : ROLE.Normal })
   }).then(() => {
-    res.send(responseInfo.success('Approve succcessfully'))
+    res.send(responseInfo.success('Approve Succcessfully'))
   }).catch((error: Error) => res.send(responseInfo.requestException(error)))
 }
 
@@ -320,7 +317,6 @@ function adminApprovalDoctorStatus({ userId, status }: changeDoctorStatusType, r
  * @param { Response } res 响应
  */
 function adminRejectDoctorStatus({ userId, status }: changeDoctorStatusType, res: Response) {
-  // TODO 后续有兴趣可以通过id写审批日志
   if (!status) {
     res.send(responseInfo.requestException('Missing request parameter'))
     return;
@@ -332,7 +328,7 @@ function adminRejectDoctorStatus({ userId, status }: changeDoctorStatusType, res
   DoctorModel.findOneAndUpdate({ userId }, { status: AUDITSTATUS[(status as keyof typeof AUDITSTATUS)] }).then(() => {
     return UserModel.findOneAndUpdate({ _id: userId }, { role: status === 'NoPass' ? ROLE.Docotr : ROLE.Normal })
   }).then(() => {
-    res.send(responseInfo.success('Rejected succcessfully'))
+    res.send(responseInfo.success('Rejected Succcessfully'))
   }).catch((error: Error) => res.send(responseInfo.requestException(error)))
 }
 
@@ -353,7 +349,7 @@ function adminInactiveDoctorStatus({ userId, status }: changeDoctorStatusType, r
   DoctorModel.findOneAndUpdate({ userId }, { status: AUDITSTATUS[(status as keyof typeof AUDITSTATUS)] }).then(() => {
     return UserModel.findOneAndUpdate({ _id: userId }, { role: status === 'Reviewing' ? ROLE.Docotr : ROLE.Normal })
   }).then(() => {
-    res.send(responseInfo.success('Inactive succcessfully'))
+    res.send(responseInfo.success('Inactive Succcessfully'))
   }).catch((error: Error) => res.send(responseInfo.requestException(error)))
 }
 
@@ -381,7 +377,7 @@ function adminApprovalDoctorCancelStatus({ userId, bool }: adminApprovalDoctorCa
     let doctorId = result._id
     bool && DoctorAvailableTimeModel.deleteMany({ doctorId })             // 如果同意其取消医生的资格，则直接删掉对应的空闲时间
     bool && DoctorAvailableWeekModel.deleteMany({ doctorId })             // 如果同意其取消医生的资格，则直接删掉对应的空闲时间
-    res.send(responseInfo.success('Approve succcessfully'))
+    res.send(responseInfo.success('Approve Succcessfully'))
   }).catch((error: Error) => res.send(responseInfo.requestException(error)))
 }
 
@@ -405,7 +401,6 @@ function getAllDoctor({ status }: Record<string, string>, res: Response) {
     }
   }]).exec(function (err, result) {
     res.send(responseInfo.success(result))
-    // students contain WorksnapsTimeEntries
   });
 }
 
@@ -416,8 +411,6 @@ function getAllDoctor({ status }: Record<string, string>, res: Response) {
  */
 function getApprovedDoctor({ status }: Record<string, string>, res: Response) {
   DoctorModel.find({ status: AUDITSTATUS.Approved }).then((result: Array<any>) => {
-    // console.log("this is res " + res);
-    // console.log("this is result " + result);
     res.send(responseInfo.success(result))
   }).catch((err: Error) => { res.send(responseInfo.getException(err)) })
 }
@@ -431,14 +424,12 @@ function getOneDoctor({ id, name, hospitalName, hospitalLevel, hospitalAddress, 
 }
 
 function getaDoctor({ doctorId }: getaDoctorType, res: Response) {
-  // console.log("get-a-doctor: " + doctorId);
   DoctorModel.findOne({ _id: doctorId })
     .then((result: any) => { res.send(responseInfo.success(result)) })
     .catch(() => { res.send(responseInfo.updataException('not found')) })
 }
 
 function getaDoctorbyUserId({ userId }: getaDoctorType, res: Response) {
-  // console.log("get-a-doctor-new: " + userId);
   DoctorModel.findOne({ userId: userId })
     .then((result: any) => {
       // console.log(result);
@@ -446,6 +437,7 @@ function getaDoctorbyUserId({ userId }: getaDoctorType, res: Response) {
     })
     .catch(() => { res.send(responseInfo.updataException('not found')) })
 }
+
 /**
  * 用户进行问诊预约
  * @param { personAskDoctorType } data 请求数据
@@ -457,7 +449,7 @@ function personAskDoctor({ id, userName, doctorName, doctorId, selfReport, aller
     if (num == 0) { throw new Error('The doctor does not exist') }
     return new InquiryModel(InquiryData).save()
   }).then((result: any) => {
-    res.send(responseInfo.success('Successfully appointment'))
+    res.send(responseInfo.success('Successfully Appointment'))
   }).catch((err: Error) => res.send(responseInfo.applyException(err)))
 }
 
@@ -557,7 +549,6 @@ function doctorWirteVisitRecord(data: doctorWirteVisitRecordType, res: Response)
   }).then((result: any) => {
     res.send(responseInfo.success('Save successfully'))
   }).catch((err: Error) =>
-    // console.log(err))
     res.send(responseInfo.updataException(err)))
 }
 
@@ -706,7 +697,6 @@ function updataPushInfo({ inqueryId, selfReport, allergyMedicine, appointmentTim
 function findDoc({ doctorId }: findDocType, res: Response) {
   console.log("1: " + doctorId);
   DoctorPictureModel.findOne({ doctorId: doctorId }).then((result: any) => {
-    // console.log("2: " + doctorId);
     if (!result) { throw new Error('No such document is found') }
     res.send(responseInfo.success(result))
   }).catch((err: Error) => {
@@ -722,8 +712,6 @@ function findDoc({ doctorId }: findDocType, res: Response) {
  */
 function deletePushInfo({ infoId }: updatePushInfoType, res: Response) {
   PushInformationModel.findOne({ _id: infoId }).then((result: any) => {
-    // console.log("the result is : " + result);
-    // console.log(infoId);
     if (!result) { throw new Error('No such push is displayed') }
     return PushInformationModel.deleteMany({ _id: infoId })
   }).then((result: any) => {

@@ -91,8 +91,7 @@ export default {
   },
   mounted() {
     this.alldoctordetails.inquiryId = this.$route.params.id;
-    console.log(this.alldoctordetails.inquiryId);
-
+    
     Common.getVisitRecordList()
       .then((res) => {
         if (res.data.code === 1) {

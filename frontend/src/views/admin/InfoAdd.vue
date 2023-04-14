@@ -64,11 +64,10 @@ export default {
       adminService
         .addPushInfo(this.ruleForm)
         .then((res) => {
-          console.log(JSON.stringify(res.data));
           if (res.data.code === 1) {
             alert(res.data.info);
             if (res.data.info == "Please input the form completely") {
-              console.log("not yet submitted");
+              //not yet submitted
             } else {
               location.assign("/healthinformation");
             }

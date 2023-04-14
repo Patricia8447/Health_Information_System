@@ -132,14 +132,12 @@ export default {
       this.$refs[formName].validate((valid) => {
         //开启校验
         if (valid) {
-          console.log("发送送药接口");
-          console.log(JSON.stringify(this.ruleForm));
+          //发送送药接口
+          
           Service.createDistribution(this.ruleForm)
             .then((res) => {
-              console.log(res.data);
               if (res.data.code === 1) {
                 alert("submitted successfully");
-                console.log(res.data.info);
                 location.assign("/appointmentorderrecord");
               } else {
                 alert(res.data.info);
@@ -169,8 +167,7 @@ export default {
   },
   mounted() {
     this.alldoctordetails.inquiryId = this.$route.params.id;
-    console.log(this.alldoctordetails.inquiryId);
-
+    
     Service.getVisitRecordList()
       .then((res) => {
         if (res.data.code === 1) {
@@ -204,8 +201,7 @@ export default {
     let datas1 = {
       userId: JSON.parse(localStorage.getItem("user")).id,
     };
-    console.log(datas1);
-
+    
     User.getUserInfo(datas1)
       .then((res) => {
         if (res.data.code === 1) {

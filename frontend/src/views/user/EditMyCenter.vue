@@ -69,12 +69,10 @@ export default {
   },
   methods: {
     async onSubmit(formName) {
-      console.log("发送修改用户个人信息接口");
-      //修改用户个人信息接口
+      //发送修改用户个人信息接口
       this.$refs[formName].validate((valid) => {
         //开启校验
         if (valid) {
-          console.log(this.form);
           Service.resaveUserInfo(this.form)
             .then((res) => {
               if (res.data.code === 1) {
@@ -102,8 +100,7 @@ export default {
     let datas1 = {
       userId: JSON.parse(localStorage.getItem("user")).id,
     };
-    console.log(datas1);
-
+    
     Service.getUserInfo(datas1)
       .then((res) => {
         if (res.data.code === 1) {

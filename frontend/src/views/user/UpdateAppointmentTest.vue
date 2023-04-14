@@ -178,7 +178,7 @@ export default {
           dayjs(appointmentDate).format("d") === this.availableDate.Fri ||
           dayjs(appointmentDate).format("d") === this.availableDate.Sat ||
           dayjs(appointmentDate).format("d") === this.availableDate.Sun ||
-           Date.parse(appointmentDate) < new Date().getTime()
+          Date.parse(appointmentDate) < new Date().getTime()
         );
       },
     };
@@ -215,11 +215,9 @@ export default {
             time: this.ruleForm.appointmentTime,
           }).then((res) => {
             if (res.data.info) {
-              console.log("test update method: " + this.ruleForm.inqueryId);
               adminService
                 .updataPushInfo(this.ruleForm)
                 .then((res) => {
-                  console.log(JSON.stringify(res.data));
                   if (res.data.code === 1) {
                     location.assign("/appointmentorderrecord");
                     alert(res.data.info);
@@ -292,7 +290,7 @@ export default {
     timeChange(newVal) {
       if (newVal === "24:00-24:00") {
         this.$message.error(
-          "This time has been booked by the patient, please choose again"
+          "This time has been booked by other patient, please choose again"
         );
         this.ruleForm.appointmentTime = "";
       }
@@ -303,17 +301,11 @@ export default {
     },
   },
   mounted() {
-    console.log("2333");
-    // console.log(this.$route.params.id);
-    // this.ruleForm.doctorId = this.$route.params.id;
     this.ruleForm.inqueryId = this.$route.params.id;
-    console.log(this.ruleForm.inqueryId);
 
     Service.getVisitRecordList()
       .then((res) => {
         if (res.data.code === 1) {
-          console.log(this.ruleForm.inqueryId);
-          console.log("New: " + JSON.stringify(res.data.info));
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i]._id == this.ruleForm.inqueryId) {
               this.ruleForm = res.data.info[i];
@@ -390,7 +382,6 @@ export default {
         if (res.data.code === 1) {
           for (let i = 0; i < res.data.info.length; i++) {
             if (res.data.info[i].doctorId == this.ruleForm.doctorId) {
-              // console.log("test-1-time: " + JSON.stringify(res.data.info[i]));
               this.availableTime = res.data.info[i];
               break;
             }

@@ -61,12 +61,9 @@ export default {
   },
   methods: {
      async alertResults(sender) {
-      console.log(sender);
-      console.log(sender.data);
       adminService
         .updataPushInfo(sender.data)
         .then((res) => {
-          console.log(JSON.stringify(res.data));
           if (res.data.code === 1) {
            alert(res.data.info);
           } else {

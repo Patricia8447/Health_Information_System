@@ -21,7 +21,7 @@ function signUpEmail(email: string) {
     from: sendEmailData[sendEmailType].user,
     to: email,
     subject: 'Welcome to My System',
-    html: '<span>Welcome to join us</span>',
+    html: '<span>Welcome new user !!!</span>',
   }
   // 发送邮件
   transporter.sendMail(options, (err: any, msg: string) => {
@@ -64,7 +64,7 @@ function checkStatusEmail(email: string) {
     from: sendEmailData[sendEmailType].user,
     to: email,
     subject: 'Appointment Status Reminder',
-    html: '<span>A change has been detected in your appointment. Please log in to your account to check the current appointment status.</span>',
+    html: '<span>Dear user: A change has been detected in your appointment(s). Please login to your account to check the current appointment(s) status.</span>',
   }
   // 发送邮件
   transporter.sendMail(options, (err: any, msg: string) => {
@@ -83,7 +83,7 @@ function allertDoctorStatusEmail(email: string) {
     from: sendEmailData[sendEmailType].user,
     to: email,
     subject: 'Change of Account Status',
-    html: '<span>A change has been detected in your account. Please log in to your account to check the current status. Please check all affected patient appointments promptly. If you have any questions, please contact the manager at admin@admin.com</span>',
+    html: '<span>Dear doctor: A change has been detected in your account. Please login to your account to check the current status. Please check all affected patient appointments promptly. If you have any questions, please contact the us at admin@admin.com</span>',
   }
   // 发送邮件
   transporter.sendMail(options, (err: any, msg: string) => {

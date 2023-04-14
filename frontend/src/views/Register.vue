@@ -99,12 +99,10 @@ export default {
         //开启校验
         if (valid) {
           // 如果校验通过，请求接口，允许提交表单
-          console.log("发送注册接口");
-          console.log(this.json.role);
-          //注册接口
+          //发送注册接口
+
           Service.signUp(this.json)
             .then((res) => {
-              console.log(res.data);
               if (res.data.code === 1) {
                 alert(res.data.info);
                 location.assign("/login");

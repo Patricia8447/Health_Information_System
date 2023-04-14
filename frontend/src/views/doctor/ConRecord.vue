@@ -71,17 +71,14 @@ export default {
   },
   methods: {
     async alertResults(sender) {
-      console.log(JSON.stringify(sender.data));
       let data = sender.data;
       data.inquiryId = this.$route.params.id;
 
       Service.doctorWirteVisitRecord(data)
         .then((res) => {
-          console.log(res.data);
           if (res.data.code === 1) {
             alert("submitted successfully");
-            console.log(res.data.info);
-            // location.assign("/appointmentorderrecord");
+            location.assign("/seepatient");
           } else {
             alert(res.data.info);
           }

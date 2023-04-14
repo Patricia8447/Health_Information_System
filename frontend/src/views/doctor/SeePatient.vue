@@ -10,15 +10,15 @@
         )
       "
       style="width: 100%"
-      height="2500"
+      height="2800"
       :header-cell-style="tableHeaderColor"
     >
-      <el-table-column
+      <!-- <el-table-column
         label="Patient ID"
         prop="userId"
         :width="flexColumnWidth('Patient ID', 'userId')"
       >
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         label="Patient Name"
         prop="userName"
@@ -29,6 +29,7 @@
         label="Self Report"
         prop="selfReport"
         :width="flexColumnWidth('Self Report', 'selfReport')"
+        show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
@@ -61,9 +62,9 @@
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
           <el-input
-            style="width: 300px"
             v-model="search"
             size="mini"
+            class="searching"
             placeholder="search your patient by name or by date..."
           />
         </template>
@@ -122,14 +123,13 @@ export default {
       let data1 = {
         inquiryId: data[e]._id,
       };
-      console.log("data: " + data[e]._id);
+
       Service.clickStart(data1)
         .then((res) => {
           if (res.data.code === 1) {
             alert(
               "please remember to write the diagnosis result after the consultation!"
             );
-            console.log(res.data.info);
           } else {
             alert(res.data.info);
           }
@@ -138,21 +138,21 @@ export default {
           console.log(err);
         });
     },
-     getCurrentDate(appointmentDate) {
+    getCurrentDate(appointmentDate) {
       var myDate = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
       var time = myDate.toJSON().split("T")[0];
       var timeCombine1 = time.split("-")[0];
       var timeCombine2 = time.split("-")[1];
       var timeCombine3 = time.split("-")[2];
       var timeCombine = parseInt(timeCombine1 + timeCombine2 + timeCombine3);
-      
+
       var appointmentDate1 = appointmentDate.split("-")[0];
       var appointmentDate2 = appointmentDate.split("-")[1];
       var appointmentDate3 = appointmentDate.split("-")[2];
       var appointmentDateCombine = parseInt(
         appointmentDate1 + appointmentDate2 + appointmentDate3
       );
-      
+
       if (appointmentDateCombine > timeCombine || appointmentDateCombine == timeCombine) {
         return false;
       } else {
@@ -161,19 +161,12 @@ export default {
     },
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
-        return "background-color:#87cefa;color:black;font-size:13px;font-weight: 700; height: 50px;";
+        return "background-color:#87cefa;color:black;font-size:13px;font-weight: 700; height: 70px;";
       }
     },
     goRoute(e) {
       let data = this.tableData;
       this.$router.push({ name: "ConRecord", params: { id: data[e]._id } });
-    },
-
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
     },
 
     /**
@@ -227,7 +220,6 @@ export default {
       .then((res) => {
         if (res.data.code === 1) {
           this.zoomlink = res.data.info.doctor.zoomlink;
-          // alert("这是医生的id： " + res.data.info.doctor.id);
           let datas2 = {
             doctorId: res.data.info.doctor.id,
           };
@@ -261,25 +253,7 @@ export default {
   width: 100%;
 }
 
-.el-table /deep/ th {
-  padding: 0;
-  white-space: nowrap;
-  min-width: fit-content;
-}
-
-.el-table /deep/ td {
-  padding: 1px;
-  white-space: nowrap;
-  width: fit-content;
-}
-
-/** 修改el-card默认paddingL:20px-内边距 **/
->>> .el-card__body {
-  padding: 10px;
-}
-
-.el-table /deep/ .cell {
-  white-space: nowrap;
-  width: fit-content;
+.searching {
+  width: 260px;
 }
 </style>

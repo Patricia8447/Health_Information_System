@@ -322,8 +322,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         //开启校验
         if (valid) {
-          console.log("发送成为医生接口");
-          // console.log(JSON.stringify(this.ruleForm));
+          //发送成为医生接口
           Service.toBeDoctor(this.ruleForm)
             .then((res) => {
               if (res.data.code === 1) {
@@ -348,19 +347,18 @@ export default {
       this.$refs[formName].resetFields();
     },
     test(e, type) {
-      console.log(e, type, 123);
+      // console.log(e, type, 123);
       let formData = new FormData();
       formData.append("file", e.target.files[0]);
       Service2.uploadImg(formData, { files: e.target.files }).then((res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         this.ruleForm[type] = res.data.info;
-        console.log(this.ruleForm[type], type);
+        // console.log(this.ruleForm[type], type);
       });
     },
   },
   mounted() {
     this.testing = JSON.parse(localStorage.getItem("user"));
-    console.log(this.testing.id);
     this.ruleForm.id = this.testing.id;
     this.ruleForm.doctorName = this.testing.name;
     this.ruleForm.email = this.testing.email;
@@ -372,15 +370,13 @@ export default {
       .getaDoctorbyUserId(data)
       .then((res) => {
         if (res.data.code === 1) {
-          // alert(JSON.stringify(res.data.info));
-          // (res.data.info.status != "Approved" && res.data.info.status != "Reviewing" && res.data.info.status != "Not Pass")
           if (res.data.info == null) {
             this.$alert(
               '<strong>When you fill out the application form, you are aware of the platform privacy policy and are willing to become a user of the platform. Please refer <a href="http://localhost:8080/policy" target="_blank">Privacy policy</a> if necessary.</strong>',
               "warning",
               {
                 dangerouslyUseHTMLString: true,
-                 confirmButtonText: 'OK',
+                confirmButtonText: "OK",
               }
             );
           } else {

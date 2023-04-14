@@ -56,14 +56,13 @@ export default {
       this.$router.push("/infoadd");
     },
     deleteInfo(_id) {
-      console.log("test delete method: " + _id);
+      //delete method
       let datas = {
         infoId: _id,
       };
       adminService
         .deletePushInfo(datas)
         .then((res) => {
-          console.log(JSON.stringify(res.data));
           if (res.data.code === 1) {
             alert(res.data.info);
           } else {
@@ -80,11 +79,9 @@ export default {
     },
   },
   mounted() {
-    console.log("发送获取资讯列表接口");
     //资讯列表接口
     Service.getPushInfoList()
       .then((res) => {
-        console.log("test1" + JSON.stringify(res.data));
         if (res.data.code === 1) {
           this.infos = res.data.info;
         } else {

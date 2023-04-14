@@ -450,7 +450,6 @@ export default {
         this.selectList8[0].state == "" ||
         this.selectList9[0].state == ""
       ) {
-
         alert("The test is not finished");
       } else {
         let res = 0;
@@ -573,8 +572,7 @@ export default {
         }
 
         res = resA + resB + resC + resD + resE + resF + resG;
-        //   alert(res);
-
+        
         if (res >= 5) {
           this.resultMessage =
             "Your PSQI score is : " +

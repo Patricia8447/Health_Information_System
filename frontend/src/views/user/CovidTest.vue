@@ -338,8 +338,7 @@ export default {
           count += 1;
         }
       });
-
-      // alert(count);
+      
       if (
         this.selectList[0].state === "none" ||
         this.selectList[1].state === "none" ||

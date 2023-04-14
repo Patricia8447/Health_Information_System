@@ -57,7 +57,6 @@ export default {
         //开启校验
         if (valid) {
           // 忘记密码接口
-          console.log("发送忘记密码接口", this.json);
           Service.sendCheckMail(this.json)
             .then((res) => {
               if (res.data.code === 1) {

@@ -68,13 +68,12 @@ export default {
       this.$refs[formName].validate((valid) => {
         //开启校验
         if (valid) {
-          console.log("发送登录接口", this.json);
+          //发送登录接口
           userService
             .login(this.json)
             .then((res) => {
-              console.log(res.data);
               if (res.data.code === 1) {
-                alert("login Successfully.");
+                alert("Login Successfully");
                 //缓存用户信息
                 localStorage.setItem("user", JSON.stringify(res.data.info));
                 localStorage.setItem("user_id", res.data.info.id);
@@ -89,7 +88,6 @@ export default {
               }
             })
             .catch((err) => {
-              console.log(err);
               alert(err);
             });
         } else {

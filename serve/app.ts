@@ -37,7 +37,7 @@ app.use(ExpressJwt({
 app.use((err:express.Errback, req:express.Request, res:express.Response, next:express.NextFunction) => {
   let errArray = ['TokenExpiredError', 'JsonWebTokenError', 'NotBeforeError']
   if(err.name === 'UnauthorizedError'){
-    res.send(responseInfo.loginOverTime('暂未登录,请先登录'))
+    res.send(responseInfo.loginOverTime('please login first'))
   }else if(errArray.includes(err.name)){
     res.send(responseInfo.loginOverTime())
   }else{
