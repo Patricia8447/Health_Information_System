@@ -206,13 +206,6 @@ export default new Router({
             import(/* webpackChunkName: "about" */ "../views/doctor/EditDoctorPersonalInfo.vue"),
         },
         {
-          path: "/doctordetail",
-          name: "DoctorDetail",
-          meta: { requireAuth: true, visible: true, roles: ['doctor'] },
-          component: () =>
-            import(/* webpackChunkName: "about" */ "../views/doctor/DoctorDetail.vue"),
-        },
-        {
           path: "/infomanage",
           name: "Infomanage",
           meta: { requireAuth: true, visible: true, roles: ['admin'] },
